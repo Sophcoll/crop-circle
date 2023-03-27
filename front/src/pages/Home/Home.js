@@ -5,8 +5,8 @@ const Home = () => {
         <div>
             <h1>Home Page</h1>
             <div>
-                  <button> <Link to="/login">Login</Link></button>
-                   <button><Link to="/signup">Signup</Link></button>
+                <button> <Link to="/login">Login</Link></button>
+                <button><Link to="/signup">Signup</Link></button>
                     </div>
         </div>
     )
