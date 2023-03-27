@@ -12,19 +12,19 @@ const {
 const router = express.Router();
 
 // GET all produce
-router.get('/', getAllProduce)
+router.get('/produce', getAllProduce)
 
 // GET single produce item
-router.get('/:id', getProduceItem)
+router.get('/produce/:id', getProduceItem)
 
 // POST a new produce
-router.post('/', createProduceItem)
+router.post('/produce', createProduceItem)
 
 // UPDATE a produce item
-router.put('/:id', updateProduceItem)
+router.put('/produce/:id', updateProduceItem)
 
 // DELETE a produce item
-router.delete('/:id', deleteProduceItem)
+router.delete('/produce/:id', deleteProduceItem)
 
 
 

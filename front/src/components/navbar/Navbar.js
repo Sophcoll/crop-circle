@@ -8,10 +8,10 @@ const Navbar = () => {
                     <h1 className='title'>Nav to home page</h1>
                 </Link>
                 <nav>
-                    {/* <div>
-                    <Link to="/login">Login</Link>
-                    <Link to="/signup">Signup</Link>
-                    </div> */}
+                    <div>
+                    <Link to="/menu">Menu</Link>
+                    <Link to="/addlisting">Add</Link>
+                    </div>
                 </nav>
             </div>
         </header>

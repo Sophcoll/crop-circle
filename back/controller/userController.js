@@ -2,12 +2,13 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // to create webtoken for user (backend) - npm install jsonwebtoken
-//
 const createToken = (_id) => {
    return jwt.sign({_id: _id}, process.env.SECRET, {expiresIn: '3d'})
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // login user, after creating check if user exists then find the token and password
 const loginUser = async (req, res) => {
     const {email, password} = req.body
@@ -28,7 +29,7 @@ const loginUser = async (req, res) => {
 }
 
 
-// when starting project signup/post user before you do the login user
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // signup user
 const signupUser = async (req, res) => {
     const { email, password } = req.body

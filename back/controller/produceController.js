@@ -2,16 +2,18 @@ const Produce = require('../models/produceModel')
 const mongoose = require('mongoose');
 
 
-
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // GET all produce items, sorted by newest created
 const getAllProduce = async (req, res) => {
-    const produce = await Produce.find({}).sort({ createdAt: -1 })
-    res.status(200).json(produce)
+    const produces = await Produce.find({}).sort({ createdAt: -1 })
+    res.status(200).json(produces)
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // GET a single produce item
 const getProduceItem = async () => { }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // POST a new produce item
 const createProduceItem = async (req, res) => { 
     const { name, exchange, image, location, pickup, description, message } = req.body
@@ -24,13 +26,16 @@ const createProduceItem = async (req, res) => {
     }
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // UPDATE a produce item
 const updateProduceItem = async () => { }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DELETE a single produce item
 const deleteProduceItem = async () => { }
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // export functions to controller
 module.exports = {
     getAllProduce,
