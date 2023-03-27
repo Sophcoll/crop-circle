@@ -1,7 +1,13 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-const produceSchema = new Schema({
+
+// image: {
+//     data: Buffer,
+//     contentType: String,
+//     },
+
+const listingSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -9,10 +15,6 @@ const produceSchema = new Schema({
     exchange: {
         type: String,
         required: true
-    },
-    image: {
-    data: Buffer,
-    contentType: String,
     },
     location: {
         type: String,
@@ -28,4 +30,4 @@ const produceSchema = new Schema({
     }
 }, {timestamps: true})
 
-module.exports = mongoose.model('Produce', produceSchema)
+module.exports = mongoose.model('Listing', listingSchema)
