@@ -6,30 +6,21 @@ import Navbar from "./components/navbar/Navbar"
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import AddListing from "./pages/AddListing/AddListing";
+import NotFound from "./pages/errors/NotFound";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        
         <Navbar />
         <div className="pages">
           <Routes>
-             <Route
-              path='/'
-              element={ <Home />}
-            />
-             <Route
-              path='/login'
-              element={ <Login />}
-            />
-             <Route
-              path='/signup'
-              element={ <Signup />}
-            />
-            <Route
-              path='/add-listing'
-              element={ <AddListing />}
-            />
+             <Route path='/' element={ <Home />} />
+             <Route path='/login' element={ <Login />} />
+             <Route path='/signup' element={ <Signup />} />
+             <Route path='/add-listing' element={ <AddListing />} />
+             <Route path="*" element={<NotFound/>} />
           </Routes>
         </div>
       </BrowserRouter>
