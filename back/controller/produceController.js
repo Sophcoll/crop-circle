@@ -13,7 +13,16 @@ const getAllProduce = async (req, res) => {
 const getProduceItem = async () => { }
 
 // POST a new produce item
-const createProduceItem = async () => { }
+const createProduceItem = async (req, res) => { 
+    const { name, exchange, image, location, pickup, description, message } = req.body
+    
+    try {
+        const produce = await Produce.create({ name, exchange, image, location, pickup, description, message })
+        res.status(200).json(produce)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 // UPDATE a produce item
 const updateProduceItem = async () => { }
