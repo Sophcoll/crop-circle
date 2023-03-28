@@ -12,19 +12,19 @@ const {
 const router = express.Router();
 
 // GET all listings
-router.get('/listings', getAllListings)
+router.get('/', getAllListings)
 
 // GET single listing
-router.get('/listings/:id', getListing)
+router.get('/:id', getListing)
 
 // POST a new listing
-router.post('/listings', createListing)
+router.post('/', createListing)
 
 // UPDATE a listing
-router.put('/listings/:id', updateListing)
+router.put('/:id', updateListing)
 
 // DELETE a listing
-router.delete('/listings/:id', deleteListing)
+router.delete('/:id', deleteListing)
 
 
 
