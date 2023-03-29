@@ -1,9 +1,12 @@
 import { useState } from "react"
+import { UseLogin } from "../../hooks/useLogin";
+import './Login.scss';
 
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {login, error, isLoading} = UseLogin()
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -27,7 +30,8 @@ const Login = () => {
                 value={password}
             />
 
-            <button>Log in</button>
+           <button disabled={isLoading}>Log in</button>
+            {error && <div className="error">{ error }</div>}
         </form>
     )
 }

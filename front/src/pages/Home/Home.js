@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+
   //----------------------------------------------------------------------
   // USE STATES & GLOBAL VARIABLES
 
@@ -47,3 +48,4 @@ const Home = () => {
 };
 
 export default Home;
+

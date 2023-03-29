@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useAuthContext } from './useAuthContext'
 
-export const UseSignup = () => {
+export const UseLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const {dispatch} = useAuthContext()
 
-    const signup = async (email, password) => {
+    const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
 
-// post the user email and password to the database (is listing the right route??)
-        const response = await fetch('/user/signup', {
+// post the user email and password to the database
+        const response = await fetch('/api/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email, password})
         })
         const json = await response.json()
-        console.log(response)
+
         if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
@@ -28,9 +28,8 @@ export const UseSignup = () => {
             localStorage.setItem('user', JSON.stringify(json))
 // update auth context from the AuthContext Hook
             dispatch({ type: 'LOGIN', payload: json })
-    // update loading state
             setIsLoading(false)
         }
     }
-    return { signup, isLoading, error}
+    return { login, isLoading, error}
 } 
