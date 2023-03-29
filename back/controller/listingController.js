@@ -17,14 +17,14 @@ const getListing = async (req, res) => {
 
 // POST a new listing
 const createListing = async (req, res) => { 
-    const { name, exchange, location, pickup, description, message } = req.body
+    const { exchange, exchangeDescription, name, description, quantity, location, pickup } = req.body
 
 // create new listing
     
     
 // add to database
     try {
-        const listing = await Listing.create({ name, exchange, location, pickup, description, message })
+        const listing = await Listing.create({ exchange, exchangeDescription, name, description, quantity, location, pickup })
         res.status(200).json(listing)
     } catch (error) {
         res.status(400).json({error: error.message})

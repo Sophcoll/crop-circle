@@ -1,33 +1,45 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 // image: {
 //     data: Buffer,
 //     contentType: String,
 //     },
 
-const listingSchema = new Schema({
+// message: {
+//     type: String
+// }
+
+
+const listingSchema = new Schema(
+  {
+    exchange: {    
+      type: String,
+      required: true,
+    },
+    exchangeDescription: {
+      type: String,
+    },
     name: {
-        type: String,
-        required: true
-    },
-    exchange: {
-        type: String,
-        required: true
-    },
-    location: {
-        type: String,
-    },
-    pickup: {
-      type: String,  
+      type: String,
+      required: true,
     },
     description: {
-        type: String
+      type: String,
     },
-    message: {
-        type: String
-    }
-}, {timestamps: true})
+    quantity: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+    },
+    pickup: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Listing', listingSchema)
+module.exports = mongoose.model("Listing", listingSchema);

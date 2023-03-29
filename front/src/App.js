@@ -1,12 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // pages and components
-import Home from './pages/Home/Home';
+import Landing from './pages/Landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
-import AddListing from './pages/AddListing/AddListing';
 import NotFound from './pages/errors/NotFound';
+import AddListingDetails from './pages/AddListing/AddListingDetails';
+import AddListingCategory from './pages/AddListing/AddListingCategory';
+import Home from './pages/Home/Home';
 
 function App() {
   return (
@@ -16,10 +18,12 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-             <Route path='/' element={ <Home />} />
+             <Route path='/' element={ <Landing />} />
              <Route path='/login' element={ <Login />} />
              <Route path='/signup' element={ <Signup />} />
-             <Route path='/add-listing' element={ <AddListing />} />
+             <Route path='/home' element={<Home />}/> 
+             <Route path='/list/item-category' element={ <AddListingCategory />} />
+             <Route path='/list/item-details' element={ <AddListingDetails />} />
              <Route path="*" element={<NotFound/>} />
           </Routes>
         </div>
