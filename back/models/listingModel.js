@@ -7,10 +7,10 @@ const Schema = mongoose.Schema;
 //     contentType: String,
 //     },
 
-// message: {
-//     type: String
-// }
-
+// sellerId: {
+//   type: Number,
+//   required: true,
+// },
 
 const listingSchema = new Schema(
   {

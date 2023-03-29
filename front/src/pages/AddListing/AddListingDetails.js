@@ -69,6 +69,7 @@ const AddListingDetails = () => {
   // finds the chosen category
   const handleExchangeCategory = (event) => {
     setExchange(event.target.value);
+    // exchange === "free" ? setExchangeDescription("") : null
   };
 
   // saves the description for the exchange
