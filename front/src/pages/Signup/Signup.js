@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { UseSignup } from "../../hooks/useSignup"
 
+// components
+import './Signup.scss'
+
 
 const Signup = () => {
     const [email, setEmail] = useState('')
@@ -10,7 +13,7 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-          // console.log(email, password)
+          console.log(email, password)
         await signup(email, password)
     }
 

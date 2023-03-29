@@ -1,0 +1,21 @@
+/* auth forms */
+form.signup, form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ded5d5;
+  border-radius: 4px;
+}
+
+/* errprs */
+div.error {
+  padding: 10px;
+  background: #ffefef;
+   border: 1px solid rgb(218, 74, 74);
+  color: rgb(218, 74, 74);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid rgb(218, 74, 74);
+}
