@@ -9,7 +9,8 @@ import NotFound from './pages/errors/NotFound';
 import AddListingDetails from './pages/AddListing/AddListingDetails';
 import AddListingCategory from './pages/AddListing/AddListingCategory';
 import Home from './pages/Home/Home';
-import Listing from './pages/Listing/Listing';
+import ListingDetails from './pages/ListingDetails/ListingDetails';
+
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
              <Route path='/home' element={<Home />}/> 
              <Route path='/list/item-category' element={ <AddListingCategory />} />
              <Route path='/list/item-details' element={ <AddListingDetails />} />
-             <Route path="/listings/:id" element={<Listing />} />
+             <Route path='/listings/:i' element={ <ListingDetails />} />
              <Route path="*" element={<NotFound/>} />
           </Routes>
         </div>
