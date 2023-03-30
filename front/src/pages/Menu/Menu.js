@@ -1,3 +1,7 @@
+// HOOKS
+import { React } from 'react';
+
+// COMPONENTS
 import Navbar from "../../components/navbar/Navbar"
 
 const Menu = () => {
