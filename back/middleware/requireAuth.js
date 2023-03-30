@@ -10,7 +10,7 @@ const requireAuth = async (req, res, next) => {
         return res.status(401).json({error: "authentication token required"})
     }
 
-    // split the string webtoken which is authorization to the second part of the split the actual token
+    // split the string webtoken which is authorization to the second part of the array the actual token, the second item
     const token = authorization.split('')[1]
 
     try {
