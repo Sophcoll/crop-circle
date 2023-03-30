@@ -1,11 +1,9 @@
 // HOOKS
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from "../../components/navbar/Navbar";
-
+import Navbar from '../../components/navbar/Navbar';
 
 const Home = () => {
-
   //----------------------------------------------------------------------
   // USE STATES & GLOBAL VARIABLES
 
@@ -15,7 +13,7 @@ const Home = () => {
   // GET REQUEST TO DATABASE ON PAGE LOAD
   useEffect(() => {
     const fetchListings = async () => {
-      const response = await fetch("http://localhost:4000/listings/");
+      const response = await fetch('http://localhost:4000/listings/');
       const json = await response.json();
 
       if (response.ok) {
@@ -25,13 +23,12 @@ const Home = () => {
     fetchListings();
   }, []);
 
-
   //----------------------------------------------------------------------
   return (
-      <div>
-       <Navbar />  
+    <div>
+      <Navbar />
       <ul>
-      {listings &&
+        {listings &&
           listings.map((listing) => {
             return (
               <Link
@@ -52,4 +49,3 @@ const Home = () => {
 };
 
 export default Home;
-

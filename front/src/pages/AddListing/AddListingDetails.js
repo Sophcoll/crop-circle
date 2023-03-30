@@ -1,5 +1,5 @@
 // HOOKS
-import { useState } from "react";
+import { useState, React } from "react";
 
 const AddListingDetails = () => {
   //----------------------------------------------------------------------
@@ -16,7 +16,7 @@ const AddListingDetails = () => {
   const [location, setLocation] = useState("");
   const [pickup, setPickup] = useState("");
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
+  // const [emptyFields, setEmptyFields] = useState([]);
 
   //----------------------------------------------------------------------
   // POST REQUEST ON FORM SUBMIT - Add a new listing to database
@@ -46,7 +46,7 @@ const AddListingDetails = () => {
     // if response NOT ok then show error in database
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields);
+      // setEmptyFields(json.emptyFields);
       console.log(error);
     }
     // if response OK then this will reset the inputs to empty to add another and set the error to null
@@ -58,7 +58,7 @@ const AddListingDetails = () => {
       setQuantity("");
       setLocation("");
       setPickup("");
-      setEmptyFields([]);
+      // setEmptyFields([]);
       setError(null);
     }
   };
