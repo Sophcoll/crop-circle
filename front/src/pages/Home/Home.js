@@ -1,6 +1,8 @@
 // HOOKS
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import Navbar from "../../components/navbar/Navbar";
+
 
 const Home = () => {
 
@@ -26,7 +28,8 @@ const Home = () => {
 
   //----------------------------------------------------------------------
   return (
-    <div>
+      <div>
+       <Navbar />  
       <ul>
       {listings &&
           listings.map((listing) => {

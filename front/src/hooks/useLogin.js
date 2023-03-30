@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { useAuthContext } from './useAuthContext'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const UseLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const {dispatch} = useAuthContext()
-
+    const navigate = useNavigate();
     const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
 
 // post the user email and password to the database
-        const response = await fetch('/api/user/login', {
+        const response = await fetch('/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email, password})
@@ -29,6 +30,7 @@ export const UseLogin = () => {
 // update auth context from the AuthContext Hook
             dispatch({ type: 'LOGIN', payload: json })
             setIsLoading(false)
+             navigate('/home')
         }
     }
     return { login, isLoading, error}
