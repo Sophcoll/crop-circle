@@ -1,11 +1,11 @@
 // HOOKS
-import { useState, React } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, React } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 // STYLE SHEET
-import './AddListing.scss';
+import '../AddListing/AddListing.scss';
 
-const AddListingDetails = () => {
+const EditListing = () => {
   //----------------------------------------------------------------------
   // USE STATES & GLOBAL VARIABLES
 
@@ -22,13 +22,40 @@ const AddListingDetails = () => {
   const [error, setError] = useState(null);
   // const [emptyFields, setEmptyFields] = useState([]);
 
-  // navigate hook to programmatically redirect back to 'Home' component after submit button clicked
+  // navigate hook to programmatically redirect back to 'Home' component after update button clicked
   const navigate = useNavigate();
 
-  //----------------------------------------------------------------------
-  // POST REQUEST ON FORM SUBMIT - Add a new listing to database
+  // listing id to use as parameter in GET request below to find specific listing
+  const listingId = useParams().i;
 
-  const handleSubmit = async (event) => {
+  //----------------------------------------------------------------------
+  // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
+
+  useEffect(() => {
+    const fetchListingDetails = async (listingId) => {
+      const response = await fetch(
+        `http://localhost:4000/listings/${listingId}`
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        setExchange(json.exchange);
+        setExchangeDescription(json.exchangeDescription);
+        setName(json.name);
+        setDescription(json.description);
+        setQuantity(json.quantity);
+        setLocation(json.location);
+        setPickup(json.pickup);
+      }
+    };
+
+    fetchListingDetails(listingId);
+  }, []);
+
+  //----------------------------------------------------------------------
+  // PUT REQUEST TO EDIT SPECIFIC LISTING WITHIN THE DATABASE ON PAGE LOAD
+
+  const handleUpdate = async (event) => {
     event.preventDefault();
 
     const listing = {
@@ -41,13 +68,19 @@ const AddListingDetails = () => {
       pickup,
     };
 
-    const response = await fetch('http://localhost:4000/listings', {
-      method: 'POST',
-      body: JSON.stringify(listing),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    console.log(listing);
+
+    const response = await fetch(
+      `http://localhost:4000/listings/${listingId}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(listing),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
     const json = await response.json();
 
     // if response NOT ok then show error in database
@@ -56,18 +89,11 @@ const AddListingDetails = () => {
       // setEmptyFields(json.emptyFields);
       console.log(error);
     }
-    // if response OK then this will reset the inputs to empty to add another and set the error to null
+
+    // if response OK then navigate back to listing and set the error to null
     if (response.ok) {
-      setExchange('');
-      setExchangeDescription('');
-      setName('');
-      setDescription('');
-      setQuantity('');
-      setLocation('');
-      setPickup('');
-      // setEmptyFields([]);
       setError(null);
-      navigate('/home/');
+      navigate(`/listings/${listingId}`);
     }
   };
 
@@ -83,13 +109,15 @@ const AddListingDetails = () => {
   // saves the description for the exchange
   const handleExchangeDescription = (event) => {
     setExchangeDescription(event.target.value);
-
   };
 
   //----------------------------------------------------------------------
 
   return (
     <div>
+      <Link to={`/listings/${listingId}`}>
+        <button>Back</button>
+      </Link>
       <form>
         <div>
           <input
@@ -97,7 +125,8 @@ const AddListingDetails = () => {
             type='radio'
             id='free'
             name='exchange'
-            value='free'
+            value={exchange}
+            checked={exchange === 'free' ? true : false}
           />
           <label htmlFor='free'>Free</label>
         </div>
@@ -107,7 +136,8 @@ const AddListingDetails = () => {
             type='radio'
             id='labour'
             name='exchange'
-            value='labour'
+            value={exchange}
+            checked={exchange === 'labour' ? true : false}
           />
           <label htmlFor='labour'>Labour</label>
           <textarea
@@ -117,6 +147,7 @@ const AddListingDetails = () => {
             id='labourDescription'
             cols='30'
             rows='10'
+            value={exchangeDescription}
           ></textarea>
         </div>
         <div>
@@ -125,7 +156,8 @@ const AddListingDetails = () => {
             type='radio'
             id='produce'
             name='exchange'
-            value='produce'
+            value={exchange}
+            checked={exchange === 'produce' ? true : false}
           />
           <label htmlFor='produce'>Other produce</label>
           <textarea
@@ -135,11 +167,12 @@ const AddListingDetails = () => {
             id='produceDescription'
             cols='30'
             rows='10'
+            value={exchangeDescription}
           ></textarea>
         </div>
       </form>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleUpdate}>
         <label>Name</label>
         <input
           type='text'
@@ -175,10 +208,10 @@ const AddListingDetails = () => {
           value={pickup}
         />
 
-        <button>Submit</button>
+        <button>Update</button>
       </form>
     </div>
   );
 };
 
-export default AddListingDetails;
+export default EditListing;

@@ -5,12 +5,13 @@ import Navbar from '../../components/navbar/Navbar';
 
 const Home = () => {
   //----------------------------------------------------------------------
-  // USE STATES & GLOBAL VARIABLES
+  // USE STATE
 
   const [listings, setListings] = useState(null);
 
   //----------------------------------------------------------------------
   // GET REQUEST TO DATABASE ON PAGE LOAD
+
   useEffect(() => {
     const fetchListings = async () => {
       const response = await fetch('http://localhost:4000/listings/');
@@ -44,6 +45,9 @@ const Home = () => {
             );
           })}
       </ul>
+      <Link to="/list/item-details">
+      <button>Add Listing</button>
+      </Link>
     </div>
   );
 };
