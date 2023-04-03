@@ -1,6 +1,7 @@
 // HOOKS
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { React } from 'react';
+import { useAuthContext } from './hooks/useAuthContext';
 
 // COMPONENTS
 import Landing from './pages/Landing/Landing';
@@ -18,15 +19,24 @@ import UserListings from './pages/UserListings/UserListings';
 import Watchlist from './pages/Watchlist/Watchlist';
 
 function App() {
+  // instantiate user from AuthContext so we can protect routes from people not logged in & redirect a user based on their authentication status 
+  const { user } = useAuthContext();
+
   return (
     <div className='App'>
       <BrowserRouter>
         <div className='pages'>
           <Routes>
             <Route path='/' element={<Landing />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/home' element={<Home />} />
+            <Route
+              path='/login'
+              element={!user ? <Login /> : <Navigate to='/home' />}
+            />
+            <Route path='/signup' element={!user? <Signup /> : <Navigate to="/home" />} />
+            <Route
+              path='/home'
+              element={user ? <Home /> : <Navigate to='/' />}
+            />
             <Route path='/menu' element={<Menu />} />
             <Route path='/menu/profile' element={<Profile />} />
             <Route path='/menu/messages' element={<Messages />} />

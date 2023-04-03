@@ -1,23 +1,13 @@
 // HOOKS
 import { useState, React } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-// import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
 // STYLE SHEET
 import './AddListing.scss';
 
 const AddListingDetails = () => {
-  //-----------------------------------------------------------------------------
-  // USE CONTEXT
-
-  // instantiating user from useAuthContext hook to be used within the submit handler below
-  // const { user } = useAuthContext();
-
-
-  // instantiating the dispatch function from the useListingsContext hook to update the global state to match DB when new listing document is created
-  const { dispatch } = useListingsContext();
-
   //----------------------------------------------------------------------
   // USE STATES
 
@@ -38,6 +28,16 @@ const AddListingDetails = () => {
   const navigate = useNavigate();
 
   // console.log(emptyFields);
+
+  //-----------------------------------------------------------------------------
+  // USE CONTEXT
+
+  // instantiating user from useAuthContext hook to be used within the submit handler below
+  const { user } = useAuthContext();
+
+  // instantiating the dispatch function from the useListingsContext hook to update the global state to match DB when new listing document is created
+  const { dispatch } = useListingsContext();
+
   //----------------------------------------------------------------------
   // POST REQUEST ON FORM SUBMIT - Add a new listing to database
 
@@ -45,9 +45,10 @@ const AddListingDetails = () => {
     event.preventDefault();
 
     // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
-    // if (!user) {
-    //   return;
-    // }
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
 
     const listing = {
       exchange,
@@ -64,7 +65,7 @@ const AddListingDetails = () => {
       body: JSON.stringify(listing),
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${user.token}`
+        'Authorization': `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -113,7 +114,7 @@ const AddListingDetails = () => {
   return (
     <div>
       <Link to={'/home'}>
-      <button>back</button>
+        <button>back</button>
       </Link>
       <form>
         <div>
@@ -178,7 +179,9 @@ const AddListingDetails = () => {
           type='text'
           onChange={(event) => setDescription(event.target.value)}
           value={description}
-          className={emptyFields && emptyFields.includes('description') ? 'error' : ''}
+          className={
+            emptyFields && emptyFields.includes('description') ? 'error' : ''
+          }
         />
 
         <label>Quantity</label>
@@ -186,7 +189,9 @@ const AddListingDetails = () => {
           type='text'
           onChange={(event) => setQuantity(event.target.value)}
           value={quantity}
-          className={emptyFields && emptyFields.includes('quantity') ? 'error' : ''}
+          className={
+            emptyFields && emptyFields.includes('quantity') ? 'error' : ''
+          }
         />
 
         <label>Approx Location</label>
@@ -194,7 +199,9 @@ const AddListingDetails = () => {
           type='text'
           onChange={(event) => setLocation(event.target.value)}
           value={location}
-          className={emptyFields && emptyFields.includes('location') ? 'error' : ''}
+          className={
+            emptyFields && emptyFields.includes('location') ? 'error' : ''
+          }
         />
 
         <label>Pick-up times</label>
@@ -202,7 +209,9 @@ const AddListingDetails = () => {
           type='text'
           onChange={(event) => setPickup(event.target.value)}
           value={pickup}
-          className={emptyFields && emptyFields.includes('pickup') ? 'error' : ''}
+          className={
+            emptyFields && emptyFields.includes('pickup') ? 'error' : ''
+          }
         />
 
         <button>Submit</button>

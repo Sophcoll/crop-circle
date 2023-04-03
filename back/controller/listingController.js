@@ -37,7 +37,6 @@ const getListing = async (req, res) => {
 const createListing = async (req, res) => {
   // specify what needs to be sent in the request body to align with the listingModel
 
-   // -------- OLD WAY ----------
   const {
     exchange,
     exchangeDescription,
@@ -82,8 +81,6 @@ const createListing = async (req, res) => {
     // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
     // const sellerId = req.user._id;
     // const sellerName = req.user.firstName;
-
-    // console.log(req.user)
 
     const listing = await Listing.create({
       exchange,

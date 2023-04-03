@@ -1,9 +1,9 @@
 // HOOKS
 import { useState, useEffect, React } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const ListingDetails = () => {
-
   //----------------------------------------------------------------------
   // USE STATES & PARAMS
 
@@ -16,6 +16,8 @@ const ListingDetails = () => {
   // navigate hook to programmatically redirect back to 'Home' component after delete button clicked
   const navigate = useNavigate();
 
+  // instantiating user from useAuthContext hook to be used within the submit handler below
+  const { user } = useAuthContext();
 
   //----------------------------------------------------------------------
   // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
@@ -23,26 +25,43 @@ const ListingDetails = () => {
   useEffect(() => {
     const fetchListingDetails = async (listingId) => {
       const response = await fetch(
-        `http://localhost:4000/listings/${listingId}`
+        `http://localhost:4000/listings/${listingId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
+
       const json = await response.json();
 
       if (response.ok) {
         setListingDetails(json);
       }
     };
-
-    fetchListingDetails(listingId);
-  }, []);
+    if (user) {
+      fetchListingDetails(listingId);
+    }
+  }, [user]);
 
   //----------------------------------------------------------------------
   // DELETE REQUEST USING SPECIFIC ID ON CLICK OF DELETE BUTTON
 
   const handleDelete = async () => {
+    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    if (!user) {
+      return;
+    }
+
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}`,
       {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
@@ -54,6 +73,15 @@ const ListingDetails = () => {
     if (!response.ok) {
       console.log('response not ok');
     }
+  };
+
+  //----------------------------------------------------------------------
+  // FORM SUBMIT FUNCTION TO ADD COMMENTS
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log('submitted');
   };
 
   //----------------------------------------------------------------------
@@ -76,11 +104,11 @@ const ListingDetails = () => {
           <p>Pickup location: {listingDetails.location}</p>
           <p>Pickup time: {listingDetails.pickup}</p>
           <Link
-                to={`/listings/${listingDetails._id}/edit`}
-                state={listingDetails}
-                key={listingDetails._id}
-              >
-          <button>Edit</button>
+            to={`/listings/${listingDetails._id}/edit`}
+            state={listingDetails}
+            key={listingDetails._id}
+          >
+            <button>Edit</button>
           </Link>
           <button onClick={handleDelete}>Delete</button>
         </div>
@@ -95,10 +123,10 @@ const ListingDetails = () => {
         </div>
 
         <div>
-          <form>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+          <form onSubmit={handleSubmit}>
+            <textarea name='' id='' cols='30' rows='10'></textarea>
+            <button>Leave comment</button>
           </form>
-          <button>Leave comment</button>
         </div>
       </div>
     </div>
