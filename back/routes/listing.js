@@ -28,7 +28,7 @@ router.get('/', getAllListings)
 // GET single listing
 router.get('/:id', getListing)
 
-// POST a new listing
+// POST a new listing 
 router.post('/', createListing)
 
 // UPDATE a listing

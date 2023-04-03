@@ -79,8 +79,7 @@ const createListing = async (req, res) => {
   // ADDING NEW LISTING ENTRY TO DATABASE
   try {
     // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
-    // const sellerId = req.user._id;
-    // const sellerName = req.user.firstName;
+    const author = req.user._id;
 
     const listing = await Listing.create({
       exchange,
@@ -90,6 +89,7 @@ const createListing = async (req, res) => {
       quantity,
       location,
       pickup,
+      author
     });
 
 

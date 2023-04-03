@@ -7,7 +7,7 @@ import { useListingsContext } from '../../hooks/useListingsContext';
 // STYLE SHEET
 import './AddListing.scss';
 
-const AddListingDetails = () => {
+const AddListing = () => {
   //----------------------------------------------------------------------
   // USE STATES
 
@@ -222,4 +222,4 @@ const AddListingDetails = () => {
   );
 };
 
-export default AddListingDetails;
+export default AddListing;
