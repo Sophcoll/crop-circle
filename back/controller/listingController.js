@@ -35,6 +35,9 @@ const getListing = async (req, res) => {
 // POST a new listing
 
 const createListing = async (req, res) => {
+  // specify what needs to be sent in the request body to align with the listingModel
+
+   // -------- OLD WAY ----------
   const {
     exchange,
     exchangeDescription,
@@ -45,10 +48,43 @@ const createListing = async (req, res) => {
     pickup,
   } = req.body;
 
-  // create new listing
 
-  // add to database
+  // ERROR HANDLING
+  // detect which fields are empty when user adds listing, save these in an array, then send that back to the client
+  let emptyFields = [];
+
+  if (!name) {
+    emptyFields.push('name');
+  }
+  if (!description) {
+    emptyFields.push('description');
+  }
+  if (!quantity) {
+    emptyFields.push('quantity');
+  }
+  if (!location) {
+    emptyFields.push('location');
+  }
+  if (!pickup) {
+    emptyFields.push('pickup');
+  }
+  // if any of the above values are missing, push them into the emptyFields array
+
+  // now count emptyFields array, if length more than 0, there is an error - return to client
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: 'Please fill in all the fields', emptyFields });
+  }
+
+  // ADDING NEW LISTING ENTRY TO DATABASE
   try {
+    // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
+    // const sellerId = req.user._id;
+    // const sellerName = req.user.firstName;
+
+    // console.log(req.user)
+
     const listing = await Listing.create({
       exchange,
       exchangeDescription,
@@ -58,8 +94,13 @@ const createListing = async (req, res) => {
       location,
       pickup,
     });
+
+
+    // send the listing back as json to the client
     res.status(200).json(listing);
+
   } catch (error) {
+    // error handling if entry doesn't work
     res.status(400).json({ error: error.message });
   }
 };
