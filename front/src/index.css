@@ -12,7 +12,8 @@ code {
     monospace;
 }
 
-input {
+input,
+textarea {
   display: block;
 }
 

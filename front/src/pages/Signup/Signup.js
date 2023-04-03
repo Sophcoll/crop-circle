@@ -36,7 +36,6 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('signed up now send me to confirmation page');
-    console.log(firstName, lastName, email, password);
     await signup(firstName, lastName, email, password);
   };
 
@@ -44,6 +43,9 @@ const Signup = () => {
   return (
     <>
       <div>
+        <Link to='/'>
+          <button>Back to landing</button>
+        </Link>
         {user && (
           <div>
             <span>{user.email}</span>

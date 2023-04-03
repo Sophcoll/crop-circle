@@ -1,6 +1,8 @@
 // HOOKS
 import { useState, useEffect, React } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
+// import { useListingsContext } from '../../hooks/useListingsContext';
 
 // STYLE SHEET
 import '../AddListing/AddListing.scss';
@@ -20,7 +22,6 @@ const EditListing = () => {
   const [location, setLocation] = useState('');
   const [pickup, setPickup] = useState('');
   const [error, setError] = useState(null);
-  // const [emptyFields, setEmptyFields] = useState([]);
 
   // navigate hook to programmatically redirect back to 'Home' component after update button clicked
   const navigate = useNavigate();
@@ -28,13 +29,27 @@ const EditListing = () => {
   // listing id to use as parameter in GET request below to find specific listing
   const listingId = useParams().listingId;
 
+  //-----------------------------------------------------------------------------
+  // USE CONTEXT
+
+  // instantiating user from useAuthContext hook to be used within the submit handler below
+  const { user } = useAuthContext();
+
+  // instantiating the dispatch function from the useListingsContext hook to update the global state to match DB when new listing document is created
+  // const { dispatch } = useListingsContext();
+
   //----------------------------------------------------------------------
   // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
 
   useEffect(() => {
     const fetchListingDetails = async (listingId) => {
       const response = await fetch(
-        `http://localhost:4000/listings/${listingId}`
+        `http://localhost:4000/listings/${listingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
       const json = await response.json();
 
@@ -49,14 +64,22 @@ const EditListing = () => {
       }
     };
 
-    fetchListingDetails(listingId);
-  }, []);
+    if (user) {
+      fetchListingDetails(listingId);
+    }
+  }, [user]);
 
   //----------------------------------------------------------------------
   // PUT REQUEST TO EDIT SPECIFIC LISTING WITHIN THE DATABASE ON PAGE LOAD
 
   const handleUpdate = async (event) => {
     event.preventDefault();
+
+    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
 
     const listing = {
       exchange,
@@ -77,6 +100,7 @@ const EditListing = () => {
         body: JSON.stringify(listing),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
         },
       }
     );
@@ -86,7 +110,6 @@ const EditListing = () => {
     // if response NOT ok then show error in database
     if (!response.ok) {
       setError(json.error);
-      // setEmptyFields(json.emptyFields);
       console.log(error);
     }
 
@@ -111,7 +134,8 @@ const EditListing = () => {
 
   // saves the description for the exchange
   const handleExchangeDescription = (event) => {
-    setExchangeDescription(event.target.value);
+    const newDescription = event.target.value;
+    setExchangeDescription(newDescription);
   };
 
   //----------------------------------------------------------------------

@@ -5,7 +5,7 @@ const requireAuth = async (req, res, next) => {
   // verify authentication by using an authorization headers request property - this should contain our JSON web token
   const { authorization } = req.headers;
 
-  // we first need to make sure that it has a value
+  // we first need to make sure that there is an authorization value specified in the request header
   if (!authorization) {
     return res.status(401).json({ error: 'Authorization token required' });
   }
@@ -23,6 +23,7 @@ const requireAuth = async (req, res, next) => {
 
     // go to the next piece of middleware (controller functions)
     next();
+    
   } catch (error) {
     console.log(error);
     res.status(401).json({ error: 'Request is not authorized' });

@@ -3,7 +3,7 @@ Posts also have comments embedded in them as subdocuments, which is done by impo
 const mongoose = require('mongoose');
 
 // need to instantiate our commentModel so that it can be used as a subdocument within the schema
-const Comment = require('../models/commentModel')
+const Comment = require('../models/commentModel');
 
 const Schema = mongoose.Schema;
 
@@ -29,9 +29,8 @@ const Schema = mongoose.Schema;
 //   required: true,
 // },
 
-
-    // add comment as a subdocument of post (since Comment is the model which is exported, we can access its schema by calling Comment.schema)
-    // comments: [Comment.schema]
+// add comment as a subdocument of post (since Comment is the model which is exported, we can access its schema by calling Comment.schema)
+// comments: [Comment.schema]
 
 const listingSchema = new Schema(
   {
@@ -58,7 +57,7 @@ const listingSchema = new Schema(
     },
     pickup: {
       type: String,
-    }
+    },
   },
   { timestamps: true }
 );
