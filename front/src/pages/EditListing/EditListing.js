@@ -26,7 +26,7 @@ const EditListing = () => {
   const navigate = useNavigate();
 
   // listing id to use as parameter in GET request below to find specific listing
-  const listingId = useParams().i;
+  const listingId = useParams().listingId;
 
   //----------------------------------------------------------------------
   // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
@@ -102,8 +102,11 @@ const EditListing = () => {
 
   // finds the chosen category
   const handleExchangeCategory = (event) => {
-    setExchange(event.target.value);
-    event.target.value === 'free' ? setExchangeDescription('') : null;
+    const value = event.target.value;
+    setExchange(value);
+    if (value === 'free') {
+      setExchangeDescription('');
+    }
   };
 
   // saves the description for the exchange

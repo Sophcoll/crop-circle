@@ -12,6 +12,10 @@ import Home from './pages/Home/Home';
 import ListingDetails from './pages/ListingDetails/ListingDetails';
 import Menu from './pages/Menu/Menu';
 import EditListing from './pages/EditListing/EditListing';
+import Profile from './pages/Profile/Profile';
+import Messages from './pages/Messages/Messages';
+import UserListings from './pages/UserListings/UserListings';
+import Watchlist from './pages/Watchlist/Watchlist';
 
 function App() {
   return (
@@ -24,9 +28,13 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='/home' element={<Home />} />
             <Route path='/menu' element={<Menu />} />
+            <Route path='/menu/profile' element={<Profile />} />
+            <Route path='/menu/messages' element={<Messages />} />
+            <Route path='/menu/listings' element={<UserListings />} />
+            <Route path='/menu/watchlist' element={<Watchlist />} />
             <Route path='/list/item-details' element={<AddListingDetails />} />
-            <Route path='/listings/:i' element={<ListingDetails />} />
-            <Route path='listings/:i/edit' element={<EditListing />} />
+            <Route path='/listings/:listingId' element={<ListingDetails />} />
+            <Route path='listings/:listingId/edit' element={<EditListing />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>

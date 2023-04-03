@@ -12,6 +12,8 @@ const Signup = () => {
   //----------------------------------------------------------------------
   // USE STATES & GLOBAL VARIABLES
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,8 +36,8 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('signed up now send me to confirmation page');
-    console.log(email, password);
-    await signup(email, password);
+    console.log(firstName, lastName, email, password);
+    await signup(firstName, lastName, email, password);
   };
 
   //----------------------------------------------------------------------
@@ -60,6 +62,19 @@ const Signup = () => {
       </div>
       <form className='signup' onSubmit={handleSubmit}>
         <h3>Sign up</h3>
+
+        <label>First Name: </label>
+        <input
+          type='text'
+          onChange={(event) => setFirstName(event.target.value)}
+          value={firstName}
+        />
+        <label>Last Name: </label>
+        <input
+          type='text'
+          onChange={(event) => setLastName(event.target.value)}
+          value={lastName}
+        />
 
         <label>Email address: </label>
         <input

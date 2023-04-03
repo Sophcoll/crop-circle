@@ -11,7 +11,7 @@ const ListingDetails = () => {
   const [listingDetails, setListingDetails] = useState(null);
 
   // listing id to use as parameter in GET request below to find specific listing
-  const listingId = useParams().i;
+  const listingId = useParams().listingId;
 
   // navigate hook to programmatically redirect back to 'Home' component after delete button clicked
   const navigate = useNavigate();
@@ -85,6 +85,22 @@ const ListingDetails = () => {
           <button onClick={handleDelete}>Delete</button>
         </div>
       ) : null}
+
+      <div>
+        <h2>Comments</h2>
+        <div>
+          <p>Author of comment</p>
+          <p>Comment</p>
+          <p>Time comment posted</p>
+        </div>
+
+        <div>
+          <form>
+          <textarea name="" id="" cols="30" rows="10"></textarea>
+          </form>
+          <button>Leave comment</button>
+        </div>
+      </div>
     </div>
   );
 };
