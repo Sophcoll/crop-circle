@@ -2,8 +2,9 @@
 import { React } from 'react';
 import { Link } from 'react-router-dom';
 
-// COMPONENTS
+// components
 import Navbar from "../../components/navbar/Navbar"
+
 
 const Menu = () => {
     
@@ -24,7 +25,6 @@ const Menu = () => {
             </Link>
         </div>
     )
-
 }
 
 export default Menu

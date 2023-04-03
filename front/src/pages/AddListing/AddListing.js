@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
+
 // STYLE SHEET
 import './AddListing.scss';
 
@@ -23,12 +24,12 @@ const AddListing = () => {
   const [pickup, setPickup] = useState('');
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
-
+  const [image, setImage] = useState('')
+  const [imagePreview, setImagePreview] = useState('')
   // navigate hook to programmatically redirect back to 'Home' component after submit button clicked
   const navigate = useNavigate();
 
-  // console.log(emptyFields);
-
+ // ----------------------------------------------------------------------
   //-----------------------------------------------------------------------------
   // USE CONTEXT
 
@@ -37,23 +38,28 @@ const AddListing = () => {
 
   // instantiating the dispatch function from the useListingsContext hook to update the global state to match DB when new listing document is created
   const { dispatch } = useListingsContext();
+ 
 
   //----------------------------------------------------------------------
   // POST REQUEST ON FORM SUBMIT - Add a new listing to database
-
+   
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+        // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
     if (!user) {
       setError('You must be logged in');
       return;
     }
-
+   
+ let userImage = await toBase64(image);
+    const file = { file: userImage }
+    
     const listing = {
       exchange,
       exchangeDescription,
       name,
+      file,
       description,
       quantity,
       location,
@@ -87,6 +93,7 @@ const AddListing = () => {
       setQuantity('');
       setLocation('');
       setPickup('');
+      setImage('')
       dispatch({ type: 'CREATE_LISTING', payload: json }); // update the global state to match the db
       navigate('/home/');
     }
@@ -97,17 +104,47 @@ const AddListing = () => {
 
   // finds the chosen category
   const handleExchangeCategory = (event) => {
-    const value = event.target.value;
+    const value = event.target.value
     setExchange(value);
-    if (value === 'free') {
-      setExchangeDescription('');
-    }
+    if (value === 'free') {setExchangeDescription('')} 
   };
 
   // saves the description for the exchange
   const handleExchangeDescription = (event) => {
     setExchangeDescription(event.target.value);
   };
+
+
+    //----------------------------------------------------------------------
+  // CALL BACK FUNCTIONS FOR IMAGE UPLOAD
+  const fileChangeHandler = (event) => {
+    event.preventDefault();
+    const image = event.target.files[0]
+
+    if (!image) {
+      alert('choose image')
+    }
+    
+    if (image) {
+      setImage(image)
+      // console.log(image)
+
+      const imgUrl = URL.createObjectURL(image);
+      setImagePreview(imgUrl);
+    }
+  }
+
+   // upload image file
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  
+
+
 
   //----------------------------------------------------------------------
 
@@ -165,7 +202,24 @@ const AddListing = () => {
         </div>
       </form>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
+            
+    {/* upload image section */}
+        <label htmlFor='image'> Upload Image</label>
+        <input
+          onInput={(e) => fileChangeHandler(e)}
+          type="file"
+          name='image'
+        id='image'
+        accept='.jpeg, .png, .jpg'
+           />
+    {/* conditional rendering of image thumbnail */}
+          {image ? (
+            <div className="image-thumbnail">
+              <img src={imagePreview} alt="" />
+            </div>
+          ) : null}
+
         <label>Name</label>
         <input
           type='text'

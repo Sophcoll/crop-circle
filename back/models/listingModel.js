@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+=======
 /*  The author field within the listingModel is a reference to the user's ID in the database, so we'll need to use the populate method to replace the author field with the user's data from the database.
 Posts also have comments embedded in them as sub-documents, which is done by importing the Comment model and using the schema as a field in the Post model. */
 const mongoose = require('mongoose');
@@ -12,6 +19,7 @@ const Schema = mongoose.Schema;
 //     contentType: String,
 //     },
 
+>>>>>>> master
 
 const listingSchema = new Schema(
   {
@@ -21,6 +29,9 @@ const listingSchema = new Schema(
     },
     exchangeDescription: {
       type: String,
+    },
+    image: {
+     type: String,
     },
     name: {
       type: String,

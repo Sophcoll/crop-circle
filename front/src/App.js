@@ -18,6 +18,7 @@ import Messages from './pages/Messages/Messages';
 import UserListings from './pages/UserListings/UserListings';
 import Watchlist from './pages/Watchlist/Watchlist';
 
+
 function App() {
   // instantiate user from AuthContext so we can protect routes from people not logged in & redirect a user based on their authentication status 
   const { user } = useAuthContext();

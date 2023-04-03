@@ -13,6 +13,7 @@ const requireAuth = async (req, res, next) => {
   // split the string web token which is authorization to the second part of the array the actual token, the second item
   const token = authorization.split(' ')[1];
 
+
   // we then need to verify that this token hasn't been tampered with using the JSON web token package
   try {
     // once verified, it then returns the payload of that token so we are able to grab the id from the token from the payload and store it in a constant

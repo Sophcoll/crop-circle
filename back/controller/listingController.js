@@ -1,5 +1,9 @@
 const Listing = require('../models/listingModel');
 const mongoose = require('mongoose');
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
 
 //----------------------------------------------------------------------
 // GET all listings, sorted by newest created
@@ -35,6 +39,7 @@ const getListing = async (req, res) => {
 // POST a new listing
 
 const createListing = async (req, res) => {
+
   // specify what needs to be sent in the request body to align with the listingModel
 
   const {
@@ -45,6 +50,7 @@ const createListing = async (req, res) => {
     quantity,
     location,
     pickup,
+    image,
   } = req.body;
 
 
@@ -81,16 +87,16 @@ const createListing = async (req, res) => {
     // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
     const author = req.user._id;
 
-    const listing = await Listing.create({
-      exchange,
-      exchangeDescription,
-      name,
-      description,
-      quantity,
-      location,
-      pickup,
-      author
-    });
+    await Listing.create({
+    exchange: req.body.exchange,
+    exchangeDescription: req.body.exchangeDescription,
+    name: req.body.name,
+    image: req.body.file.file,
+    description: req.body.description,
+    quantity: req.body.quantity,
+    location: req.body.location,
+    pickup: req.body.pickup,
+  })
 
 
     // send the listing back as json to the client
@@ -144,17 +150,53 @@ const deleteListing = async (req, res) => {
       .status(404)
       .json({ error: 'cant delete listing because no such listing' });
   }
+}
 
-  res.status(200).json(listing);
-};
+// ----------------------------------------------------------------------
+// UPLOAD image
+const uploadImage = async (req, res) => {
+  console.log('file:' + JSON.stringify(req.file.path));
+    if (!req.file) {
+      res.json({mssg: 'no image received'})
+    }
+    else {
+      const image = new Listing({
+        image: {
+          data: fs.readFileSync(
+            path.join(__dirname + "/uploads/" + req.file.filename)
+          ),
+          contentType: "image.png",
+        }
+      })
+      image.save(() => {
+        fs.unlinkSync(path.join(__dirname + "/uploads/" + req.file.filename));
+        res.json({mssg: "saved"})
+      })
+    }
+  }
+
+  // ----------------------------------------------------------------------
+// GET image
+  const getImage = async (req, res) => {
+    Listing.find({}, (error, results) => {
+      if (error) {
+        console.log(error)
+      } else {
+        res.send(results)
+      }
+    }).lean();
+  }
+
 
 //----------------------------------------------------------------------
 // export functions to controller
 
-module.exports = {
-  getAllListings,
-  getListing,
-  createListing,
-  updateListing,
-  deleteListing,
-};
+  module.exports = {
+    getAllListings,
+    getListing,
+    createListing,
+    updateListing,
+    deleteListing,
+    uploadImage,
+    getImage,
+  }

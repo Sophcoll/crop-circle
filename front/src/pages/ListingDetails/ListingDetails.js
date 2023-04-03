@@ -80,6 +80,20 @@ const ListingDetails = () => {
   };
 
   //----------------------------------------------------------------------
+
+  // GET REQUEST FOR IMAGE
+
+    // const fetchImageDetails = async () => {
+    //   const response = await fetch(
+    //     `http://localhost:4000/listings`
+    //   );
+    //   const results = await response.json();
+       
+    //   if (response.ok) {
+    //     console.log('response ok, image uploaded', results)
+    //   }
+    // fetchImageDetails(results);
+
   // FORM SUBMIT FUNCTION TO ADD COMMENTS
 
   const handleSubmit = (event) => {
@@ -97,6 +111,7 @@ const ListingDetails = () => {
       {listingDetails && listingDetails ? (
         <div>
           <h1>{listingDetails.name}</h1>
+          <img className="user-image" src={`data:image/png;base64,${listingDetails.image.data}`} alt="user-img"/>
           <p>Exchanging for: {listingDetails.exchange}</p>
           <p>
             {listingDetails.exchangeDescription

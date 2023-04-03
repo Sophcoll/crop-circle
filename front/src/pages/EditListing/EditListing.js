@@ -125,11 +125,9 @@ const EditListing = () => {
 
   // finds the chosen category
   const handleExchangeCategory = (event) => {
-    const value = event.target.value;
+    const value = event.target.value
     setExchange(value);
-    if (value === 'free') {
-      setExchangeDescription('');
-    }
+    if (value === 'free') {setExchangeDescription('')} 
   };
 
   // saves the description for the exchange
