@@ -15,7 +15,7 @@ export const listingsReducer = (state, action) => {
       };
     case 'DELETE_LISTINGS':
       return {
-        listings: state.listings.filter((w) => w._id !== action.payload._id),
+        listings: state.listings.filter((listing) => listing._id !== action.payload._id),
       };
     default:
       return state;
@@ -27,6 +27,8 @@ export const ListingsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(listingsReducer, {
     listings: null,
   });
+
+  console.log('listingsContext state:     ', state);
 
   return (
     <ListingsContext.Provider value={{ ...state, dispatch }}>

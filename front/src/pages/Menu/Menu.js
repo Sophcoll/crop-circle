@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+// HOOKS
+import { React } from 'react';
+import { Link } from 'react-router-dom';
 
 // components
 import Navbar from "../../components/navbar/Navbar"
@@ -9,12 +11,18 @@ const Menu = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <h1>Menu</h1>
-            <p>My Profile</p>
-            <Link to="/home"> Home </Link>
-            <Link to='/messages'> My Messages </Link>
-            <Link to="/listings"> My Listings </Link>
-            <Link to="/list/item-category">Add Listing </Link>
+            <Link to='/menu/profile'>
+            <h1>Profile</h1>
+            </Link>
+            <Link to='/menu/messages'>
+            <h1>Messages</h1>
+            </Link>
+            <Link to='/menu/listings'>
+            <h1>Listings</h1>
+            </Link>
+            <Link to='/menu/watchlist'>
+            <h1>Watchlist</h1>
+            </Link>
         </div>
     )
 }

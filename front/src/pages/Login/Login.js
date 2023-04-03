@@ -31,7 +31,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, password);
+    console.log('logged in now send me to home page');
     await login(email, password);
   };
 
@@ -39,6 +39,8 @@ const Login = () => {
   return (
     <>
       <div>
+        <Link to="/">
+        <button>Back to landing</button></Link>
         {user && (
           <div>
             <span>{user.email}</span>
