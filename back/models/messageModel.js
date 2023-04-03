@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// image: {
-//     data: Buffer,
-//     contentType: String,
-//     },
 
 // sellerId: {
 //   type: Number,

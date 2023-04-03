@@ -33,7 +33,6 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('signed up now send me to confirmation page');
     console.log(email, password);
     await signup(email, password);
   };
@@ -61,14 +60,20 @@ const Signup = () => {
       <form className='signup' onSubmit={handleSubmit}>
         <h3>Sign up</h3>
 
-        <label>Email address: </label>
+        <label> first name</label>
+        <input type="text" />
+
+        <label> last name</label>
+        <input type="text" />
+
+        <label>email: </label>
         <input
           type='email'
           onChange={(event) => setEmail(event.target.value)}
           value={email}
         />
 
-        <label>Password</label>
+        <label>password</label>
         <input
           type='password'
           onChange={(event) => setPassword(event.target.value)}

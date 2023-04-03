@@ -1,16 +1,8 @@
+
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// image: {
-//     data: Buffer,
-//     contentType: String,
-//     },
-
-// sellerId: {
-//   type: Number,
-//   required: true,
-// },
 
 const listingSchema = new Schema(
   {
@@ -20,6 +12,9 @@ const listingSchema = new Schema(
     },
     exchangeDescription: {
       type: String,
+    },
+    image: {
+     type: String,
     },
     name: {
       type: String,

@@ -2,6 +2,7 @@
 import { useState, React } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 // STYLE SHEET
 import './AddListing.scss';
 
@@ -21,20 +22,29 @@ const AddListingDetails = () => {
   const [pickup, setPickup] = useState('');
   const [error, setError] = useState(null);
   // const [emptyFields, setEmptyFields] = useState([]);
-
+  const [image, setImage] = useState('')
+  const [imagePreview, setImagePreview] = useState('')
   // navigate hook to programmatically redirect back to 'Home' component after submit button clicked
   const navigate = useNavigate();
 
+ // ----------------------------------------------------------------------
+
+ 
   //----------------------------------------------------------------------
   // POST REQUEST ON FORM SUBMIT - Add a new listing to database
-
+   
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+   
+ let userImage = await toBase64(image);
+    const file = { file: userImage }
+    
+    
     const listing = {
       exchange,
       exchangeDescription,
       name,
+      file,
       description,
       quantity,
       location,
@@ -65,6 +75,7 @@ const AddListingDetails = () => {
       setQuantity('');
       setLocation('');
       setPickup('');
+      setImage('')
       // setEmptyFields([]);
       setError(null);
       navigate('/home/');
@@ -76,8 +87,9 @@ const AddListingDetails = () => {
 
   // finds the chosen category
   const handleExchangeCategory = (event) => {
-    setExchange(event.target.value);
-    event.target.value === 'free' ? setExchangeDescription('') : null;
+    const value = event.target.value
+    setExchange(value);
+    if (value === 'free') {setExchangeDescription('')} 
   };
 
   // saves the description for the exchange
@@ -85,6 +97,38 @@ const AddListingDetails = () => {
     setExchangeDescription(event.target.value);
 
   };
+
+
+    //----------------------------------------------------------------------
+  // CALL BACK FUNCTIONS FOR IMAGE UPLOAD
+  const fileChangeHandler = (event) => {
+    event.preventDefault();
+    const image = event.target.files[0]
+
+    if (!image) {
+      alert('choose image')
+    }
+    
+    if (image) {
+      setImage(image)
+      // console.log(image)
+
+      const imgUrl = URL.createObjectURL(image);
+      setImagePreview(imgUrl);
+    }
+  }
+
+   // upload image file
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  
+
+
 
   //----------------------------------------------------------------------
 
@@ -139,7 +183,24 @@ const AddListingDetails = () => {
         </div>
       </form>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
+            
+    {/* upload image section */}
+        <label htmlFor='image'> Upload Image</label>
+        <input
+          onInput={(e) => fileChangeHandler(e)}
+          type="file"
+          name='image'
+        id='image'
+        accept='.jpeg, .png, .jpg'
+           />
+    {/* conditional rendering of image thumbnail */}
+          {image ? (
+            <div className="image-thumbnail">
+              <img src={imagePreview} alt="" />
+            </div>
+          ) : null}
+
         <label>Name</label>
         <input
           type='text'

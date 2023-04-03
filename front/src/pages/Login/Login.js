@@ -31,7 +31,6 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('logged in now send me to home page');
     console.log(email, password);
     await login(email, password);
   };
