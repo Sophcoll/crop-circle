@@ -5,10 +5,14 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
-  // USE STATES & PARAMS
+  // USE STATES, HOOKS & PARAMS
 
   // stores the listing details that are being retrieved in the GET request to the database below
   const [listingDetails, setListingDetails] = useState(null);
+
+  // stores comment to post at bottom of listing
+  const [comment, setComment] = useState('');
+ 
 
   // listing id to use as parameter in GET request below to find specific listing
   const listingId = useParams().listingId;
@@ -124,8 +128,15 @@ const ListingDetails = () => {
 
         <div>
           <form onSubmit={handleSubmit}>
-            <textarea name='' id='' cols='30' rows='10'></textarea>
-            <button>Leave comment</button>
+            <textarea
+              cols='30'
+              rows='10'
+              onChange={(event) => setComment(event.target.value)}
+              name='comment'
+              id='comment'
+              value={comment}
+            ></textarea>
+            <button type='submit'>Leave comment</button>
           </form>
         </div>
       </div>

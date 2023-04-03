@@ -42,7 +42,7 @@ const createComment = async (req, res) => {
     res.json(updatedListing);
   } catch (error) {
     console.log(error.message);
-    res.json({ error: err.message });
+    res.json({ error: error.message });
   }
 };
 

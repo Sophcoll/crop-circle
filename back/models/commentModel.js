@@ -1,4 +1,4 @@
-/* Comments are stored as part of posts, so this shcema is imported into the listing model, where it is used as a subdocument.
+/* Comments are stored as part of posts, so this schema is imported into the listing model, where it is used as a subdocument.
 Comments also have an author field that contains a reference to the user that created the comment.
 This reference allows us to populate the author field with the user's data from the database, so we can access the user's emails and usernames. */
 const mongoose = require("mongoose");
