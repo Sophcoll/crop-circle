@@ -11,7 +11,7 @@ const createToken = (_id) => {
 // login user, after creating check if user exists then find the token and password
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  // res.json({ mssg: "login user" })
+
   try {
     const user = await User.login(email, password);
 

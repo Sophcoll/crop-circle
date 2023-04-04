@@ -19,6 +19,7 @@ const Signup = () => {
 
   //   const navigate = useNavigate(); // <--- Temporarily removed this from the imports at top of page because it's not yet being used and was throwing lint errors
 
+  // console.log(firstName, lastName, email, password)
   //----------------------------------------------------------------------
   // HOOKS
 
