@@ -51,8 +51,8 @@ const AddListing = () => {
       return;
     }
    
-//  let userImage = await toBase64(image);
-//     const file = { file: userImage }
+ let userImage = await toBase64(image);
+    const file = { file: userImage }
     
     const listing = {
       exchange,
@@ -62,6 +62,7 @@ const AddListing = () => {
       quantity,
       location,
       pickup,
+      file
     };
 
     const response = await fetch(`http://localhost:4000/listings`, {

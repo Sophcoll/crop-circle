@@ -13,7 +13,8 @@ and the updated post is saved to the database and sent back to the client. */
 const createComment = async (req, res) => {
   try {
     // find the listing we want to add the comment to by its ID in the URL params (from the route)
-    const listing = await Listing.findById(req.params.listingId);
+    // 'id' corresponds to what is written on the listing routers url parameter
+    const listing = await Listing.findById(req.params.id);
 
     // if the listing doesn't exist, throw an error
     if (!listing) throw new Error('Listing not found');
@@ -53,7 +54,7 @@ If an error occurs, the function logs the error message and sends back an error 
 const deleteComment = async (req, res) => {
   try {
     // find the listing by its ID in the URL params
-    const listing = await Listing.findById(req.params.listingId);
+    const listing = await Listing.findById(req.params.id);
 
     // pull the comment from the post's comments array
     listing.comments.pull(req.params.commentId);

@@ -41,9 +41,13 @@ router.put('/:id', updateListing)
 // DELETE a listing
 router.delete('/:id', deleteListing)
 
-//----------------------------------------------------------------------
+// COMMENTS (SUB-DOCUMENT ROUTES)
+router.use("/:id/comments", require("./comments"))
 
-// --------------------------------------------------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------
 // IMAGE
 
 // store files on server
