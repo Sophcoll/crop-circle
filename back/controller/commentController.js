@@ -1,7 +1,5 @@
-const Listing = require("../models/listingModel");
-const Comment = require("../models/commentModel");
-
-
+const Listing = require('../models/listingModel');
+const Comment = require('../models/commentModel');
 
 //----------------------------------------------------------------------
 // POST A COMMENT - adds a new comment to a listing in the database
@@ -12,27 +10,24 @@ then creates a new comment with data from the request body and the user's ID fro
 The comment is added to the post's comments array as a subdocument, 
 and the updated post is saved to the database and sent back to the client. */
 
-
 const createComment = async (req, res) => {
   try {
-
     // find the listing we want to add the comment to by its ID in the URL params (from the route)
-    const listing = await Listing.findById(req.params.postId);
-    
+    const listing = await Listing.findById(req.params.listingId);
+
     // if the listing doesn't exist, throw an error
-    if (!listing) throw new Error("Listing not found");
-    
+    if (!listing) throw new Error('Listing not found');
+
     const comment = new Comment({
       // spread the data from the request body into the new comment
       ...req.body,
 
-      // assign the author field to the user's ID from the URL params (from the route)
-      author: req.params.userId,
+      // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
+      author: req.user._id,
       // create a new comment with the data from the request body and the user's ID from the URL params (from the route)
     });
 
-
-    // add the comment to the post's comments array (this is a subdocument)
+    // add the comment to the post's comments array (this is a sub-document)
     listing.comments.push(comment);
 
     // save the listing to the database and get the updated listing back from the database
@@ -40,6 +35,7 @@ const createComment = async (req, res) => {
 
     // send back the updated listing to the client
     res.json(updatedListing);
+    
   } catch (error) {
     console.log(error.message);
     res.json({ error: error.message });
@@ -58,10 +54,10 @@ const deleteComment = async (req, res) => {
   try {
     // find the listing by its ID in the URL params
     const listing = await Listing.findById(req.params.listingId);
-    
+
     // pull the comment from the post's comments array
     listing.comments.pull(req.params.commentId);
-    
+
     // save the listing to the database
     const updatedListing = await post.save();
 

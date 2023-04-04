@@ -30,7 +30,6 @@ const AddListing = () => {
   const navigate = useNavigate();
 
  // ----------------------------------------------------------------------
-  //-----------------------------------------------------------------------------
   // USE CONTEXT
 
   // instantiating user from useAuthContext hook to be used within the submit handler below
@@ -52,14 +51,13 @@ const AddListing = () => {
       return;
     }
    
- let userImage = await toBase64(image);
-    const file = { file: userImage }
+//  let userImage = await toBase64(image);
+//     const file = { file: userImage }
     
     const listing = {
       exchange,
       exchangeDescription,
       name,
-      file,
       description,
       quantity,
       location,
@@ -68,11 +66,11 @@ const AddListing = () => {
 
     const response = await fetch(`http://localhost:4000/listings`, {
       method: 'POST',
-      body: JSON.stringify(listing),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${user.token}`,
       },
+      body: JSON.stringify(listing),
     });
     const json = await response.json();
 

@@ -12,7 +12,6 @@ const ListingDetails = () => {
 
   // stores comment to post at bottom of listing
   const [comment, setComment] = useState('');
- 
 
   // listing id to use as parameter in GET request below to find specific listing
   const listingId = useParams().listingId;
@@ -72,7 +71,7 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
-      navigate('/home/');
+      navigate('/home');
     }
     if (!response.ok) {
       console.log('response not ok');
@@ -96,8 +95,38 @@ const ListingDetails = () => {
 
   // FORM SUBMIT FUNCTION TO ADD COMMENTS
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    if (!user) {
+      return;
+    }
+
+    const response = await fetch(
+      `http://localhost:4000/listings/${listingId}/comments/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ message: comment }),
+      }
+    );
+
+    // if response NOT ok then show error in database
+    if (!response.ok) {
+      // setError(json.error);
+      // setEmptyFields(json.emptyFields);
+      // console.log(error);
+    }
+
+    if (response.ok) {
+      // setEmptyFields([]);
+      // setError(null);
+      setComment('');
+    }
 
     console.log('submitted');
   };
@@ -111,7 +140,7 @@ const ListingDetails = () => {
       {listingDetails && listingDetails ? (
         <div>
           <h1>{listingDetails.name}</h1>
-          <img className="user-image" src={`data:image/png;base64,${listingDetails.image.data}`} alt="user-img"/>
+          {/* <img className="user-image" src={`data:image/png;base64,${listingDetails.image.data}`} alt="user-img"/> */}
           <p>Exchanging for: {listingDetails.exchange}</p>
           <p>
             {listingDetails.exchangeDescription

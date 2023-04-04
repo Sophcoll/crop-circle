@@ -17,7 +17,6 @@ const {
 // instantiate middleware 'requireAuth' to check that the user making the request is authenticated before firing any listing controller function
 const requireAuth = require('../middleware/requireAuth');
 
-
 // invoke an instance of the express router 
 const router = express.Router();
 
