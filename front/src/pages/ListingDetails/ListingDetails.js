@@ -14,6 +14,9 @@ const ListingDetails = () => {
   // stores comment to post at bottom of listing
   const [newComment, setNewComment] = useState('');
 
+  // ordered comments array - shows comments from listingDetails in reverse order (newest at top):
+  const [orderedComments, setOrderedComments] = useState([])
+
   // listing id to use as parameter in GET request below to find specific listing
   const listingId = useParams().listingId;
 
@@ -22,6 +25,7 @@ const ListingDetails = () => {
 
   // instantiating user from useAuthContext hook to be used within the submit handler below
   const { user } = useAuthContext();
+
 
 
   //----------------------------------------------------------------------
@@ -43,17 +47,31 @@ const ListingDetails = () => {
 
       if (response.ok) {
         setListingDetails(json);
+        handleOrderComments(json.comments)
       }
     };
     if (user) {
       fetchListingDetails(listingId);
     }
-  }, [user]);
+  }, [user, orderedComments]);
 
+  //----------------------------------------------------------------------
+  // ORDER COMMENTS 
+
+  const handleOrderComments = (commentsArray) => {
+
+    const unorderedArray  = commentsArray;
+
+    if(unorderedArray.length > 0){
+     const orderedArray =  unorderedArray.reverse()
+     setOrderedComments(orderedArray);
+    }
+
+  }
 
 
   //----------------------------------------------------------------------
-  // DELETE REQUEST USING SPECIFIC ID ON CLICK OF DELETE BUTTON
+  // DELETE LISTING REQUEST 
 
   const handleDelete = async () => {
     // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
@@ -82,24 +100,10 @@ const ListingDetails = () => {
     }
   };
 
-  //----------------------------------------------------------------------
-
-  // GET REQUEST FOR IMAGE
-
-  // const fetchImageDetails = async () => {
-  //   const response = await fetch(
-  //     `http://localhost:4000/listings`
-  //   );
-  //   const results = await response.json();
-
-  //   if (response.ok) {
-  //     console.log('response ok, image uploaded', results)
-  //   }
-  // fetchImageDetails(results);
-
 
   //----------------------------------------------------------------------
-  // POST REQUEST TO ADD COMMENTS
+  // ADD COMMENT REQUEST 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -116,7 +120,6 @@ const ListingDetails = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
-        // body: JSON.stringify(message),
         body: JSON.stringify({ message: newComment }),
       }
     );
@@ -131,7 +134,6 @@ const ListingDetails = () => {
     }
 
     if (response.ok) {
-      console.log(json);
       setListingDetails(json);
       // setEmptyFields([]);
       // setError(null);
@@ -144,35 +146,33 @@ const ListingDetails = () => {
   //----------------------------------------------------------------------
   // DELETE REQUEST TO DELETE COMMENTS 
 
-  const handleCommentDelete = async (event) => {
+  const handleCommentDelete = async (commentId) => {
    console.log("clicked")
 
-    // // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
-    // if (!user) {
-    //   return;
-    // }
+    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    if (!user) {
+      return;
+    }
 
-    // const commentId = event.target.key
+    const response = await fetch(
+      `http://localhost:4000/listings/${listingId}/comments/${commentId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    const json = await response.json();
 
-    // const response = await fetch(
-    //   `http://localhost:4000/listings/${listingId}/comments/${commentId}`,
-    //   {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Bearer ${user.token}`,
-    //     },
-    //   }
-    // );
-    // const json = await response.json();
-
-    // if (response.ok) {
-    //   // setListingDetails(json);
-    //   // navigate('/home');
-    // }
-    // if (!response.ok) {
-    //   console.log('response not ok');
-    // }
+    if (response.ok) {
+      setListingDetails(json);
+      // console.log(json)
+    }
+    if (!response.ok) {
+      console.log('response not ok');
+    }
   };
 
 
@@ -209,13 +209,13 @@ const ListingDetails = () => {
       ) : null}
 
 <h2>Comments</h2>
-      {listingDetails && listingDetails.comments.length > 0 ? listingDetails.comments.map((comment) => {
-        return (
-          <div key={comment._id} value={comment._id}>
+      {orderedComments ? orderedComments.map((comment) => {
+        return ( 
+          <div key={comment._id} >
           <p>Author: {comment.author.email}</p>
           <p>Message: {comment.message}</p>
           <p>Posted: {comment.createdAt}</p>
-          <button onClick={handleCommentDelete}>Delete</button>
+          <button onClick={() => handleCommentDelete(comment._id)}>Delete</button>
           </div>
         )
       }) : null }

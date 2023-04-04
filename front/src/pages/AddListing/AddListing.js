@@ -83,6 +83,7 @@ const AddListing = () => {
     }
     // if response OK then this will reset the inputs to empty to add another and set the error to null
     if (response.ok) {
+      console.log(json)
       setEmptyFields([]);
       setError(null);
       setExchange('');
