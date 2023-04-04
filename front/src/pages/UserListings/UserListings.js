@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom"
 
-import ListingCard from "../components/cards/ListingCard"
+// import ListingCard from "../components/cards/ListingCard"
 
 import { useState, useEffect } from "react"
 
-import { useAuthContext } from "../hooks/useAuthContext"
-import { useGetUser } from "../hooks/useGetUser"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { useGetUser } from "../../hooks/useGetUser"
 
 
 const UserListings = () => {
@@ -33,8 +33,8 @@ const UserListings = () => {
 
     const returnListingData = async () => {
      
-    const resposne = await fetch(`http://localhost:8001/your-listings/${ID}`, {method: "GET"})
-    const data = await resposne.json()
+    const response = await fetch(`http://localhost:8001/your-listings/${ID}`, {method: "GET"})
+    const data = await response.json()
     const dataArray = data
     console.log(dataArray)
     setListingArray(dataArray)
@@ -44,14 +44,14 @@ const UserListings = () => {
   }
   }, [ID])
 
- return(
-  <div>
-   <Link to="/profile/" className="" >My Profile</Link>
-   <p>Edit Listings</p>
+//  return(
+//   <div>
+//    <Link to="/profile/" className="" >My Profile</Link>
+//    <p>Edit Listings</p>
 
-   {listingArray ? < ListingCard listings={listingArray} link={editListingsPage} /> : null}
-   </div>
-  )
+//    {listingArray ? < ListingCard listings={listingArray} link={editListingsPage} /> : null}
+//    </div>
+//   )
 
 }
 
