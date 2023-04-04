@@ -71,7 +71,7 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
-      navigate('/home/');
+      navigate('/home');
     }
     if (!response.ok) {
       console.log('response not ok');

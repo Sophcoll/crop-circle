@@ -100,7 +100,6 @@ const createListing = async (req, res) => {
     author: userId,
   })
 
-
     // send the listing back as json to the client
     res.status(200).json(listing);
 
