@@ -60,7 +60,7 @@ const deleteComment = async (req, res) => {
     listing.comments.pull(req.params.commentId);
 
     // save the listing to the database
-    const updatedListing = await post.save();
+    const updatedListing = await listing.save();
 
     // send back the updated comments array to the client
     res.json(updatedListing.comments);

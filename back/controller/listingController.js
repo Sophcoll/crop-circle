@@ -24,6 +24,7 @@ const getListing = async (req, res) => {
   }
 
   const listing = await Listing.findById(id);
+  // const listing = await Listing.findById(id).populate("author").populate("comment.author");
 
   if (!listing) {
     return res
@@ -83,8 +84,6 @@ const createListing = async (req, res) => {
   try {
     // we have access to the user object because we attached it to the req object within the middleware function that checks whether or not a user is logged in
     const userId = req.user._id;
-
-    // image: req.body.file.file
 
     const listing = await Listing.create({
       exchange: req.body.exchange,
