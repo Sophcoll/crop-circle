@@ -54,7 +54,7 @@ If an error occurs, the function logs the error message and sends back an error 
 const deleteComment = async (req, res) => {
   try {
     // find the listing by its ID in the URL params
-    const listing = await Listing.findById(req.params.listingId);
+    const listing = await Listing.findById(req.params.id);
 
     // pull the comment from the post's comments array
     listing.comments.pull(req.params.commentId);
