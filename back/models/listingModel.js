@@ -8,10 +8,8 @@ const Comment = require('../models/commentModel');
 const Schema = mongoose.Schema;
 
 // image: {
-//     data: Buffer,
 //     contentType: String,
 //     },
-
 
 const listingSchema = new Schema(
   {
@@ -20,6 +18,9 @@ const listingSchema = new Schema(
       required: true,
     },
     exchangeDescription: {
+      type: String,
+    },
+    image: {
       type: String,
     },
     name: {
