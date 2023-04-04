@@ -13,7 +13,8 @@ and the updated post is saved to the database and sent back to the client. */
 const createComment = async (req, res) => {
   try {
     // find the listing we want to add the comment to by its ID in the URL params (from the route)
-    const listing = await Listing.findById(req.params.listingId);
+    // 'id' corresponds to what is written on the listing routers url parameter
+    const listing = await Listing.findById(req.params.id);
 
     // if the listing doesn't exist, throw an error
     if (!listing) throw new Error('Listing not found');

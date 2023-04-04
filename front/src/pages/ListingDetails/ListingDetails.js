@@ -9,6 +9,7 @@ const ListingDetails = () => {
 
   // stores the listing details that are being retrieved in the GET request to the database below
   const [listingDetails, setListingDetails] = useState(null);
+  const [error, setError] = useState(null)
 
   // stores comment to post at bottom of listing
   const [comment, setComment] = useState('');
@@ -93,7 +94,9 @@ const ListingDetails = () => {
     //   }
     // fetchImageDetails(results);
 
-  // FORM SUBMIT FUNCTION TO ADD COMMENTS
+//----------------------------------------------------------------------
+
+  // POST REQUEST TO ADD COMMENTS
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -103,26 +106,32 @@ const ListingDetails = () => {
       return;
     }
 
+    // const message = comment;
+
     const response = await fetch(
-      `http://localhost:4000/listings/${listingId}/comments/`,
+      `http://localhost:4000/listings/${listingId}/comments`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
+        // body: JSON.stringify(message),
         body: JSON.stringify({ message: comment }),
       }
     );
 
+    const json = await response.json();
+
     // if response NOT ok then show error in database
     if (!response.ok) {
-      // setError(json.error);
+      setError(json.error);
       // setEmptyFields(json.emptyFields);
-      // console.log(error);
+      console.log(error);
     }
 
     if (response.ok) {
+      console.log(json)
       // setEmptyFields([]);
       // setError(null);
       setComment('');
