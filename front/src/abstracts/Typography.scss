@@ -1,20 +1,53 @@
 @use "./Variables.scss" as *;
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;600&display=swap");
 
-html {
-    font-size: 62.5%;
-}
-
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+html {
+  /* 62.5% of 16px base font size is 10px */
+  font-size: 62.5%;
+  color: $primary-grn;
+}
+
+/* Preserve 16px body font-size, set body font-size to 1.6rem */
+body {
+  /* 16px */
+  font-size: 1.6rem;
+}
+
 h1 {
-   font-size: 1.6rem; 
+   font-size: 6.1rem; 
    font-weight: 600;
    text-transform: lowercase;
 }
 
+h2 {
+    font-size: 3.9rem;
+     font-weight: 600;
+}
+
+h3 {
+    font-size: 3.1rem;
+     font-weight: 600;
+}
+
+h4 {
+    font-size: 2.5rem;
+     font-weight: 600;
+}
+
+h5 {
+    font-size: 2rem;
+     font-weight: 600;
+}
+
+p {
+  /* 10 * 1.2 = 12px */
+  font-size: 1.2rem;
+  line-height: 1.82rem;
+}
 
 a {
     text-decoration: none;

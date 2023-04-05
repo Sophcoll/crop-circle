@@ -1,21 +1,140 @@
-/* auth forms */
-form.signup, form.login {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #ded5d5;
-  border-radius: 4px;
+@use "../../abstracts/"as *;
+
+body {
+  background-color: $primary-background;
 }
 
-/* errprs */
+.crop--circle {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+
+.grid-navigation__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #008148;
+  border-right: 1px solid #008148;
+}
+
+  .grid-navigation__footer {
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+  bottom: 0;
+  margin: 0;
+  border-top: 1px solid #008148;
+}
+
+.half-btn:nth-child(odd) {
+  border-right: 1px solid #008148;
+}
+
+.crop--circle__container {
+  display: flex;
+  position: relative;
+  // border: 1px dashed #008148;
+  height: 45vh;
+
+
+ .crop--circle__title {
+  display: flex;
+  position: absolute;
+  width: 216px;
+  height: 80px;
+  z-index: 10;
+  text-align: center;
+  justify-content: center;
+  left: calc(50% - 250px/2 + 10px);
+  top: calc(50% - 120px/2 + 10px);
+}}
+
+.crop--circle__form {
+  padding-top: 20px;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  text-transform: lowercase;
+  width: 311px;
+  height: 100px;
+  left: 44px;
+  top: 390px;
+  background: #FFF9E7;
+  border-top: 1px solid #008148;
+  border-bottom: 1px solid #008148;
+}
+}
+
+.crop--circle__label{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: $primary-grn;
+}
+
+.crop--circle__input {
+  border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 200;
+  color: $primary-grn;
+}
+
+.crop-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: $primary-grn;
+  position: absolute;
+  text-transform: uppercase;
+  top: 35px;
+  right: 65px;
+}
+
+.crop--circle__circle {
+  background-color: $primary-yellow;
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  clip-path: circle(50%);
+  z-index: 1;
+  left: calc(50% - 340px/2);
+  top: calc(50% - 350px/2 + 10px);
+}
+
+
+/* errors */
 div.error {
   padding: 10px;
   background: #ffefef;
-   border: 1px solid rgb(218, 74, 74);
+  border: 1px solid rgb(218, 74, 74);
   color: rgb(218, 74, 74);
   border-radius: 4px;
   margin: 20px 0;
 }
+
 input.error {
   border: 1px solid rgb(218, 74, 74);
+}
+
+.half-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: $primary-grn;
+  text-transform: uppercase;
+  width: 195px;
+  height: 90px;
+}
+
+.full-btn.signin {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: $primary-grn;
+  text-transform: uppercase;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  left: -45px;
+  width: 100vw;
+  height: 90px;
+  bottom: -180px;
+  text-align: center;
+  border-top: 1px solid #008148;
 }
