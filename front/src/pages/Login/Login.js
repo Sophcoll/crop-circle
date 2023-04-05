@@ -8,6 +8,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // STYLE SHEET
 import './Login.scss';
 
+
 const Login = () => {
   //----------------------------------------------------------------------
   // USE STATES
@@ -38,45 +39,62 @@ const Login = () => {
   //----------------------------------------------------------------------
   return (
     <>
-      <div>
-        <Link to="/">
-        <button>Back to landing</button></Link>
-        {user && (
+      <div className='crop--circle'>
+        <div className='grid-navigation__top'>
+          <Link to="/">
+            <button className='btn bck-btn half-btn'>Back to landing</button></Link>
+          {user && (
+            <div>
+              <span>{user.email}</span>
+              <button className='btn' onClick={handleClick}>Logout</button>
+              <Link to='/home'> Home </Link>
+            </div>
+          )}
+          {!user && (
+            <div>
+              <button className='btn'>
+                {' '}
+                <Link to='/signup' className='crop-link'>Signup</Link>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className='crop--circle__container'>
+          <div className='crop--circle__circle'></div>
+          <h1 className='crop--circle__title'>welcome back</h1>
           <div>
-            <span>{user.email}</span>
-            <button onClick={handleClick}>Logout</button>
-            <Link to='/home'> Home </Link>
+            <form className='crop--circle__form' onSubmit={handleSubmit}>
+
+              <div className="grid-left">
+                <label className='crop--circle__label'>Email</label></div>
+
+              <div className="grid-right"> <input className='crop--circle__input'
+                type='email'
+                placeholder='joeblogs@gmail.com'
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+              /></div>
+
+              <div className="grid-left"> <label className='crop--circle__label'>Password</label></div>
+              <div className="grid-right"> <input className='crop--circle__input'
+                placeholder='*********'
+                type='password'
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+              /></div>
+
+
+              <button className='btn full-btn signin' disabled={isLoading}>Sign in</button>
+              {error && <div className='error'>{error}</div>}
+            </form>
           </div>
-        )}
-        {!user && (
-          <div>
-            <button>
-              {' '}
-              <Link to='/signup'>Signup</Link>
-            </button>
-          </div>
-        )}
+        </div>
+        <div className="grid-navigation__footer">
+          <div><button className='half-btn'>google</button></div>
+         <div><button className='half-btn'>facebook</button></div> 
+        </div>
       </div>
-      <form className='login' onSubmit={handleSubmit}>
-        <h3>Log in</h3>
-
-        <label>Email</label>
-        <input
-          type='email'
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-        />
-
-        <label>Password</label>
-        <input
-          type='password'
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
-
-        <button disabled={isLoading}>Log in</button>
-        {error && <div className='error'>{error}</div>}
-      </form>
     </>
   );
 };

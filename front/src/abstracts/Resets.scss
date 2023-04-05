@@ -6,15 +6,15 @@
     box-sizing: border-box;
 }
 
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 body, 
 html {
     max-height: 100vh;
-}
-
-button {
-    background: none;
-    border: none;
-    cursor: pointer;
 }
 
 li {
