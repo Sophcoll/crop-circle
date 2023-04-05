@@ -14,6 +14,8 @@ const ListingDetails = () => {
   // stores comment to post at bottom of listing
   const [newComment, setNewComment] = useState('');
 
+  const[commentsArray, setCommentsArray ] = useState([])
+
   // ordered comments array - shows comments from listingDetails in reverse order (newest at top):
   const [orderedComments, setOrderedComments] = useState([]);
 
@@ -102,9 +104,9 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
+      setCommentsArray(json.comments)
       // setEmptyFields([]);
       // setError(null);
-      handleOrderComments(json.comments);
       setNewComment('');
     }
   };
@@ -134,6 +136,8 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
+      setCommentsArray(json.comments)
+
     }
     if (!response.ok) {
       console.log('response not ok');
@@ -159,13 +163,14 @@ const ListingDetails = () => {
 
       if (response.ok) {
         setListingDetails(json);
-        handleOrderComments(json.comments);
+        setCommentsArray(json.comments)
       }
     };
+
     if (user) {
       fetchListingDetails(listingId);
     }
-  }, [user, orderedComments, handleCommentDelete]);
+  }, [user]);
 
   //----------------------------------------------------------------------
   return (
@@ -173,6 +178,7 @@ const ListingDetails = () => {
       <Link to='/home'>
         <button>Go Back</button>
       </Link>
+
       {listingDetails && listingDetails ? (
         <div>
           <h1>{listingDetails.name}</h1>
@@ -187,7 +193,7 @@ const ListingDetails = () => {
           <p>Quantity: {listingDetails.quantity}</p>
           <p>Pickup location: {listingDetails.location}</p>
           <p>Pickup time: {listingDetails.pickup}</p>
-          <p>Seller name: {listingDetails.author}</p>
+          <p>Seller name: {listingDetails.author.firstName}</p>
         </div>
       ) : null}
 
@@ -205,20 +211,16 @@ const ListingDetails = () => {
       ) : null}
 
       <h2>Comments</h2>
-      {orderedComments
-        ? orderedComments.map((comment) => {
-            return (
-              <div key={comment._id}>
-                <p>Author: {comment.author.email}</p>
-                <p>Message: {comment.message}</p>
-                <p>Posted: {comment.createdAt}</p>
-                <button onClick={() => handleCommentDelete(comment._id)}>
-                  Delete
-                </button>
-              </div>
-            );
-          })
-        : null}
+        {commentsArray && commentsArray.map((comment) => {
+          return (
+            <div key={comment._id}>
+              <p>Author: {comment.author.firstName}</p>
+              <p>message: {comment.message}</p>
+              <p>Posted at: {comment.createdAt}</p>
+              <button>Delete Comment</button>
+            </div>
+          )
+        })}
 
       <div>
         <form onSubmit={handleSubmit}>

@@ -8,9 +8,9 @@ const path = require('path');
 // GET all listings, sorted by newest created
 
 const getAllListings = async (req, res) => {
-  const listings = await Listing.find({}).sort({ createdAt: -1 });
+  // const listings = await Listing.find({}).sort({ createdAt: -1 });
 
-  // const listings = await Listing.find({}).populate("author");
+  const listings = await Listing.find({}).populate("author");
 
   res.status(200).json(listings);
 };
@@ -25,9 +25,9 @@ const getListing = async (req, res) => {
     return res.status(404).json({ error: 'no such id' });
   }
 
-  const listing = await Listing.findById(id);
+  // const listing = await Listing.findById(id);
 
-  // const listing = await Listing.findById(id).populate("author").populate("comments.author");
+  const listing = await Listing.findById(id).populate("author").populate("comments.author");
 
   if (!listing) {
     return res
