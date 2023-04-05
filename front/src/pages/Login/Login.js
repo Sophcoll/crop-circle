@@ -91,8 +91,8 @@ const Login = () => {
           </div>
         </div>
         <div className="grid-navigation__footer">
-          <button className='btn half-btn'>google</button>
-          <button className='btn half-btn'>facebook</button>
+          <div><button className='half-btn'>google</button></div>
+         <div><button className='half-btn'>facebook</button></div> 
         </div>
       </div>
     </>
