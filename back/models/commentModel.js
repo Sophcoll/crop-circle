@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema( // create a new schema
     author: {
       type: mongoose.Schema.Types.ObjectId,
       // this is the model we are referencing
-      ref: "userModel",
+      ref: "User",
       required: true,
     },
   },

@@ -10,6 +10,8 @@ const path = require('path');
 const getAllListings = async (req, res) => {
   const listings = await Listing.find({}).sort({ createdAt: -1 });
 
+  // const listings = await Listing.find({}).populate("author");
+
   res.status(200).json(listings);
 };
 
@@ -24,7 +26,8 @@ const getListing = async (req, res) => {
   }
 
   const listing = await Listing.findById(id);
-  // const listing = await Listing.findById(id).populate("author").populate("comment.author");
+
+  // const listing = await Listing.findById(id).populate("author").populate("comments.author");
 
   if (!listing) {
     return res

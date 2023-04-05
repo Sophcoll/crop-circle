@@ -15,7 +15,7 @@ const ListingDetails = () => {
   const [newComment, setNewComment] = useState('');
 
   // ordered comments array - shows comments from listingDetails in reverse order (newest at top):
-  const [orderedComments, setOrderedComments] = useState([])
+  const [orderedComments, setOrderedComments] = useState([]);
 
   // listing id to use as parameter in GET request below to find specific listing
   const listingId = useParams().listingId;
@@ -26,52 +26,20 @@ const ListingDetails = () => {
   // instantiating user from useAuthContext hook to be used within the submit handler below
   const { user } = useAuthContext();
 
-
-
   //----------------------------------------------------------------------
-  // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
-
-  useEffect(() => {
-    const fetchListingDetails = async (listingId) => {
-      const response = await fetch(
-        `http://localhost:4000/listings/${listingId}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-
-      const json = await response.json();
-
-      if (response.ok) {
-        setListingDetails(json);
-        handleOrderComments(json.comments)
-      }
-    };
-    if (user) {
-      fetchListingDetails(listingId);
-    }
-  }, [user, orderedComments]);
-
-  //----------------------------------------------------------------------
-  // ORDER COMMENTS 
+  // ORDER COMMENTS
 
   const handleOrderComments = (commentsArray) => {
+    const unorderedArray = commentsArray;
 
-    const unorderedArray  = commentsArray;
-
-    if(unorderedArray.length > 0){
-     const orderedArray =  unorderedArray.reverse()
-     setOrderedComments(orderedArray);
+    if (unorderedArray.length > 0) {
+      const orderedArray = unorderedArray.reverse();
+      setOrderedComments(orderedArray);
     }
-
-  }
-
+  };
 
   //----------------------------------------------------------------------
-  // DELETE LISTING REQUEST 
+  // DELETE LISTING REQUEST
 
   const handleDelete = async () => {
     // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
@@ -100,9 +68,8 @@ const ListingDetails = () => {
     }
   };
 
-
   //----------------------------------------------------------------------
-  // ADD COMMENT REQUEST 
+  // ADD COMMENT REQUEST
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -137,17 +104,16 @@ const ListingDetails = () => {
       setListingDetails(json);
       // setEmptyFields([]);
       // setError(null);
+      handleOrderComments(json.comments);
       setNewComment('');
     }
-
-    console.log('submitted');
   };
 
   //----------------------------------------------------------------------
-  // DELETE REQUEST TO DELETE COMMENTS 
+  // DELETE REQUEST TO DELETE COMMENTS
 
   const handleCommentDelete = async (commentId) => {
-   console.log("clicked")
+    console.log('clicked');
 
     // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
     if (!user) {
@@ -168,14 +134,38 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
-      // console.log(json)
     }
     if (!response.ok) {
       console.log('response not ok');
     }
   };
 
+  //----------------------------------------------------------------------
+  // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
 
+  useEffect(() => {
+    const fetchListingDetails = async (listingId) => {
+      const response = await fetch(
+        `http://localhost:4000/listings/${listingId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        setListingDetails(json);
+        handleOrderComments(json.comments);
+      }
+    };
+    if (user) {
+      fetchListingDetails(listingId);
+    }
+  }, [user, orderedComments, handleCommentDelete]);
 
   //----------------------------------------------------------------------
   return (
@@ -186,7 +176,7 @@ const ListingDetails = () => {
       {listingDetails && listingDetails ? (
         <div>
           <h1>{listingDetails.name}</h1>
-          <img src={listingDetails.image} alt="" />
+          <img src={listingDetails.image} alt='' />
           <p>Exchanging for: {listingDetails.exchange}</p>
           <p>
             {listingDetails.exchangeDescription
@@ -197,6 +187,12 @@ const ListingDetails = () => {
           <p>Quantity: {listingDetails.quantity}</p>
           <p>Pickup location: {listingDetails.location}</p>
           <p>Pickup time: {listingDetails.pickup}</p>
+          <p>Seller name: {listingDetails.author}</p>
+        </div>
+      ) : null}
+
+      {listingDetails && listingDetails.author === user.userId ? (
+        <div>
           <Link
             to={`/listings/${listingDetails._id}/edit`}
             state={listingDetails}
@@ -208,33 +204,36 @@ const ListingDetails = () => {
         </div>
       ) : null}
 
-<h2>Comments</h2>
-      {orderedComments ? orderedComments.map((comment) => {
-        return ( 
-          <div key={comment._id} >
-          <p>Author: {comment.author.email}</p>
-          <p>Message: {comment.message}</p>
-          <p>Posted: {comment.createdAt}</p>
-          <button onClick={() => handleCommentDelete(comment._id)}>Delete</button>
-          </div>
-        )
-      }) : null }
+      <h2>Comments</h2>
+      {orderedComments
+        ? orderedComments.map((comment) => {
+            return (
+              <div key={comment._id}>
+                <p>Author: {comment.author.email}</p>
+                <p>Message: {comment.message}</p>
+                <p>Posted: {comment.createdAt}</p>
+                <button onClick={() => handleCommentDelete(comment._id)}>
+                  Delete
+                </button>
+              </div>
+            );
+          })
+        : null}
 
-    
-        <div>
-          <form onSubmit={handleSubmit}>
-            <textarea
-              cols='30'
-              rows='10'
-              onChange={(event) => setNewComment(event.target.value)}
-              name='comment'
-              id='comment'
-              value={newComment}
-            ></textarea>
-            <button type='submit'>Leave comment</button>
-          </form>
-        </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            cols='30'
+            rows='10'
+            onChange={(event) => setNewComment(event.target.value)}
+            name='comment'
+            id='comment'
+            value={newComment}
+          ></textarea>
+          <button type='submit'>Leave comment</button>
+        </form>
       </div>
+    </div>
   );
 };
 
