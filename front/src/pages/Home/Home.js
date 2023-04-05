@@ -56,7 +56,7 @@ const Home = () => {
               >
                 <li>
                   <h2>{listing.name}</h2>
-                  {/* <h2>{listing.exchange}</h2> */}
+                  <p>Listed by</p>
                 </li>
               </Link>
             );

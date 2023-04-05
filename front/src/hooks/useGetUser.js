@@ -5,7 +5,7 @@ export const useGetUser = () => {
  const [ firstName, setFirstName ] = useState()
  const [ lastName, setLastName ] = useState()
  const [ email, setEmail ] = useState()
- const [ ID, setID] = useState()
+ const [ userId, setUserId] = useState()
 
  const userDetails = (userEmail) => {
 
@@ -18,13 +18,13 @@ export const useGetUser = () => {
   setFirstName(user.firstName)
   setLastName(user.lastName)
   setEmail(user.email)
-  setID(user._id)
+  setUserId(user._id)
   }
 
   getUserDetails()
  
  }
 
- return { userDetails, firstName, lastName, email, ID }
+ return { userDetails, firstName, lastName, email, userId }
 
 }

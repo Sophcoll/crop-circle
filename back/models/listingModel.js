@@ -42,8 +42,8 @@ const listingSchema = new Schema(
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      // this is the model we are referencing
-      ref: 'userModel',
+      // this is the model we are referencing (name of the collection in MongoDb)
+      ref: 'User',
       required: true,
     },
     // add comment as a sub-document of post (since Comment is the model which is exported, we can access its schema by calling Comment.schema)

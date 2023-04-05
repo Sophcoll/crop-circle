@@ -18,9 +18,8 @@ import Messages from './pages/Messages/Messages';
 import UserListings from './pages/UserListings/UserListings';
 import Watchlist from './pages/Watchlist/Watchlist';
 
-
 function App() {
-  // instantiate user from AuthContext so we can protect routes from people not logged in & redirect a user based on their authentication status 
+  // instantiate user from AuthContext so we can protect routes from people not logged in & redirect a user based on their authentication status
   const { user } = useAuthContext();
 
   return (
@@ -28,12 +27,18 @@ function App() {
       <BrowserRouter>
         <div className='pages'>
           <Routes>
-            <Route path='/' element={<Landing />} />
+            <Route
+              path='/'
+              element={!user ? <Landing /> : <Navigate to='/home' />}
+            />
             <Route
               path='/login'
               element={!user ? <Login /> : <Navigate to='/home' />}
             />
-            <Route path='/signup' element={!user? <Signup /> : <Navigate to="/home" />} />
+            <Route
+              path='/signup'
+              element={!user ? <Signup /> : <Navigate to='/home' />}
+            />
             <Route
               path='/home'
               element={user ? <Home /> : <Navigate to='/' />}
