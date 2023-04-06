@@ -3,6 +3,9 @@ import { useState, useEffect, React } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
+// STYLE SHEET
+import './ListingDetails.scss';
+
 const ListingDetails = () => {
   //----------------------------------------------------------------------
   // USE STATES, HOOKS & PARAMS
@@ -14,7 +17,7 @@ const ListingDetails = () => {
   // stores comment to post at bottom of listing
   const [newComment, setNewComment] = useState('');
 
-  const[commentsArray, setCommentsArray ] = useState([])
+  const [commentsArray, setCommentsArray] = useState([]);
 
   // ordered comments array - shows comments from listingDetails in reverse order (newest at top):
   const [orderedComments, setOrderedComments] = useState([]);
@@ -104,7 +107,7 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
-      setCommentsArray(json.comments)
+      setCommentsArray(json.comments);
       // setEmptyFields([]);
       // setError(null);
       setNewComment('');
@@ -136,8 +139,7 @@ const ListingDetails = () => {
 
     if (response.ok) {
       setListingDetails(json);
-      setCommentsArray(json.comments)
-
+      setCommentsArray(json.comments);
     }
     if (!response.ok) {
       console.log('response not ok');
@@ -163,7 +165,7 @@ const ListingDetails = () => {
 
       if (response.ok) {
         setListingDetails(json);
-        setCommentsArray(json.comments)
+        setCommentsArray(json.comments);
       }
     };
 
@@ -174,26 +176,63 @@ const ListingDetails = () => {
 
   //----------------------------------------------------------------------
   return (
-    <div>
-      <Link to='/home'>
-        <button>Go Back</button>
-      </Link>
+    <div className='listing-details'>
+      <div className='listing-details__top-nav'>
+        <Link to='/home'>
+          <button>Go Back</button>
+        </Link>
+      </div>
 
       {listingDetails && listingDetails ? (
-        <div>
-          <h1>{listingDetails.name}</h1>
-          <img src={listingDetails.image} alt='' />
-          <p>Exchanging for: {listingDetails.exchange}</p>
-          <p>
-            {listingDetails.exchangeDescription
-              ? listingDetails.exchangeDescription
-              : null}
-          </p>
-          <p>Description: {listingDetails.description}</p>
-          <p>Quantity: {listingDetails.quantity}</p>
-          <p>Pickup location: {listingDetails.location}</p>
-          <p>Pickup time: {listingDetails.pickup}</p>
-          <p>Seller name: {listingDetails.author.firstName}</p>
+        <div className='listing'>
+          <header className='listing-header'>
+            <div className={user.userId === listingDetails.author._id ? "listing-header__buttons" : "hide"}>
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+            <figure className='listing-header__img'>
+              <img src={listingDetails.image} alt='uploaded image of produce' />
+            </figure>
+            <div className='listing-header__name'>
+              <h1>{listingDetails.name}</h1>
+            </div>
+            <div className='listing-header__exchange'>
+              <p>Exchanging for:</p>
+              <p>{listingDetails.exchange}</p>
+            </div>
+          </header>
+          <main className='listing-body'>
+            <p className='listing-body__description'>
+              {listingDetails.description}
+            </p>
+            <p className='listing-body__author'>
+              Listed by: {listingDetails.author.firstName}
+            </p>
+            <p
+              className={
+                listingDetails.exchangeDescription
+                  ? 'listing-body__exchange-description'
+                  : 'hide'
+              }
+            >
+              Exchange description: {listingDetails.exchangeDescription}
+            </p>
+          </main>
+          <footer className='listing-footer'>
+            <div className='listing-footer__quantity'>
+              <p>Quantity</p>
+              <p>{listingDetails.quantity}</p>
+            </div>
+            <div className='two-column'>
+              <div className='listing-footer__location'>
+                <p>{listingDetails.location}</p>
+              </div>
+              <div className="line"></div>
+              <div className='listing-footer__pickup-time'>
+                <p>{listingDetails.pickup}</p>
+              </div>
+            </div>
+          </footer>
         </div>
       ) : null}
 
@@ -211,7 +250,8 @@ const ListingDetails = () => {
       ) : null}
 
       <h2>Comments</h2>
-        {commentsArray && commentsArray.map((comment) => {
+      {commentsArray &&
+        commentsArray.map((comment) => {
           return (
             <div key={comment._id}>
               <p>Author: {comment.author.firstName}</p>
@@ -219,7 +259,7 @@ const ListingDetails = () => {
               <p>Posted at: {comment.createdAt}</p>
               <button>Delete Comment</button>
             </div>
-          )
+          );
         })}
 
       <div>

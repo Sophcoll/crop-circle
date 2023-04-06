@@ -1,5 +1,5 @@
 @use "./Variables.scss" as *;
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap");
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -43,11 +43,12 @@ h5 {
      font-weight: 600;
 }
 
-p {
-  /* 10 * 1.2 = 12px */
-  font-size: 1.2rem;
-  line-height: 1.82rem;
-}
+// p {
+//   /* 10 * 1.2 = 12px */
+//   font-size: 1.6rem;
+//   // line-height: 1.82rem;
+//   font-weight: 400;
+// }
 
 a {
     text-decoration: none;
