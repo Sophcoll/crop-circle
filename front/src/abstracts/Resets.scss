@@ -1,3 +1,5 @@
+@use "./Variables.scss" as *;
+
 *,
 *::before,
 *::after {
@@ -10,6 +12,11 @@ button {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+
+body{
+    background-color: $primary-background;
 }
 
 body, 

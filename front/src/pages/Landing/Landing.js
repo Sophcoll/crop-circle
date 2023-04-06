@@ -1,48 +1,38 @@
 // HOOKS
 import { React } from 'react';
 import { Link } from 'react-router-dom';
-import { useLogout } from '../../hooks/useLogout';
-import { useAuthContext } from '../../hooks/useAuthContext';
+
+// STYLE SHEET
+import './Landing.scss';
 
 const Landing = () => {
-  //----------------------------------------------------------------------
-  // HOOKS
-
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
-
-  //----------------------------------------------------------------------
-  // CALL BACK FUNCTION
-
-  const handleClick = () => {
-    logout();
-  };
 
   //----------------------------------------------------------------------
   return (
-    <div>
-      <h1>Landing Page</h1>
+    <div className='landing-page'>
+      {/* <div className='landing-page__container'> */}
+           <h5 className='landing-page__title-top'>Your Friendly neigbourhood</h5>
+        <div className="landing-page__circle1"> </div>
+          <h1 className='landing-page__title1'>crop</h1>
+       
+        <div className="landing-page__circle2">
+          <h1 className='landing-page__title2'>circle</h1>
+        </div>
+     
+        <h5 className='landing-page__title-bottom'>produce-sharing app</h5>
+      {/* </div> */}
+
       <div>
-        {user && (
-          <div>
-            <span>{user.email}</span>
-            <button onClick={handleClick}>Logout</button>
-            <Link to='/home'> Home </Link>
-            <Link to='/list/item-category'>Listings</Link>
-          </div>
-        )}
-        {!user && (
-          <div>
-            <button>
-              {' '}
-              <Link to='/login'>Login</Link>
-            </button>
-            <button>
-              <Link to='/signup'>Signup</Link>
-            </button>
-          </div>
-        )}
+        <div>
+          <button className='landing-page__signin-btn'>
+            <Link to='/signup' className='landing-page__link'>Sign in</Link>
+          </button>
+          <button className='landing-page__login-btn'>
+            <Link to='/login' className='landing-page__link'>Login</Link>
+          </button>
+        </div>
       </div>
+
     </div>
   );
 };

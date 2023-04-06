@@ -1,0 +1,105 @@
+@use "../../abstracts/"as *;
+
+.landing-page {
+    width: 100vw;
+    height: 844px;
+    position: relative;
+
+    &__container {
+        width: 100vw;
+    }
+
+    &__title-top {
+        position: absolute;
+        width: 220px;
+        height: 25px;
+        font-size: 16px;
+        left: 50%;
+        top: 8%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__circle1 {
+        background-color: $primary-yellow;
+        position: absolute;
+        width: 270px;
+        height: 270px;
+        clip-path: circle(50%);
+        z-index: 1;
+        left: 50%;
+        top: 27%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__title1 {
+        z-index: 10;
+        position: absolute;
+        width: 140px;
+        height: 65px;
+        left: 50%;
+        top: 22%;
+        transform: translate(-50%, -50%);
+        font-size: 6rem;
+    }
+
+
+    &__circle2 {
+        background-color: $primary-yellow;
+        position: absolute;
+        width: 270px;
+        height: 270px;
+        clip-path: circle(50%);
+        z-index: 1;
+        left: 50%;
+        top: 59%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__title2 {
+        z-index: 10;
+        position: absolute;
+        width: 164px;
+        height: 65px;
+        left: 50%;
+        top: 32%;
+        transform: translate(-50%, -50%);
+        font-size: 6rem;
+    }
+
+    &__title-bottom {
+        position: absolute;
+        height: 25px;
+        font-size: 16px;
+        left: 50%;
+        bottom: 18%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__signin-btn {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 600;
+        color: $primary-grn;
+        text-transform: uppercase;
+        position: absolute;
+        width: 100vw;
+        height: 75px;
+        top: 694px;
+        border-top: 1px solid $primary-grn;
+    }
+
+    &__login-btn {
+        position: absolute;
+        width: 100vw;
+        height: 75px;
+        top: 769px;
+        border-top: 1px solid $primary-grn;
+    }
+
+
+    &__link {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 600;
+        color: $primary-grn;
+        text-transform: uppercase;
+    }
+}

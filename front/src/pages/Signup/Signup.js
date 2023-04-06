@@ -36,7 +36,7 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('signed up now send me to confirmation page');
+    // console.log('signed up now send me to confirmation page');
     await signup(firstName, lastName, email, password);
   };
 
