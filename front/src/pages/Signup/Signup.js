@@ -43,59 +43,63 @@ const Signup = () => {
   //----------------------------------------------------------------------
   return (
     <>
-      <div>
-        <Link to='/'>
-          <button>Back to landing</button>
-        </Link>
-        {user && (
-          <div>
-            <span>{user.email}</span>
-            <button onClick={handleClick}>Logout</button>
-            <Link to='/home'> Home </Link>
+      <div className='signup'>
+        <div className='signup-header'>
+          <Link to='/'>
+            <button className='signup-header__btn'>Back</button>
+          </Link>
+        </div>
+        <div className='signup-body'>
+          <div className='signup-body__circle'>
+            <span className='signup-body__title'>join the circle</span>
           </div>
-        )}
-        {!user && (
-          <div>
-            <button>
-              {' '}
-              <Link to='/login'>Login</Link>
-            </button>
-          </div>
-        )}
+
+        </div>
+        <div className='signup-footer'>
+          <form className='signup-footer__form' onSubmit={handleSubmit}>
+            <div className='signup-footer__grid'>
+              <label className='signup-footer__label'>First Name: </label>
+              <input className='signup-footer__input'
+                type='text'
+                onChange={(event) => setFirstName(event.target.value)}
+                value={firstName}
+              />
+            </div>
+            <div className='signup-footer__grid'>
+              <label className='signup-footer__label'>Last Name: </label>
+              <input className='signup-footer__input'
+                type='text'
+                onChange={(event) => setLastName(event.target.value)}
+                value={lastName}
+              />
+            </div>
+            <div className='signup-footer__grid'>
+              <label className='signup-footer__label'>Email address: </label>
+              <input className='signup-footer__input'
+                type='email'
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+              />
+            </div>
+            <div className='signup-footer__grid'>
+              <label className='signup-footer__label'>password</label>
+              <input className='signup-footer__input'
+                type='password'
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+              />
+            </div>
+
+            <div className="signup-footer__conditions">
+              <input type="checkbox" name="agree" id="agree" /> <span><p>    I agree to the terms and conditions</p></span> </div>
+            
+               {error && <div className='error signup-footer__error'>{error}</div>}
+            <button className='signup-footer__btn' disabled={isLoading}>Sign up</button>
+
+          </form>
+
+        </div>
       </div>
-      <form className='signup' onSubmit={handleSubmit}>
-        <h3>Sign up</h3>
-
-        <label>First Name: </label>
-        <input
-          type='text'
-          onChange={(event) => setFirstName(event.target.value)}
-          value={firstName}
-        />
-        <label>Last Name: </label>
-        <input
-          type='text'
-          onChange={(event) => setLastName(event.target.value)}
-          value={lastName}
-        />
-
-        <label>Email address: </label>
-        <input
-          type='email'
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-        />
-
-        <label>password</label>
-        <input
-          type='password'
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
-
-        <button disabled={isLoading}>Sign up</button>
-        {error && <div className='error'>{error}</div>}
-      </form>
     </>
   );
 };

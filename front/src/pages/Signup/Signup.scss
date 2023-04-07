@@ -1,21 +1,126 @@
-/* auth forms */
-form.signup, form.login {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #ded5d5;
-  border-radius: 4px;
-}
+@use "../../abstracts/"as *;
 
-/* errprs */
-div.error {
-  padding: 10px;
-  background: #ffefef;
-   border: 1px solid rgb(218, 74, 74);
-  color: rgb(218, 74, 74);
-  border-radius: 4px;
-  margin: 20px 0;
-}
+
+.signup {
+  // border: 1px solid $primary-grn;
+  width: 100vw;
+  height: 100vh;
+
+  &-header {
+    width: 100vw;
+    border-bottom: 1px solid $primary-grn;
+
+    &__btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      color: $primary-grn;
+      text-transform: uppercase;
+      width: 50%;
+      height: 75px;
+    }
+  }
+
+  &-body {
+    padding: 15px 0;
+
+
+    &__circle {
+      margin: auto;
+      position: relative;
+      width: 340px;
+      height: 340px;
+      background-color: $primary-yellow;
+      clip-path: circle(50%);
+      display: flex;
+      justify-content: center;
+      align-self: center;
+    }
+
+    &__title {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      z-index: 10;
+      font-size: 5rem;
+      line-height: 60px;
+      width: 260px;
+      text-align: center;
+      justify-self: center;
+    }
+
+  }
+
+  &-footer {
+    border-top: 1px solid $primary-grn;
+    width: 80vw;
+    margin: auto;
+    height: 40vh;
+
+    &__form {
+      margin: auto;
+    }
+
+    &__grid {
+      height: 60px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      border-bottom: 1px solid #008148;
+    }
+
+
+    &__label {
+      height: 58px;
+      display: flex;
+      justify-self: start;
+      align-items: center;
+      text-transform: lowercase;
+      font-size: 1.4rem;
+    }
+
+    &__input {
+      height: 55px;
+      align-self: end;
+      border: none;
+      background-color: $primary-background;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      color: $primary-grn;
+    }
+
+    &__btn {
+      position: absolute;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      color: $primary-grn;
+      text-transform: uppercase;
+      width: 100%;
+      left: -2px;
+      bottom: 0;
+      height: 85px;
+      border-top: 1px solid $primary-grn;
+    }
+
+    &__error {
+      padding: 10px;
+      background: #ffefef;
+      border: 1px solid rgb(218, 74, 74);
+      color: black;
+      margin: auto;
+    }
+    
+    &__conditions {
+      display: inline-flex;
+  }
+  }
+  }
+
+
+
+
+/* errors */
 input.error {
   border: 1px solid rgb(218, 74, 74);
 }

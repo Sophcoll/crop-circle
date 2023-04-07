@@ -1,4 +1,4 @@
-@use "./Variables.scss" as *;
+@use "./Variables.scss"as *;
 
 *,
 *::before,
@@ -9,17 +9,19 @@
 }
 
 button {
-  background: none;
-  border: none;
-  cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
 }
 
 
-body{
+body {
     background-color: $primary-background;
 }
 
-body, 
+body,
 html {
     max-height: 100vh;
 }
