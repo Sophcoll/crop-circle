@@ -4,8 +4,18 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
+// COMPONENTS
+import ImageUpload from '../../components/add-listing-form/ImageUpload';
+import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
+import ListingName from '../../components/add-listing-form/ListingName';
+import ListingDescription from '../../components/add-listing-form/ListingDescription';
+import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
+import ListingLocation from '../../components/add-listing-form/ListingLocation';
+import ListingPickup from '../../components/add-listing-form/ListingPickup';
+
 // STYLE SHEET
 import './AddListing.scss';
+
 
 const AddListing = () => {
   //----------------------------------------------------------------------
@@ -154,151 +164,48 @@ const AddListing = () => {
 
       <div className='add-listing-body'>
         <form className='add-listing-form' onSubmit={handleSubmit}>
-          <div className='add-listing-form__image-upload'>
-            {/* upload image section */}
-            <label htmlFor='image'> Upload Image</label>
-            <input
-              onInput={(event) => fileChangeHandler(event)}
-              type='file'
-              name='image'
-              id='image'
-              accept='.jpeg, .png, .jpg'
-            />
-            {/* conditional rendering of image thumbnail */}
-            {image ? (
-              <div className='image-thumbnail'>
-                <img src={imagePreview} alt='user image of produce' />
-              </div>
-            ) : null}
-          </div>
+          <ImageUpload
+            fileChangeHandler={fileChangeHandler}
+            image={image}
+            imagePreview={imagePreview}
+          />
 
-          <div className='add-listing-form__exchange'>
-            <p>What would you like for your item?</p>
-            <div className='add-listing-form__exchange-type'>
-              <input
-                onChange={handleExchangeCategory}
-                type='radio'
-                id='free'
-                name='exchange'
-                value='free'
-              />
-              <label htmlFor='free'>Nothing - it's free</label>
-            </div>
-            <div className='add-listing-form__exchange-type'>
-              <input
-                onChange={handleExchangeCategory}
-                type='radio'
-                id='labour'
-                name='exchange'
-                value='labour'
-              />
-              <label htmlFor='labour'>
-                Labour - a helping hand in the harvest
-              </label>
-            </div>
-            <div className='add-listing-form__exchange-description'>
-              <textarea
-                placeholder='Please give a brief description, i.e. about 2 hours work to help pick fruit'
-                onChange={handleExchangeDescription}
-                className={exchange === 'labour' ? '' : 'hide'}
-                name='labourDescription'
-                id='labourDescription'
-                cols='30'
-                rows='10'
-              />
-            </div>
-            <div className='add-listing-form__exchange-type'>
-              <input
-                onChange={handleExchangeCategory}
-                type='radio'
-                id='produce'
-                name='exchange'
-                value='produce'
-              />
-              <label htmlFor='produce'>
-                Exchange - trade for other produce
-              </label>
-            </div>
-            <div className='add-listing-form__exchange-description'>
-              <textarea
-              placeholder='What are you wanting to exchange for? Please provide a brief description'
-                onChange={handleExchangeDescription}
-                className={exchange === 'produce' ? '' : 'hide'}
-                name='produceDescription'
-                id='produceDescription'
-                cols='30'
-                rows='10'
-              />
-            </div>
-          </div>
+          <ExchangeCategory
+            handleExchangeCategory={handleExchangeCategory}
+            handleExchangeDescription={handleExchangeDescription}
+            exchange={exchange}
+          />
 
-          <div className='add-listing-form__form-option'>
-            <label>Name of produce</label>
-            <input
-              type='text'
-              placeholder='What are you listing?  i.e. apples'
-              onChange={(event) => setName(event.target.value)}
-              value={name}
-              className={
-                emptyFields && emptyFields.includes('name') ? 'error' : ''
-              }
-            />
-          </div>
+          <ListingName
+            setName={setName}
+            name={name}
+            emptyFields={emptyFields}
+          />
 
-          <div className='add-listing-form__form-option'>
-            <label>Description</label>
-            <textarea
-              placeholder='Please give a brief description of the produce you have to offer'
-              onChange={(event) => setDescription(event.target.value)}
-              value={description}
-              className={
-                emptyFields && emptyFields.includes('description')
-                  ? 'error'
-                  : ''
-              }
-              name='description'
-              id='description'
-            />
-          </div>
+          <ListingDescription
+            setDescription={setDescription}
+            description={description}
+            emptyFields={emptyFields}
+          />
 
-          <div className='add-listing-form__form-option'>
-            <label>Quantity</label>
-            <input
-              placeholder='i.e. 1-2 kilograms, a small bag etc'
-              type='text'
-              onChange={(event) => setQuantity(event.target.value)}
-              value={quantity}
-              className={
-                emptyFields && emptyFields.includes('quantity') ? 'error' : ''
-              }
-            />
-          </div>
+          <ListingQuantity
+            setQuantity={setQuantity}
+            quantity={quantity}
+            emptyFields={emptyFields}
+          />
 
-          <div className='add-listing-form__form-option'>
-            <label>Pickup Location</label>
-            <input
-              placeholder='Only use an approx, not an actual address'
-              type='text'
-              onChange={(event) => setLocation(event.target.value)}
-              value={location}
-              className={
-                emptyFields && emptyFields.includes('location') ? 'error' : ''
-              }
-            />
-          </div>
+          <ListingLocation
+            setLocation={setLocation}
+            location={location}
+            emptyFields={emptyFields}
+          />
 
-          <div className='add-listing-form__form-option'>
-            <label>Pickup times</label>
-            <input
-              placeholder='i.e. weekdays after 5pm'
-              type='text'
-              onChange={(event) => setPickup(event.target.value)}
-              value={pickup}
-              className={
-                emptyFields && emptyFields.includes('pickup') ? 'error' : ''
-              }
-            />
-          </div>
+          <ListingPickup
+            setPickup={setPickup}
+            pickup={pickup}
+            emptyFields={emptyFields}
+          />
+
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
           {error && <div className='error'>{error}</div>}
           <button type='submit'>Submit</button>
