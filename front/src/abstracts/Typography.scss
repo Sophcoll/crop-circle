@@ -1,7 +1,8 @@
 @use "./Variables.scss" as *;
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap");
 
-body {
+body,
+textarea {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -52,4 +53,14 @@ h5 {
 
 a {
     text-decoration: none;
+    color: $primary-grn;
+}
+
+button, 
+input, 
+textarea,
+input::placeholder,
+textarea::placeholder {
+  color: $primary-grn;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }

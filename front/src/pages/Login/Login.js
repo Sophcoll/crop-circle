@@ -8,31 +8,30 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // STYLE SHEET
 import './Login.scss';
 
-
 const Login = () => {
   //----------------------------------------------------------------------
-  // USE STATES
-
+  // USE STATES & USE CONTEXT
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  //----------------------------------------------------------------------
-  // HOOKS
 
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { login, error, isLoading } = UseLogin();
 
   //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS
+  // CALLBACK FUNCTIONS
 
-  const handleClick = () => {
+  // logout
+  const handleClick = function () {
     logout();
   };
 
-  const handleSubmit = async (event) => {
+  // login
+  const handleSubmit = async function (event) {
+    // stop default page refresh on form submit
     event.preventDefault();
-    console.log('logged in now send me to home page');
+
+    // use static login function from userModel
     await login(email, password);
   };
 
@@ -41,12 +40,15 @@ const Login = () => {
     <>
       <div className='crop--circle'>
         <div className='grid-navigation__top'>
-          <Link to="/">
-            <button className='btn bck-btn half-btn'>Back to landing</button></Link>
+          <Link to='/'>
+            <button className='btn bck-btn half-btn'>Back to landing</button>
+          </Link>
           {user && (
             <div>
               <span>{user.email}</span>
-              <button className='btn' onClick={handleClick}>Logout</button>
+              <button className='btn' onClick={handleClick}>
+                Logout
+              </button>
               <Link to='/home'> Home </Link>
             </div>
           )}
@@ -54,7 +56,9 @@ const Login = () => {
             <div>
               <button className='btn'>
                 {' '}
-                <Link to='/signup' className='crop-link'>Signup</Link>
+                <Link to='/signup' className='crop-link'>
+                  Signup
+                </Link>
               </button>
             </div>
           )}
@@ -65,34 +69,48 @@ const Login = () => {
           <h1 className='crop--circle__title'>welcome back</h1>
           <div>
             <form className='crop--circle__form' onSubmit={handleSubmit}>
+              <div className='grid-left'>
+                <label className='crop--circle__label'>Email</label>
+              </div>
 
-              <div className="grid-left">
-                <label className='crop--circle__label'>Email</label></div>
+              <div className='grid-right'>
+                {' '}
+                <input
+                  className='crop--circle__input'
+                  type='email'
+                  onChange={(event) => setEmail(event.target.value)}
+                  value={email}
+                />
+              </div>
 
-              <div className="grid-right"> <input className='crop--circle__input'
-                type='email'
-                placeholder='joeblogs@gmail.com'
-                onChange={(event) => setEmail(event.target.value)}
-                value={email}
-              /></div>
+              <div className='grid-left'>
+                {' '}
+                <label className='crop--circle__label'>Password</label>
+              </div>
+              <div className='grid-right'>
+                {' '}
+                <input
+                  className='crop--circle__input'
+                  type='password'
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
+                />
+              </div>
 
-              <div className="grid-left"> <label className='crop--circle__label'>Password</label></div>
-              <div className="grid-right"> <input className='crop--circle__input'
-                placeholder='*********'
-                type='password'
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-              /></div>
-
-
-              <button className='btn full-btn signin' disabled={isLoading}>Sign in</button>
+              <button className='btn full-btn signin' disabled={isLoading}>
+                Sign in
+              </button>
               {error && <div className='error'>{error}</div>}
             </form>
           </div>
         </div>
-        <div className="grid-navigation__footer">
-          <div><button className='half-btn'>google</button></div>
-         <div><button className='half-btn'>facebook</button></div> 
+        <div className='grid-navigation__footer'>
+          <div>
+            <button className='half-btn'>google</button>
+          </div>
+          <div>
+            <button className='half-btn'>facebook</button>
+          </div>
         </div>
       </div>
     </>

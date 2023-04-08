@@ -10,33 +10,32 @@ import './Signup.scss';
 
 const Signup = () => {
   //----------------------------------------------------------------------
-  // USE STATES & GLOBAL VARIABLES
+  // USE STATES & USE CONTEXT
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //   const navigate = useNavigate(); // <--- Temporarily removed this from the imports at top of page because it's not yet being used and was throwing lint errors
-
-  // console.log(firstName, lastName, email, password)
-  //----------------------------------------------------------------------
-  // HOOKS
-
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { signup, error, isLoading } = UseSignup();
+  //   const navigate = useNavigate(); // <--- Temporarily removed this from the imports at top of page because it's not yet being used and was throwing lint errors
 
   //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS
+  // CALLBACK FUNCTIONS
 
-  const handleClick = () => {
+  // logout
+  const handleClick = function () {
     logout();
   };
 
-  const handleSubmit = async (event) => {
+  // signup
+  const handleSubmit = async function (event) {
+    // stop default page refresh on form submit
     event.preventDefault();
-    console.log('signed up now send me to confirmation page');
+
+    // use static sign up function from userModel
     await signup(firstName, lastName, email, password);
   };
 

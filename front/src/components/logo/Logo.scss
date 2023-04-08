@@ -1,0 +1,17 @@
+@use '../../abstracts/index' as *;
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 3.5rem 2.5rem 2.5rem;
+    border-bottom: solid $primary-grn 0.1rem;
+    background-color: $primary-background;
+
+    .line {
+      background-color: $primary-grn;
+      width: 10rem;
+      height: 0.1rem;
+    }
+  }

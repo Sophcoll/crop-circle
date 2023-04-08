@@ -1,0 +1,20 @@
+@use '../../abstracts/index' as *;
+
+.comments {
+  .comments-header {
+    padding: 1.5rem 3.5rem;
+    border-bottom: solid $primary-grn 0.1rem;
+
+    &__title {
+      h1 {
+        font-size: 2rem;
+        text-transform: capitalize;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.hide {
+  display: none;
+}

@@ -9,12 +9,11 @@
 button {
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 body, 
 html {
-    max-height: 100vh;
+    height: 100%;
 }
 
 li {
@@ -30,4 +29,19 @@ img {
     // height: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+textarea,
+input,
+button {
+    border: none;
+    background: none;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    cursor: pointer;
 }

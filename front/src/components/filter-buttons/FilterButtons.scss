@@ -1,0 +1,29 @@
+@use '../../abstracts/index' as *;
+
+.filter-list {
+    display: flex;
+    font-size: 1rem;
+    border-bottom: solid 0.1rem $primary-grn;
+    background-color: $primary-background;
+
+    &__item {
+      width: 100%;
+      border-right: solid 0.1rem $primary-grn;
+      padding: 1rem;
+
+      button {
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      &:last-of-type {
+        border-right: none;
+      }
+
+      &:hover {
+        background-color: $secondary-background;
+      }
+    }
+  }
