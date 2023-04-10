@@ -5,6 +5,9 @@
   // border: 1px solid $primary-grn;
   width: 100vw;
   height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: $primary-grn;
 
   &-header {
     width: 100vw;
@@ -110,12 +113,12 @@
       color: black;
       margin: auto;
     }
-    
+
     &__conditions {
       display: inline-flex;
+    }
   }
-  }
-  }
+}
 
 
 
