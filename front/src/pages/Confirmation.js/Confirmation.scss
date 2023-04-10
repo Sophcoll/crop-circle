@@ -1,11 +1,78 @@
 @use "../../abstracts/"as *;
 
-.welcome {
 
+.welcome {
+    background-color: $primary-grn;
+    color: $primary-background;
+    width: 100vw;
+    height: 100vh;
 
     &-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        height: 10vh;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
 
 
-      
+
+        &__child1 {
+            display: grid;
+            justify-items: end;
+        }
+
+        &__hr-line {
+            border: 1px solid $primary-background;
+            margin-left: 25px;
+            margin-right: 25px;
+            background: $primary-background;
+        }
+    }
+
+    &-body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 80vh;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__title {
+            margin: 0;
+            padding: 0;
+            font-size: 4em;
+            line-height: 5rem;
+        }
+
+        &__p {
+            padding-top: 50px;
+            // font-size: 18px;
+            width: 200px;
+            text-align: center;
+        }
+    }
+
+    &-footer {
+        height: 10vh;
+        width: 100vw;
+        padding: 0;
+        margin: 0;
+
+
+        &__btn {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: $primary-background;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+            width: 100vw;
+            border-top: 1px solid $primary-background;
+        }
+
     }
 }

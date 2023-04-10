@@ -44,24 +44,12 @@ const Login = () => {
           <Link to="/">
             <button className='btn bck-btn half-btn'>Back</button></Link>
           <div>
+
               <button className='btn'>
                 <Link to='/signup' className='mobile-card__link'>Signup</Link>
               </button>
             </div>
-          {/* {user && (
-            <div>
-              <span>{user.email}</span>
-              <button className='btn' onClick={handleClick}>Logout</button>
-              <Link to='/home'> Home </Link>
-            </div>
-          )}
-          {!user && (
-            <div>
-              <button className='btn'>
-                <Link to='/signup' className='mobile-card__link'>Signup</Link>
-              </button>
-            </div>
-          )} */}
+
         </div>
 
         <div className='mobile-card__container'>
