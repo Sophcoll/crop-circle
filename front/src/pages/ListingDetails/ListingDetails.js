@@ -13,6 +13,7 @@ const ListingDetails = () => {
   // USE STATES, USE CONTEXT & USE PARAMS
 
   const [listingDetails, setListingDetails] = useState(null);
+  const [authorDetails, setAuthorDetails] = useState({});
   const [commentsArray, setCommentsArray] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState(null);
@@ -26,8 +27,7 @@ const ListingDetails = () => {
 
   useEffect(() => {
     const fetchListingDetails = async function (listingId) {
-
-      // GET request using listing id value from useParams & user authentication token 
+      // GET request using listing id value from useParams & user authentication token
       const response = await fetch(
         `http://localhost:4000/listings/${listingId}`,
         {
@@ -44,6 +44,7 @@ const ListingDetails = () => {
       // if response is ok update the listingDetails useState and populate the commentsArray useState
       if (response.ok) {
         setListingDetails(json);
+        setAuthorDetails({ name: json.author.firstName, id: json.author._id });
         setCommentsArray(json.comments);
       }
     };
@@ -63,7 +64,7 @@ const ListingDetails = () => {
       return;
     }
 
-    // DELETE request using listingId from useParams in route & user authentication token 
+    // DELETE request using listingId from useParams in route & user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}`,
       {
@@ -102,7 +103,7 @@ const ListingDetails = () => {
       return;
     }
 
-    // POST request with user authentication token 
+    // POST request with user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}/comments`,
       {
@@ -137,17 +138,15 @@ const ListingDetails = () => {
 
   //----------------------------------------------------------------------
   // DELETE COMMENT REQUEST
-
   const handleCommentDelete = async (commentId) => {
     console.log('clicked');
-    console.log(commentId);
 
     // check for a logged in user before executing request
     if (!user) {
       return;
     }
 
-    // DELETE request with listingId from useParams, commentId passed in as an argument & user authentication token 
+    // DELETE request with listingId from useParams, commentId passed in as an argument & user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}/comments/${commentId}`,
       {
@@ -178,7 +177,11 @@ const ListingDetails = () => {
   return (
     <div className='listing-details'>
       <BackNav />
-      <Listing listingDetails={listingDetails} handleDelete={handleDelete} />
+      <Listing
+        authorDetails={authorDetails}
+        listingDetails={listingDetails}
+        handleDelete={handleDelete}
+      />
       <CommentSection
         commentsArray={commentsArray}
         handleCommentDelete={handleCommentDelete}

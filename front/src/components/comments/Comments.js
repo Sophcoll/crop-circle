@@ -41,7 +41,7 @@ const Comments = ({ commentsArray, handleCommentDelete }) => {
                     : 'hide'
                 }
               >
-                Delete
+                Delete Comment
               </button>
             </li>
           );

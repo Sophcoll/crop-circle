@@ -5,17 +5,21 @@ import { Link, useParams } from 'react-router-dom';
 // COMPONENTS
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 // STYLE SHEET
 import './Listing.scss';
 
-const Listing = ({ listingDetails, handleDelete }) => {
+const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
   //----------------------------------------------------------------------
   // USE CONTEXT & USE PARAMS
 
   // instantiating user from useAuthContext hook to be used within the submit handler below
   const { user } = useAuthContext();
   const listingId = useParams().listingId;
+
+  
+  
 
   //----------------------------------------------------------------------
   return (
@@ -24,8 +28,9 @@ const Listing = ({ listingDetails, handleDelete }) => {
         <div className='listing'>
           <header className='listing-header'>
             <div
+            // className='listing-header__buttons'
               className={
-                user.userId === listingDetails.author._id
+                user.userId === authorDetails.id
                   ? 'listing-header__buttons'
                   : 'hide'
               }
@@ -45,6 +50,7 @@ const Listing = ({ listingDetails, handleDelete }) => {
             </figure>
             <div className='listing-header__name'>
               <h1>{listingDetails.name}</h1>
+              <FavoriteBorderOutlinedIcon className="heart-icon" />
             </div>
           </header>
 
@@ -68,14 +74,14 @@ const Listing = ({ listingDetails, handleDelete }) => {
               Quantity: {listingDetails.quantity}
             </p>
             <p className='listing-body__author'>
-              Listed by: {listingDetails.author.firstName}
+              Listed by: {authorDetails.name}
             </p>
           </main>
           <footer className='listing-footer'>
             <div className='two-column'>
               <div className='listing-footer__location'>
                 <LocationOnOutlinedIcon />
-                <p class='test'>Near {listingDetails.location}</p>
+                <p>Near {listingDetails.location}</p>
               </div>
               <div className='line'></div>
               <div className='listing-footer__pickup-time'>

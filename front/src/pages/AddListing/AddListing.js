@@ -203,8 +203,8 @@ const AddListing = () => {
           />
 
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
-          {error && <div className='error'>{error}</div>}
           <button type='submit'>Submit</button>
+          {error && <div className='error'>{error}</div>}
         </form>
       </div>
     </div>

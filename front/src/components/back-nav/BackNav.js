@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './BackNav.scss';
 
 const BackNav = () => {
+  
   const navigate = useNavigate();
 
   return (
