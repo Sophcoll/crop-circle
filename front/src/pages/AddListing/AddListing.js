@@ -1,22 +1,27 @@
 // HOOKS
 import { useState, React } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
-
-// STYLE SHEET
-import './AddListing.scss';
+// COMPONENTS
+import ImageUpload from '../../components/add-listing-form/ImageUpload';
+import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
+import ListingName from '../../components/add-listing-form/ListingName';
+import ListingDescription from '../../components/add-listing-form/ListingDescription';
+import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
+import ListingLocation from '../../components/add-listing-form/ListingLocation';
+import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import BackNav from '../../components/back-nav/BackNav';
 
 const AddListing = () => {
   //----------------------------------------------------------------------
-  // USE STATES
+  // USE STATES, USE CONTEXT & USE NAVIGATE
 
-  // for item category (maybe needs to be on a separate page)
   const [exchange, setExchange] = useState('');
   const [exchangeDescription, setExchangeDescription] = useState('');
-
-  // for item-details
+  const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -24,36 +29,49 @@ const AddListing = () => {
   const [pickup, setPickup] = useState('');
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
-  const [image, setImage] = useState('')
-  const [imagePreview, setImagePreview] = useState('')
-  // navigate hook to programmatically redirect back to 'Home' component after submit button clicked
+
+  const { user } = useAuthContext();
+  const { dispatch } = useListingsContext();
+
   const navigate = useNavigate();
 
- // ----------------------------------------------------------------------
-  // USE CONTEXT
+  //----------------------------------------------------------------------
+  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
 
-  // instantiating user from useAuthContext hook to be used within the submit handler below
-  const { user } = useAuthContext();
+  // finds the chosen category
+  const handleExchangeCategory = function (event) {
+    const value = event.target.value;
+    setExchange(value);
+    if (value === 'free') {
+      // refreshes if the exchangeDescription useState if free category is chosen
+      setExchangeDescription('');
+    }
+  };
 
-  // instantiating the dispatch function from the useListingsContext hook to update the global state to match DB when new listing document is created
-  const { dispatch } = useListingsContext();
- 
+  // saves the description for the exchange
+  const handleExchangeDescription = function (event) {
+    const newDescription = event.target.value;
+    setExchangeDescription(newDescription);
+  };
 
   //----------------------------------------------------------------------
-  // POST REQUEST ON FORM SUBMIT - Add a new listing to database
-   
-  const handleSubmit = async (event) => {
+  // POST A NEW LISTING REQUEST
+
+  const handleSubmit = async function (event) {
+    // stop default page refresh on form submit
     event.preventDefault();
 
-        // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    // check for a logged in user before executing request
     if (!user) {
       setError('You must be logged in');
       return;
     }
-   
- let userImage = await toBase64(image);
-    const file = { file: userImage }
-    
+
+    // image upload
+    let userImage = await toBase64(image);
+    const file = { file: userImage };
+
+    // define what will be sent in request body
     const listing = {
       exchange,
       exchangeDescription,
@@ -62,28 +80,29 @@ const AddListing = () => {
       quantity,
       location,
       pickup,
-      file
+      file,
     };
 
+    // POST request with user authentication token
     const response = await fetch(`http://localhost:4000/listings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(listing),
     });
     const json = await response.json();
 
-    // if response NOT ok then show error in database
+    // if the response is not ok, output the error in the console & on front UI
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyFields);
       console.log(error);
     }
-    // if response OK then this will reset the inputs to empty to add another and set the error to null
+
+    // if response is ok, update or reset the appropriate useStates, update the global listingsContext & redirect home
     if (response.ok) {
-      console.log(json)
       setEmptyFields([]);
       setError(null);
       setExchange('');
@@ -93,48 +112,33 @@ const AddListing = () => {
       setQuantity('');
       setLocation('');
       setPickup('');
-      setImage('')
+      setImage('');
       dispatch({ type: 'CREATE_LISTING', payload: json }); // update the global state to match the db
       navigate('/home/');
     }
   };
 
   //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS FOR ITEM CATEGORY
+  // CALLBACK FUNCTIONS FOR IMAGE UPLOAD
 
-  // finds the chosen category
-  const handleExchangeCategory = (event) => {
-    const value = event.target.value
-    setExchange(value);
-    if (value === 'free') {setExchangeDescription('')} 
-  };
+  const fileChangeHandler = function (event) {
+    // save image uploaded by user in constant
+    const image = event.target.files[0];
 
-  // saves the description for the exchange
-  const handleExchangeDescription = (event) => {
-    setExchangeDescription(event.target.value);
-  };
-
-
-    //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS FOR IMAGE UPLOAD
-  const fileChangeHandler = (event) => {
-    event.preventDefault();
-    const image = event.target.files[0]
-
+    // if no image, prompt user
     if (!image) {
-      alert('choose image')
+      alert('choose image');
     }
-    
-    if (image) {
-      setImage(image)
-      // console.log(image)
 
+    // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
+    if (image) {
+      setImage(image);
       const imgUrl = URL.createObjectURL(image);
       setImagePreview(imgUrl);
     }
-  }
+  };
 
-   // upload image file
+  // upload image file (used in post request)
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -142,136 +146,64 @@ const AddListing = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
-  
-
-
 
   //----------------------------------------------------------------------
 
   return (
-    <div>
-      <Link to={'/home'}>
-        <button>back</button>
-      </Link>
-      <form>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='free'
-            name='exchange'
-            value='free'
+    <div className='add-listing'>
+      <header className='add-listing-header'>
+        <BackNav />
+      </header>
+
+      <div className='add-listing-body'>
+        <form className='add-listing-form' onSubmit={handleSubmit}>
+          <ImageUpload
+            fileChangeHandler={fileChangeHandler}
+            image={image}
+            imagePreview={imagePreview}
           />
-          <label htmlFor='free'>Free</label>
-        </div>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='labour'
-            name='exchange'
-            value='labour'
+
+          <ExchangeCategory
+            handleExchangeCategory={handleExchangeCategory}
+            handleExchangeDescription={handleExchangeDescription}
+            exchange={exchange}
           />
-          <label htmlFor='labour'>Labour</label>
-          <textarea
-            onChange={handleExchangeDescription}
-            className={exchange === 'labour' ? '' : 'hide'}
-            name='labourDescription'
-            id='labourDescription'
-            cols='30'
-            rows='10'
-          ></textarea>
-        </div>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='produce'
-            name='exchange'
-            value='produce'
+
+          <ListingName
+            setName={setName}
+            name={name}
+            emptyFields={emptyFields}
           />
-          <label htmlFor='produce'>Other produce</label>
-          <textarea
-            onChange={handleExchangeDescription}
-            className={exchange === 'produce' ? '' : 'hide'}
-            name='produceDescription'
-            id='produceDescription'
-            cols='30'
-            rows='10'
-          ></textarea>
-        </div>
-      </form>
 
-      <form onSubmit={handleSubmit} >
-            
-    {/* upload image section */}
-        <label htmlFor='image'> Upload Image</label>
-        <input
-          onInput={(e) => fileChangeHandler(e)}
-          type="file"
-          name='image'
-        id='image'
-        accept='.jpeg, .png, .jpg'
-           />
-    {/* conditional rendering of image thumbnail */}
-          {image ? (
-            <div className="image-thumbnail">
-              <img src={imagePreview} alt="" />
-            </div>
-          ) : null}
+          <ListingDescription
+            setDescription={setDescription}
+            description={description}
+            emptyFields={emptyFields}
+          />
 
-        <label>Name</label>
-        <input
-          type='text'
-          onChange={(event) => setName(event.target.value)}
-          value={name}
-          className={emptyFields && emptyFields.includes('name') ? 'error' : ''}
-        />
+          <ListingQuantity
+            setQuantity={setQuantity}
+            quantity={quantity}
+            emptyFields={emptyFields}
+          />
 
-        <label>Description</label>
-        <input
-          type='text'
-          onChange={(event) => setDescription(event.target.value)}
-          value={description}
-          className={
-            emptyFields && emptyFields.includes('description') ? 'error' : ''
-          }
-        />
+          <ListingLocation
+            setLocation={setLocation}
+            location={location}
+            emptyFields={emptyFields}
+          />
 
-        <label>Quantity</label>
-        <input
-          type='text'
-          onChange={(event) => setQuantity(event.target.value)}
-          value={quantity}
-          className={
-            emptyFields && emptyFields.includes('quantity') ? 'error' : ''
-          }
-        />
+          <ListingPickup
+            setPickup={setPickup}
+            pickup={pickup}
+            emptyFields={emptyFields}
+          />
 
-        <label>Approx Location</label>
-        <input
-          type='text'
-          onChange={(event) => setLocation(event.target.value)}
-          value={location}
-          className={
-            emptyFields && emptyFields.includes('location') ? 'error' : ''
-          }
-        />
-
-        <label>Pick-up times</label>
-        <input
-          type='text'
-          onChange={(event) => setPickup(event.target.value)}
-          value={pickup}
-          className={
-            emptyFields && emptyFields.includes('pickup') ? 'error' : ''
-          }
-        />
-
-        <button>Submit</button>
-        {/* Output the error message to user at bottom of form if not all fields are filled out */}
-        {error && <div className='error'>{error}</div>}
-      </form>
+          {/* Output the error message to user at bottom of form if not all fields are filled out */}
+          <button type='submit'>Submit</button>
+          {error && <div className='error-message'>{error}</div>}
+        </form>
+      </div>
     </div>
   );
 };

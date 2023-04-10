@@ -49,7 +49,7 @@ function App() {
             <Route path='/menu/watchlist' element={<Watchlist />} />
             <Route path='/list/item-details' element={<AddListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
-            <Route path='listings/:listingId/edit' element={<EditListing />} />
+            <Route path='/listings/:listingId/edit' element={<EditListing />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>

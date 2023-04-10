@@ -3,21 +3,30 @@ import { useState, useEffect, React } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
-import Navbar from '../../components/navbar/Navbar';
+
+// COMPONENTS
+import Logo from '../../components/logo/Logo';
+import FilterButtons from '../../components/filter-buttons/FilterButtons';
+import Circle from '../../components/circle/Circle';
+import ListingsListView from '../../components/listings-list-view/ListingsListView';
+
+// STYLE SHEET
+import './Home.scss';
 
 const Home = () => {
   //----------------------------------------------------------------------
-  // USE STATE
+  // USE STATE, USE CONTEXT & GLOBAL VARIABLES
 
   const [listings, setListings] = useState(null);
 
-  //-----------------------------------------------------------------------------
-  // HOOK
-  // instantiating user from the useAuthContext hook to access user and use in the 'Authorization' header of GET request
   const { user } = useAuthContext();
-
-  // instantiating the dispatch function from the useListingsContext hook - we need to set the initial global state so it's not null
   const { dispatch } = useListingsContext();
+
+  // values used by filter button components
+  const filterOptions = ['all', 'free', 'labour', 'exchange'];
+
+  // feeds the circle component title for the page
+  const pageTitle = 'produce nearby';
 
   //----------------------------------------------------------------------
   // GET REQUEST TO DATABASE ON PAGE LOAD
@@ -43,28 +52,26 @@ const Home = () => {
 
   //----------------------------------------------------------------------
   return (
-    <div>
-      <Navbar />
-      <ul>
-        {listings &&
-          listings.map((listing) => {
-            return (
-              <Link
-                to={`/listings/${listing._id}`}
-                state={listing}
-                key={listing._id}
-              >
-                <li>
-                  <h2>{listing.name}</h2>
-                  <p>Listed by</p>
-                </li>
-              </Link>
-            );
-          })}
-      </ul>
-      <Link to='/list/item-details'>
-        <button>Add Listing</button>
-      </Link>
+    <div className='home'>
+      <header className='home-header'>
+        <Logo />
+        <FilterButtons filterOptions={filterOptions} />
+      </header>
+
+      <main className='home-body'>
+        <Circle pageTitle={pageTitle} />
+        <ListingsListView listings={listings} />
+      </main>
+
+      <footer className='home-footer'>
+        <Link to='/menu'>
+          <button>Menu</button>
+        </Link>
+        <span className='line'></span>
+        <Link to='/list/item-details'>
+          <button>List an item</button>
+        </Link>
+      </footer>
     </div>
   );
 };

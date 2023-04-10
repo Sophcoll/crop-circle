@@ -1,0 +1,38 @@
+@use '../../abstracts/index' as *;
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3.5rem 2.5rem 2.5rem;
+  border-bottom: solid $primary-grn 0.1rem;
+  background-color: $primary-background;
+
+  @media (min-width: $desktop-width) {
+    gap: 10rem;
+  }
+
+  .line {
+    background-color: $primary-grn;
+    width: 10rem;
+    height: 0.1rem;
+
+    @media (min-width: $desktop-width) {
+      width: 20rem;
+    }
+  }
+}
+
+.logo--green {
+  border-bottom: solid $primary-background 0.1rem;
+  background-color: $primary-grn;
+
+  h5 {
+    color: $primary-background;
+  }
+
+  .line{
+    background-color: $primary-background;
+  }
+}

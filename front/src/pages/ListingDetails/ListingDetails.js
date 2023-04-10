@@ -1,54 +1,70 @@
 // HOOKS
 import { useState, useEffect, React } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
+
+// COMPONENTS
+import Listing from '../../components/listing/Listing';
+import CommentSection from '../../components/comments/CommentSection';
+import BackNav from '../../components/back-nav/BackNav';
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
-  // USE STATES, HOOKS & PARAMS
+  // USE STATES, USE CONTEXT & USE PARAMS
 
-  // stores the listing details that are being retrieved in the GET request to the database below
   const [listingDetails, setListingDetails] = useState(null);
+  const [authorDetails, setAuthorDetails] = useState({});
+  const [commentsArray, setCommentsArray] = useState([]);
+  const [newComment, setNewComment] = useState('');
   const [error, setError] = useState(null);
 
-  // stores comment to post at bottom of listing
-  const [newComment, setNewComment] = useState('');
-
-  const[commentsArray, setCommentsArray ] = useState([])
-
-  // ordered comments array - shows comments from listingDetails in reverse order (newest at top):
-  const [orderedComments, setOrderedComments] = useState([]);
-
-  // listing id to use as parameter in GET request below to find specific listing
+  const { user } = useAuthContext();
   const listingId = useParams().listingId;
-
-  // navigate hook to programmatically redirect back to 'Home' component after delete button clicked
   const navigate = useNavigate();
 
-  // instantiating user from useAuthContext hook to be used within the submit handler below
-  const { user } = useAuthContext();
-
   //----------------------------------------------------------------------
-  // ORDER COMMENTS
+  // GET A SPECIFIC LISTING REQUEST
 
-  const handleOrderComments = (commentsArray) => {
-    const unorderedArray = commentsArray;
+  useEffect(() => {
+    const fetchListingDetails = async function (listingId) {
+      // GET request using listing id value from useParams & user authentication token
+      const response = await fetch(
+        `http://localhost:4000/listings/${listingId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
-    if (unorderedArray.length > 0) {
-      const orderedArray = unorderedArray.reverse();
-      setOrderedComments(orderedArray);
+      // await response and store as json
+      const json = await response.json();
+
+      // if response is ok update the listingDetails useState and populate the commentsArray useState
+      if (response.ok) {
+        setListingDetails(json);
+        setAuthorDetails({ name: json.author.firstName, id: json.author._id });
+        setCommentsArray(json.comments);
+      }
+    };
+
+    // only invoke this function if there is a user logged in
+    if (user) {
+      fetchListingDetails(listingId);
     }
-  };
+  }, [user, commentsArray]);
 
   //----------------------------------------------------------------------
-  // DELETE LISTING REQUEST
+  // DELETE A SPECIFIC LISTING REQUEST
 
-  const handleDelete = async () => {
-    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+  const handleDelete = async function () {
+    // check for a logged in user before executing request
     if (!user) {
       return;
     }
 
+    // DELETE request using listingId from useParams in route & user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}`,
       {
@@ -59,28 +75,35 @@ const ListingDetails = () => {
         },
       }
     );
+
+    // await response and store as json
     const json = await response.json();
 
-    if (response.ok) {
-      setListingDetails(json);
-      navigate('/home');
-    }
+    // if the response is not ok, output the error in the console
     if (!response.ok) {
       console.log('response not ok');
+    }
+
+    // if response is ok update the listingDetails useState and redirect back to the home page
+    if (response.ok) {
+      setListingDetails(json);
+      navigate('/home/');
     }
   };
 
   //----------------------------------------------------------------------
-  // ADD COMMENT REQUEST
+  // POST COMMENT REQUEST
 
   const handleSubmit = async (event) => {
+    // stop default page refresh on form submit
     event.preventDefault();
 
-    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    // check for a logged in user before executing request
     if (!user) {
       return;
     }
 
+    // POST request with user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}/comments`,
       {
@@ -93,18 +116,20 @@ const ListingDetails = () => {
       }
     );
 
+    // await response and store as json
     const json = await response.json();
 
-    // if response NOT ok then show error in database
+    // if the response is not ok, output the error in the console & front end UI
     if (!response.ok) {
       setError(json.error);
       // setEmptyFields(json.emptyFields);
       console.log(error);
     }
 
+    // if response is ok update the listingDetails useState, commentsArray useState and reset the newComment useState ready for the next comment
     if (response.ok) {
       setListingDetails(json);
-      setCommentsArray(json.comments)
+      setCommentsArray(json.comments);
       // setEmptyFields([]);
       // setError(null);
       setNewComment('');
@@ -112,16 +137,16 @@ const ListingDetails = () => {
   };
 
   //----------------------------------------------------------------------
-  // DELETE REQUEST TO DELETE COMMENTS
-
+  // DELETE COMMENT REQUEST
   const handleCommentDelete = async (commentId) => {
     console.log('clicked');
 
-    // we first want to check and see if there is even a user logged in else we won't bother with the rest of the function
+    // check for a logged in user before executing request
     if (!user) {
       return;
     }
 
+    // DELETE request with listingId from useParams, commentId passed in as an argument & user authentication token
     const response = await fetch(
       `http://localhost:4000/listings/${listingId}/comments/${commentId}`,
       {
@@ -132,109 +157,38 @@ const ListingDetails = () => {
         },
       }
     );
+
+    // await response and store as json
     const json = await response.json();
 
-    if (response.ok) {
-      setListingDetails(json);
-      setCommentsArray(json.comments)
-
-    }
+    // if the response is not ok, output the error in the console
     if (!response.ok) {
       console.log('response not ok');
+    }
+
+    // if response is ok update the listingDetails & commentsArray useStates
+    if (response.ok) {
+      setListingDetails(json);
+      setCommentsArray(json.comments);
     }
   };
 
   //----------------------------------------------------------------------
-  // GET REQUEST WITH SPECIFIC ID TO DATABASE ON PAGE LOAD
-
-  useEffect(() => {
-    const fetchListingDetails = async (listingId) => {
-      const response = await fetch(
-        `http://localhost:4000/listings/${listingId}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-
-      const json = await response.json();
-
-      if (response.ok) {
-        setListingDetails(json);
-        setCommentsArray(json.comments)
-      }
-    };
-
-    if (user) {
-      fetchListingDetails(listingId);
-    }
-  }, [user]);
-
-  //----------------------------------------------------------------------
   return (
-    <div>
-      <Link to='/home'>
-        <button>Go Back</button>
-      </Link>
-
-      {listingDetails && listingDetails ? (
-        <div>
-          <h1>{listingDetails.name}</h1>
-          <img src={listingDetails.image} alt='' />
-          <p>Exchanging for: {listingDetails.exchange}</p>
-          <p>
-            {listingDetails.exchangeDescription
-              ? listingDetails.exchangeDescription
-              : null}
-          </p>
-          <p>Description: {listingDetails.description}</p>
-          <p>Quantity: {listingDetails.quantity}</p>
-          <p>Pickup location: {listingDetails.location}</p>
-          <p>Pickup time: {listingDetails.pickup}</p>
-          <p>Seller name: {listingDetails.author.firstName}</p>
-        </div>
-      ) : null}
-
-      {listingDetails && listingDetails.author === user.userId ? (
-        <div>
-          <Link
-            to={`/listings/${listingDetails._id}/edit`}
-            state={listingDetails}
-            key={listingDetails._id}
-          >
-            <button>Edit</button>
-          </Link>
-          <button onClick={handleDelete}>Delete</button>
-        </div>
-      ) : null}
-
-      <h2>Comments</h2>
-        {commentsArray && commentsArray.map((comment) => {
-          return (
-            <div key={comment._id}>
-              <p>Author: {comment.author.firstName}</p>
-              <p>message: {comment.message}</p>
-              <p>Posted at: {comment.createdAt}</p>
-              <button>Delete Comment</button>
-            </div>
-          )
-        })}
-
-      <div>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            cols='30'
-            rows='10'
-            onChange={(event) => setNewComment(event.target.value)}
-            name='comment'
-            id='comment'
-            value={newComment}
-          ></textarea>
-          <button type='submit'>Leave comment</button>
-        </form>
-      </div>
+    <div className='listing-details'>
+      <BackNav />
+      <Listing
+        authorDetails={authorDetails}
+        listingDetails={listingDetails}
+        handleDelete={handleDelete}
+      />
+      <CommentSection
+        commentsArray={commentsArray}
+        handleCommentDelete={handleCommentDelete}
+        newComment={newComment}
+        setNewComment={setNewComment}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

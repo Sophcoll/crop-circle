@@ -1,0 +1,7 @@
+@use "./Variables.scss" as *;
+
+body, 
+html {
+    background-color: $primary-background;
+    color: $primary-grn;
+}

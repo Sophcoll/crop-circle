@@ -8,31 +8,28 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // STYLE SHEET
 import './Login.scss';
 
-
 const Login = () => {
   //----------------------------------------------------------------------
-  // USE STATES
-
+  // USE STATES & USE CONTEXT
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  //----------------------------------------------------------------------
-  // HOOKS
 
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { login, error, isLoading } = UseLogin();
 
   //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS
+  // CALLBACK FUNCTIONS
 
-  const handleClick = () => {
+  // logout
+  const handleClick = function () {
     logout();
   };
 
-  const handleSubmit = async (event) => {
+  // login
+  const handleSubmit = async function (event) {
+    // stop default page refresh on form submit
     event.preventDefault();
-    // console.log('logged in now send me to home page');
     await login(email, password);
   };
 
@@ -57,7 +54,6 @@ const Login = () => {
           <h1 className='mobile-card__title'>welcome back</h1>
           <div>
             <form className='mobile-card__form' onSubmit={handleSubmit}>
-
               <div className="grid-left">
                 <label className='mobile-card__label' htmlFor='email'>Email</label></div>
 
