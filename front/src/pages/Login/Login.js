@@ -42,8 +42,13 @@ const Login = () => {
       <div className='mobile-card'>
         <div className='mobile-card__grid-top'>
           <Link to="/">
-            <button className='btn bck-btn half-btn'>Back to landing</button></Link>
-          {user && (
+            <button className='btn bck-btn half-btn'>Back</button></Link>
+          <div>
+              <button className='btn'>
+                <Link to='/signup' className='mobile-card__link'>Signup</Link>
+              </button>
+            </div>
+          {/* {user && (
             <div>
               <span>{user.email}</span>
               <button className='btn' onClick={handleClick}>Logout</button>
@@ -56,7 +61,7 @@ const Login = () => {
                 <Link to='/signup' className='mobile-card__link'>Signup</Link>
               </button>
             </div>
-          )}
+          )} */}
         </div>
 
         <div className='mobile-card__container'>
@@ -83,7 +88,9 @@ const Login = () => {
                 value={password}
                 name="password"
               /></div>
-              <button className='btn full-btn signin' disabled={isLoading}>Sign in</button>
+
+              <button className='btn full-btn signin' disabled={isLoading}>Sign Up</button>
+
              <div className='mobile-card__error'>{error && <div className='error'>{error}</div>}</div> 
             </form>
           </div>

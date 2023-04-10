@@ -17,6 +17,7 @@ import Profile from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages';
 import UserListings from './pages/UserListings/UserListings';
 import Watchlist from './pages/Watchlist/Watchlist';
+import Confirmation from './pages/Confirmation.js/Confirmation';
 
 function App() {
   // instantiate user from AuthContext so we can protect routes from people not logged in & redirect a user based on their authentication status
@@ -35,10 +36,8 @@ function App() {
               path='/login'
               element={!user ? <Login /> : <Navigate to='/home' />}
             />
-            <Route
-              path='/signup'
-              element={!user ? <Signup /> : <Navigate to='/home' />}
-            />
+            <Route path='/signup' element={!user ? <Signup /> : <Navigate to="/home" />} />
+            <Route path='/confirmation' element={ <Confirmation />} />
             <Route
               path='/home'
               element={user ? <Home /> : <Navigate to='/' />}
