@@ -1,3 +1,5 @@
+@use "./Variables.scss"as *;
+
 *,
 *::before,
 *::after {
@@ -7,8 +9,16 @@
 }
 
 button {
-  background: none;
-  border: none;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+body{
+    background-color: $primary-background;
 }
 
 body, 

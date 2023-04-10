@@ -1,0 +1,38 @@
+@use "../../abstracts/"as *;
+
+.menu {
+    background-color: $primary-grn;
+    width: 100vw;
+    height: 100vh;
+
+    &-header {
+        width: 100vw;
+        height: 10vh;
+        border-bottom: 1px solid $primary-background;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+
+        &__link {
+            color: $primary-background;
+            padding-left: 35px;
+        }
+    }
+
+    &-body {
+        width: 100vw;
+        height: 90vh;
+        display: flex;
+        flex-direction: column-reverse;
+
+
+        &__link {
+            border-top: 1px solid $primary-background;
+        }
+
+        &__link-title {
+            padding-left: 42px;
+            color: $primary-background;
+        }
+    }
+}

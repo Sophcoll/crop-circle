@@ -30,87 +30,58 @@ const Login = () => {
   const handleSubmit = async function (event) {
     // stop default page refresh on form submit
     event.preventDefault();
-
-    // use static login function from userModel
     await login(email, password);
   };
 
   //----------------------------------------------------------------------
   return (
     <>
-      <div className='crop--circle'>
-        <div className='grid-navigation__top'>
-          <Link to='/'>
-            <button className='btn bck-btn half-btn'>Back to landing</button>
-          </Link>
-          {user && (
-            <div>
-              <span>{user.email}</span>
-              <button className='btn' onClick={handleClick}>
-                Logout
-              </button>
-              <Link to='/home'> Home </Link>
-            </div>
-          )}
-          {!user && (
-            <div>
+      <div className='mobile-card'>
+        <div className='mobile-card__grid-top'>
+          <Link to="/">
+            <button className='btn bck-btn half-btn'>Back</button></Link>
+          <div>
+
               <button className='btn'>
-                {' '}
-                <Link to='/signup' className='crop-link'>
-                  Signup
-                </Link>
+                <Link to='/signup' className='mobile-card__link'>Signup</Link>
               </button>
             </div>
-          )}
+
         </div>
 
-        <div className='crop--circle__container'>
-          <div className='crop--circle__circle'></div>
-          <h1 className='crop--circle__title'>welcome back</h1>
+        <div className='mobile-card__container'>
+          <div className='mobile-card__circle'></div>
+          <h1 className='mobile-card__title'>welcome back</h1>
           <div>
-            <form className='crop--circle__form' onSubmit={handleSubmit}>
-              <div className='grid-left'>
-                <label className='crop--circle__label'>Email</label>
-              </div>
+            <form className='mobile-card__form' onSubmit={handleSubmit}>
+              <div className="grid-left">
+                <label className='mobile-card__label' htmlFor='email'>Email</label></div>
 
-              <div className='grid-right'>
-                {' '}
-                <input
-                  className='crop--circle__input'
-                  type='email'
-                  onChange={(event) => setEmail(event.target.value)}
-                  value={email}
-                />
-              </div>
+              <div className="grid-right"> <input className='mobile-card__input'
+                type='email'
+                placeholder='joeblogs@gmail.com'
+                onChange={(event) => setEmail(event.target.value)}
+                name='email'
+                value={email}
+              /></div>
+              <div className="grid-left"> <label className='mobile-card__label'>Password</label></div>
+              <div className="grid-right"> <input className='mobile-card__input'
+                placeholder='*********'
+                type='password'
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+                name="password"
+              /></div>
 
-              <div className='grid-left'>
-                {' '}
-                <label className='crop--circle__label'>Password</label>
-              </div>
-              <div className='grid-right'>
-                {' '}
-                <input
-                  className='crop--circle__input'
-                  type='password'
-                  onChange={(event) => setPassword(event.target.value)}
-                  value={password}
-                />
-              </div>
+              <button className='btn full-btn signin' disabled={isLoading}>Sign Up</button>
 
-              <button className='btn full-btn signin' disabled={isLoading}>
-                Sign in
-              </button>
-              {error && <div className='error'>{error}</div>}
+             <div className='mobile-card__error'>{error && <div className='error'>{error}</div>}</div> 
             </form>
           </div>
         </div>
-        <div className='grid-navigation__footer'>
-          <div>
-            <button className='half-btn'>google</button>
-          </div>
-          <div>
-            <button className='half-btn'>facebook</button>
-          </div>
+        <div className="mobile-card__footer">
+          <div><button className='half-btn'>google</button></div>
+         <div><button className='half-btn'>facebook</button></div> 
         </div>
       </div>
     </>

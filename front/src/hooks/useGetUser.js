@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from 'react'
+
 
 export const useGetUser = () => {
 
@@ -10,21 +11,22 @@ export const useGetUser = () => {
  const userDetails = (userEmail) => {
 
   const getUserDetails = async () => {
-  const response = await fetch(`/users/${userEmail}`, {method: "GET"})
+  const response = await fetch(`http://localhost:4000/users/${userEmail}`, {method: "GET"})
   const userResponse = await response.json()
 
-  const user = userResponse[0]
-  
+      const user = userResponse[0]
+      
+     console.log(user, userResponse)
+     console.log(user.firstName, user.email)
   setFirstName(user.firstName)
   setLastName(user.lastName)
   setEmail(user.email)
   setUserId(user._id)
   }
-
+  
   getUserDetails()
- 
  }
-
+ 
  return { userDetails, firstName, lastName, email, userId }
 
 }
