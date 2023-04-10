@@ -88,7 +88,9 @@ const Login = () => {
                 value={password}
                 name="password"
               /></div>
+
               <button className='btn full-btn signin' disabled={isLoading}>Sign Up</button>
+
              <div className='mobile-card__error'>{error && <div className='error'>{error}</div>}</div> 
             </form>
           </div>

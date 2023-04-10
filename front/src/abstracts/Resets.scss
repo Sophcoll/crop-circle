@@ -17,11 +17,12 @@ button {
 }
 
 
-body {
+body{
     background-color: $primary-background;
 }
 
-body,
+body, 
+
 html {
     max-height: 100vh;
 }
