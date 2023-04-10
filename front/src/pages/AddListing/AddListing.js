@@ -1,6 +1,6 @@
 // HOOKS
 import { useState, React } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
@@ -12,10 +12,10 @@ import ListingDescription from '../../components/add-listing-form/ListingDescrip
 import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
 import ListingLocation from '../../components/add-listing-form/ListingLocation';
 import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import BackNav from '../../components/back-nav/BackNav';
 
 // STYLE SHEET
 import './AddListing.scss';
-
 
 const AddListing = () => {
   //----------------------------------------------------------------------
@@ -155,11 +155,7 @@ const AddListing = () => {
   return (
     <div className='add-listing'>
       <header className='add-listing-header'>
-        <div className='top-nav'>
-          <Link to={'/home'}>
-            <button>back</button>
-          </Link>
-        </div>
+        <BackNav />
       </header>
 
       <div className='add-listing-body'>

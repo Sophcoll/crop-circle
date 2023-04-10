@@ -1,24 +1,85 @@
 @use '../../abstracts/index' as *;
 
 .add-listing-form {
+
+  // IMAGE UPLOAD
   .image-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     border-bottom: solid 0.1rem $primary-grn;
-    padding: 3.5rem;
 
-    input {
+    &__inner-wrapper{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3.5rem;
+    }
+
+    &__input-wrapper {
+      height: 13rem;
       width: 100%;
-      // opacity: 0;
+      position: relative;
+    }
 
-      &::placeholder {
-        display: none;
+    &__icon {
+      font-size: 8rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &__input {
+      z-index: 1000;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .image-thumbnail {
+      &__img {
+        height: 25rem;
+        width: 100%;
+      }
+
+      &__icon {
+        font-size: 2rem;
+        position: absolute;
+        left: 3.5rem;
+        top: 2rem;
+      }
+
+      &__input-wrapper {
+        padding: 3rem 3.5rem;
+        position: relative;
+
+        p {
+          font-size: 1.6rem;
+          position: absolute;
+          left: 6.5rem;
+          top: 2.1rem;
+        }
+
+        input {
+          position: absolute;
+          z-index: 1000;
+          left: 0;
+          top: 2.1rem;
+          opacity: 0;
+        }
       }
     }
   }
 
+  // EXCHANGE 
   &__exchange {
     padding: 2.5rem 3.5rem;
     border-bottom: solid 0.1rem $primary-grn;
@@ -44,6 +105,7 @@
       }
     }
 
+    // DESCRIPTION 
     &-description {
       width: 100%;
 
@@ -62,6 +124,7 @@
     }
   }
 
+  // FORM OPTION 
   &__form-option {
     padding: 2.5rem 3.5rem;
     border-bottom: solid 0.1rem $primary-grn;
@@ -93,6 +156,7 @@
     }
   }
 
+  // BUTTON 
   button {
     width: 100%;
     text-transform: uppercase;

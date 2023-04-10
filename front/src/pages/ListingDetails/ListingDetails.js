@@ -1,14 +1,12 @@
 // HOOKS
 import { useState, useEffect, React } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 // COMPONENTS
 import Listing from '../../components/listing/Listing';
 import CommentSection from '../../components/comments/CommentSection';
-
-// STYLE SHEET
-import './ListingDetails.scss';
+import BackNav from '../../components/back-nav/BackNav';
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
@@ -179,12 +177,7 @@ const ListingDetails = () => {
   //----------------------------------------------------------------------
   return (
     <div className='listing-details'>
-      <div className='listing-details__top-nav'>
-        <Link to='/home'>
-          <button>Go Back</button>
-        </Link>
-      </div>
-
+      <BackNav />
       <Listing listingDetails={listingDetails} handleDelete={handleDelete} />
       <CommentSection
         commentsArray={commentsArray}

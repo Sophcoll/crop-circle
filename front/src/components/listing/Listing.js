@@ -1,15 +1,21 @@
 // HOOKS
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { Link, useParams } from 'react-router-dom';
+
+// COMPONENTS
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 // STYLE SHEET
 import './Listing.scss';
 
 const Listing = ({ listingDetails, handleDelete }) => {
   //----------------------------------------------------------------------
-  // USE CONTEXT
+  // USE CONTEXT & USE PARAMS
 
   // instantiating user from useAuthContext hook to be used within the submit handler below
   const { user } = useAuthContext();
+  const listingId = useParams().listingId;
 
   //----------------------------------------------------------------------
   return (
@@ -24,7 +30,14 @@ const Listing = ({ listingDetails, handleDelete }) => {
                   : 'hide'
               }
             >
-              <button>Edit</button>
+              <Link
+                to={`/listings/${listingId}/edit`}
+                state={listingDetails}
+                key={listingDetails._id}
+              >
+                <button>Edit</button>
+              </Link>
+              <span className='line'></span>
               <button onClick={handleDelete}>Delete</button>
             </div>
             <figure className='listing-header__img'>
@@ -33,17 +46,11 @@ const Listing = ({ listingDetails, handleDelete }) => {
             <div className='listing-header__name'>
               <h1>{listingDetails.name}</h1>
             </div>
-            <div className='listing-header__exchange'>
-              <p>Exchanging for:</p>
-              <p>{listingDetails.exchange}</p>
-            </div>
           </header>
+
           <main className='listing-body'>
-            <p className='listing-body__description'>
-              {listingDetails.description}
-            </p>
-            <p className='listing-body__author'>
-              Listed by: {listingDetails.author.firstName}
+            <p className='listing-body__exchange'>
+              Exchanging for: {listingDetails.exchange}
             </p>
             <p
               className={
@@ -54,19 +61,26 @@ const Listing = ({ listingDetails, handleDelete }) => {
             >
               Exchange description: {listingDetails.exchangeDescription}
             </p>
+            <p className='listing-body__description'>
+              {listingDetails.description}
+            </p>
+            <p className='listing-body__quantity'>
+              Quantity: {listingDetails.quantity}
+            </p>
+            <p className='listing-body__author'>
+              Listed by: {listingDetails.author.firstName}
+            </p>
           </main>
           <footer className='listing-footer'>
-            <div className='listing-footer__quantity'>
-              <p>Quantity</p>
-              <p>{listingDetails.quantity}</p>
-            </div>
             <div className='two-column'>
               <div className='listing-footer__location'>
-                <p>{listingDetails.location}</p>
+                <LocationOnOutlinedIcon />
+                <p class='test'>Near {listingDetails.location}</p>
               </div>
               <div className='line'></div>
               <div className='listing-footer__pickup-time'>
-                <p>{listingDetails.pickup}</p>
+                <AccessTimeIcon />
+                <p>Collect {listingDetails.pickup}</p>
               </div>
             </div>
           </footer>

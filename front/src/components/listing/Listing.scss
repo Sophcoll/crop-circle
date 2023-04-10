@@ -1,22 +1,28 @@
 @use '../../abstracts/index' as *;
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 .listing-details {
   font-size: 1.4rem;
 
   &__top-nav {
     padding: 2.5rem 3.5rem;
-    border-bottom: solid 0.1rem $primary-grn
+    border-bottom: solid 0.1rem $primary-grn;
   }
 
   .listing {
     .listing-header {
-
       &__buttons {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         text-align: center;
-        align-items: center;
-        justify-content: center;
-        
+        place-content: center;
+
+        .line {
+          background-color: $primary-grn;
+          width: 0.1rem;
+          height: 100%;
+        }
+
         button {
           width: 100%;
           text-transform: uppercase;
@@ -25,9 +31,6 @@
           padding: 1rem;
           font-size: 1.2rem;
 
-          &:first-of-type {
-            border-right: solid 0.1rem $primary-grn;
-          }
           &:hover {
             background-color: $secondary-background;
           }
@@ -36,10 +39,11 @@
 
       &__img {
         width: 100%;
+        height: 25rem;
       }
 
       &__name {
-        padding: 1.5rem 3.5rem;
+        padding: 2rem 3.5rem;
         border-bottom: solid $primary-grn 0.1rem;
 
         h1 {
@@ -51,10 +55,10 @@
       &__exchange {
         padding: 1.5rem 3.5rem;
         border-bottom: solid $primary-grn 0.1rem;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
 
         p:last-of-type {
           text-transform: capitalize;
@@ -63,11 +67,12 @@
     }
 
     .listing-body {
-      padding: 1.5rem 3.5rem;
+      padding: 2.5rem 3.5rem;
       display: flex;
       flex-direction: column;
       gap: 1.6rem;
       border-bottom: solid $primary-grn 0.1rem;
+      line-height: 2rem;
     }
 
     .listing-footer {
@@ -78,7 +83,7 @@
         border-bottom: solid 0.1rem $primary-grn;
 
         p {
-          text-transform: uppercase;
+          // text-transform: uppercase;
           // font-weight: 500;
 
           &:last-of-type {
@@ -100,9 +105,25 @@
         }
       }
 
+      &__location {
+        padding: 1.5rem 3.5rem 1.5rem;
+      }
+
+      &__pickup-time {
+        padding: 1.5rem 3.5rem 1.5rem 1.5rem;
+      }
+
       &__location,
       &__pickup-time {
-        padding: 1.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+
+        p {
+          text-transform: capitalize;
+          padding-left: 0.5rem;
+          text-align: left;
+        }
       }
     }
   }

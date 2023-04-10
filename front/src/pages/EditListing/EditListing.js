@@ -1,8 +1,18 @@
 // HOOKS
 import { useState, useEffect, React } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 // import { useListingsContext } from '../../hooks/useListingsContext';
+
+// COMPONENTS
+// import ImageUpload from '../../components/add-listing-form/ImageUpload';
+import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
+import ListingName from '../../components/add-listing-form/ListingName';
+import ListingDescription from '../../components/add-listing-form/ListingDescription';
+import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
+import ListingLocation from '../../components/add-listing-form/ListingLocation';
+import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import BackNav from '../../components/back-nav/BackNav';
 
 // STYLE SHEET
 import '../AddListing/AddListing.scss';
@@ -14,8 +24,6 @@ const EditListing = () => {
   // for item category (maybe needs to be on a separate page)
   const [exchange, setExchange] = useState('');
   const [exchangeDescription, setExchangeDescription] = useState('');
-
-  // for item-details
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -125,9 +133,11 @@ const EditListing = () => {
 
   // finds the chosen category
   const handleExchangeCategory = (event) => {
-    const value = event.target.value
+    const value = event.target.value;
     setExchange(value);
-    if (value === 'free') {setExchangeDescription('')} 
+    if (value === 'free') {
+      setExchangeDescription('');
+    }
   };
 
   // saves the description for the exchange
@@ -139,102 +149,37 @@ const EditListing = () => {
   //----------------------------------------------------------------------
 
   return (
-    <div>
-      <Link to={`/listings/${listingId}`}>
-        <button>Back</button>
-      </Link>
-      <form>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='free'
-            name='exchange'
-            value={exchange}
-            checked={exchange === 'free' ? true : false}
+    <div className='edit-listing'>
+      <header className='edit-listing-header'>
+        <BackNav />
+      </header>
+
+      <main className='edit-listing-body'>
+        <form>
+          <ExchangeCategory
+            handleExchangeCategory={handleExchangeCategory}
+            handleExchangeDescription={handleExchangeDescription}
+            exchange={exchange}
           />
-          <label htmlFor='free'>Free</label>
-        </div>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='labour'
-            name='exchange'
-            value={exchange}
-            checked={exchange === 'labour' ? true : false}
+
+          <ListingName setName={setName} name={name} />
+
+          <ListingDescription
+            setDescription={setDescription}
+            description={description}
           />
-          <label htmlFor='labour'>Labour</label>
-          <textarea
-            onChange={handleExchangeDescription}
-            className={exchange === 'labour' ? '' : 'hide'}
-            name='labourDescription'
-            id='labourDescription'
-            cols='30'
-            rows='10'
-            value={exchangeDescription}
-          ></textarea>
-        </div>
-        <div>
-          <input
-            onChange={handleExchangeCategory}
-            type='radio'
-            id='produce'
-            name='exchange'
-            value={exchange}
-            checked={exchange === 'produce' ? true : false}
-          />
-          <label htmlFor='produce'>Other produce</label>
-          <textarea
-            onChange={handleExchangeDescription}
-            className={exchange === 'produce' ? '' : 'hide'}
-            name='produceDescription'
-            id='produceDescription'
-            cols='30'
-            rows='10'
-            value={exchangeDescription}
-          ></textarea>
-        </div>
-      </form>
 
-      <form onSubmit={handleUpdate}>
-        <label>Name</label>
-        <input
-          type='text'
-          onChange={(event) => setName(event.target.value)}
-          value={name}
-        />
+          <ListingQuantity setQuantity={setQuantity} quantity={quantity} />
 
-        <label>Description</label>
-        <input
-          type='text'
-          onChange={(event) => setDescription(event.target.value)}
-          value={description}
-        />
+          <ListingLocation setLocation={setLocation} location={location} />
 
-        <label>Quantity</label>
-        <input
-          type='text'
-          onChange={(event) => setQuantity(event.target.value)}
-          value={quantity}
-        />
+          <ListingPickup setPickup={setPickup} pickup={pickup} />
 
-        <label>Approx Location</label>
-        <input
-          type='text'
-          onChange={(event) => setLocation(event.target.value)}
-          value={location}
-        />
-
-        <label>Pick-up times</label>
-        <input
-          type='text'
-          onChange={(event) => setPickup(event.target.value)}
-          value={pickup}
-        />
-
-        <button>Update</button>
-      </form>
+          {/* Output the error message to user at bottom of form if not all fields are filled out */}
+          {error && <div className='error'>{error}</div>}
+          <button type='submit'>Update</button>
+        </form>
+      </main>
     </div>
   );
 };

@@ -1,12 +1,10 @@
-// HOOKS
-import { useAuthContext } from '../../hooks/useAuthContext';
-
 // COMPONENTS
 import Comments from './Comments';
+import CommentForm from './CommentsForm';
 
 // STYLE SHEET
 import './CommentSection.scss';
-import CommentForm from './CommentsForm';
+
 
 const CommentSection = ({
   commentsArray,
@@ -15,12 +13,7 @@ const CommentSection = ({
   setNewComment,
   handleSubmit,
 }) => {
-  //----------------------------------------------------------------------
-  // GLOBAL VARIABLES & USE CONTEXT
 
-  const { user } = useAuthContext();
-
-  //----------------------------------------------------------------------
   return (
     <div className='comments'>
       <header className='comments-header'>

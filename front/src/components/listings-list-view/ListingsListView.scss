@@ -20,9 +20,24 @@
       }
 
       .arrow {
-        width: 5rem;
+        width: 2.5rem;
         height: 0.1rem;
         background-color: $primary-grn;
+        position: relative;
+
+
+      &::after {
+        content: '';
+        right: 0;
+        top: -0.3rem;
+        position: absolute;
+        border: solid $primary-grn;
+        border-width: 0 0.1rem 0.1rem 0;
+        display: inline-block;
+        padding: 0.3rem;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
       }
 
       &:first-of-type {
