@@ -1,8 +1,8 @@
-@use "./Variables.scss" as *;
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;600&display=swap");
+@use "./Variables.scss"as *;
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap");
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 html {
@@ -18,37 +18,38 @@ body {
 }
 
 h1 {
-   font-size: 6.1rem; 
-   font-weight: 600;
-   text-transform: lowercase;
+  font-size: 6.1rem;
+  font-weight: 600;
+  text-transform: lowercase;
 }
 
 h2 {
-    font-size: 3.9rem;
-     font-weight: 600;
+  font-size: 3.9rem;
+  font-weight: 600;
 }
 
 h3 {
-    font-size: 3.1rem;
-     font-weight: 600;
+  font-size: 3.1rem;
+  font-weight: 600;
 }
 
 h4 {
-    font-size: 2.5rem;
-     font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 600;
 }
 
 h5 {
-    font-size: 2rem;
-     font-weight: 600;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 p {
   /* 10 * 1.2 = 12px */
   font-size: 1.2rem;
   line-height: 1.82rem;
+  font-weight: 400;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }

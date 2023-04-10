@@ -1,119 +1,99 @@
 @use "../../abstracts/"as *;
 
-body {
-  background-color: $primary-background;
-}
 
-.crop--circle {
+.mobile-card {
   position: relative;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
 
-.grid-navigation__top {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid #008148;
-  border-right: 1px solid #008148;
-}
+  &__container {
+    display: flex;
+    position: relative;
+    height: 45vh;
+  }
 
-.grid-navigation__footer {
-  position: absolute;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100vw;
-  bottom: 0;
-  margin: 0;
-  border-top: 1px solid #008148;
-}
+  &__circle {
+    background-color: $primary-yellow;
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    clip-path: circle(50%);
+    z-index: 1;
+    left: calc(50% - 340px/2);
+    top: calc(50% - 350px/2 + 10px);
+  }
 
-.half-btn:nth-child(odd) {
-  border-right: 1px solid #008148;
-}
+  &__grid-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid #008148;
+    border-right: 1px solid #008148;
+  }
 
-.crop--circle__container {
-  display: flex;
-  position: relative;
-  // border: 1px dashed #008148;
-  height: 45vh;
+  &__title {
+    display: flex;
+    position: absolute;
+    width: 216px;
+    height: 80px;
+    z-index: 10;
+    font-size: 5rem;
+    text-align: center;
+    justify-content: center;
+    left: calc(50% - 200px/2);
+    top: calc(50% - 180px/2);
+  }
 
+  &__form {
+    padding-top: 20px;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    text-transform: lowercase;
+    width: 80%;
+    height: 120px;
+    left: 44px;
+    top: 390px;
+    background: #FFF9E7;
+    border-top: 1px solid #008148;
+    border-bottom: 1px solid #008148;
+  }
 
- .crop--circle__title {
-  display: flex;
-  position: absolute;
-  width: 216px;
-  height: 80px;
-  z-index: 10;
-  text-align: center;
-  justify-content: center;
-  left: calc(50% - 250px/2 + 10px);
-  top: calc(50% - 120px/2 + 10px);
-}}
+  &__label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    color: $primary-grn;
+  }
 
-.crop--circle__form {
-  padding-top: 20px;
-  position: absolute;
-  display: grid;
-  grid-template-columns: 40% 1fr;
-  text-transform: lowercase;
-  width: 80%;
-  height: 150px;
-  left: 44px;
-  top: 450px;
-  background: #FFF9E7;
-  border-top: 1px solid #008148;
-  border-bottom: 1px solid #008148;
-}
-}
+  &__input {
+    border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 200;
+    color: $primary-grn;
+    background-color: $primary-background;
+  }
 
-.crop--circle__label{
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
-  color: $primary-grn;
-}
+  &__footer {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100vw;
+    bottom: 0;
+    margin: 0;
+    border-top: 1px solid #008148;
+  }
 
-.crop--circle__input {
-  border: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 200;
-  color: $primary-grn;
-}
-
-.crop-link {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
-  color: $primary-grn;
-  position: absolute;
-  text-transform: uppercase;
-  top: 35px;
-  right: 65px;
-}
-
-.crop--circle__circle {
-  background-color: $primary-yellow;
-  position: absolute;
-  width: 340px;
-  height: 340px;
-  clip-path: circle(50%);
-  z-index: 1;
-  left: calc(50% - 340px/2);
-  top: calc(50% - 350px/2 + 10px);
-}
-
-
-/* errors */
-div.error {
-  padding: 10px;
-  background: #ffefef;
-  border: 1px solid rgb(218, 74, 74);
-  color: rgb(218, 74, 74);
-  border-radius: 4px;
-  margin: 20px 0;
-}
-
-input.error {
-  border: 1px solid rgb(218, 74, 74);
+  &__link {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    color: $primary-grn;
+    position: absolute;
+    text-transform: uppercase;
+    top: 35px;
+    right: 65px;
+  }
 }
 
 .half-btn {
@@ -123,6 +103,10 @@ input.error {
   text-transform: uppercase;
   width: 100%;
   height: 90px;
+}
+
+.half-btn:nth-child(odd) {
+  border-right: 1px solid #008148;
 }
 
 .full-btn.signin {
@@ -136,7 +120,29 @@ input.error {
   left: -45px;
   width: 100vw;
   height: 90px;
-  bottom: -130px;
+  bottom: -150px;
   text-align: center;
   border-top: 1px solid #008148;
+}
+
+/* errors */
+.mobile-card__error {
+  position: absolute;
+  left: 50%;
+  top: 128%;
+  transform: translate(-50%, -50%);
+}
+
+div.error {
+  width: 200px;
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid rgb(218, 74, 74);
+  color: rgb(218, 74, 74);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid rgb(218, 74, 74);
 }
