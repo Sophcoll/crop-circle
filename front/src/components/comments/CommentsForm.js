@@ -2,10 +2,6 @@
 import './CommentForm.scss';
 
 const CommentForm = ({ handleSubmit, setNewComment, newComment }) => {
-  //----------------------------------------------------------------------
-  // GLOBAL VARIABLE
-
-  const placeholderMessage = 'Write your comment here';
 
   //----------------------------------------------------------------------
   return (

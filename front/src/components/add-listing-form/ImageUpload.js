@@ -4,9 +4,9 @@ import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 // STYLE SHEET
 import './AddListingForm.scss';
 
-const ImageUpload = ({ fileChangeHandler, image, imagePreview }) => {
+const ImageUpload = ({ fileChangeHandler, image, imagePreview, emptyFields }) => {
   return (
-    <div className='image-upload'>
+    <div className={emptyFields && emptyFields.includes('image') ? 'image-upload error' : 'image-upload'}>
       {image ? (
         <div className='image-thumbnail'>
           <figure className='image-thumbnail__img'>

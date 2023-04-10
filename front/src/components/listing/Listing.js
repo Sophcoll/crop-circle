@@ -18,9 +18,6 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
   const { user } = useAuthContext();
   const listingId = useParams().listingId;
 
-  
-  
-
   //----------------------------------------------------------------------
   return (
     <>
@@ -28,7 +25,6 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
         <div className='listing'>
           <header className='listing-header'>
             <div
-            // className='listing-header__buttons'
               className={
                 user.userId === authorDetails.id
                   ? 'listing-header__buttons'

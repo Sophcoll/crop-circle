@@ -1,2 +1,14 @@
 @use '../../abstracts/index' as *;
 
+.edit-listing-body {
+  button {
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2.5rem;
+
+    &:hover {
+      background-color: $primary-background;
+    }
+  }
+}

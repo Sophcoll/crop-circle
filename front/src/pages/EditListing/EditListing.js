@@ -15,7 +15,7 @@ import ListingPickup from '../../components/add-listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
 
 // STYLE SHEET
-import '../AddListing/AddListing.scss';
+import "./EditListing.scss";
 
 const EditListing = () => {
   //----------------------------------------------------------------------
@@ -155,7 +155,7 @@ const EditListing = () => {
       </header>
 
       <main className='edit-listing-body'>
-        <form>
+        <form onSubmit={handleUpdate}>
           <ExchangeCategory
             handleExchangeCategory={handleExchangeCategory}
             handleExchangeDescription={handleExchangeDescription}

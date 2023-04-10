@@ -14,9 +14,6 @@ import ListingLocation from '../../components/add-listing-form/ListingLocation';
 import ListingPickup from '../../components/add-listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
 
-// STYLE SHEET
-import './AddListing.scss';
-
 const AddListing = () => {
   //----------------------------------------------------------------------
   // USE STATES, USE CONTEXT & USE NAVIGATE
@@ -204,7 +201,7 @@ const AddListing = () => {
 
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
           <button type='submit'>Submit</button>
-          {error && <div className='error'>{error}</div>}
+          {error && <div className='error-message'>{error}</div>}
         </form>
       </div>
     </div>

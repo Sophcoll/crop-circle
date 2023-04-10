@@ -172,3 +172,16 @@
     }
   }
 }
+
+.add-listing-form__form-option.error,
+.error-message {
+  border: solid 0.1rem $primary-error;
+  background-color: $secondary-error;
+  border-radius: 0.4rem;
+  color: $primary-error;
+}
+
+.error-message {
+  padding: 3.5rem;
+  text-align: center;
+}
