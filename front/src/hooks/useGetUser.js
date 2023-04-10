@@ -10,7 +10,7 @@ export const useGetUser = () => {
 
  const userDetails = (userEmail) => {
 
-  const getUserDetails = async (req, res) => {
+  const getUserDetails = async () => {
   const response = await fetch(`http://localhost:4000/users/${userEmail}`, {method: "GET"})
   const userResponse = await response.json()
 

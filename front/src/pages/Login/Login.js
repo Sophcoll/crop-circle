@@ -44,10 +44,12 @@ const Login = () => {
           <Link to="/">
             <button className='btn bck-btn half-btn'>Back</button></Link>
           <div>
+
               <button className='btn'>
                 <Link to='/signup' className='mobile-card__link'>Signup</Link>
               </button>
             </div>
+
         </div>
 
         <div className='mobile-card__container'>
@@ -74,7 +76,9 @@ const Login = () => {
                 value={password}
                 name="password"
               /></div>
+
               <button className='btn full-btn signin' disabled={isLoading}>Sign Up</button>
+
              <div className='mobile-card__error'>{error && <div className='error'>{error}</div>}</div> 
             </form>
           </div>
