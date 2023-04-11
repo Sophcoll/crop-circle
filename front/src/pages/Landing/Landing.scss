@@ -1,104 +1,102 @@
 @use "../../abstracts/"as *;
 
-.landing-page {
+.landing {
     width: 100vw;
-    height: 844px;
-    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     &__container {
-        width: 100vw;
+        margin: auto;
+        padding: 0;
+        width: 80vw;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 
     &__title-top {
-        position: absolute;
-        width: 220px;
-        height: 25px;
+        text-align: center;
         font-size: 16px;
-        left: 50%;
-        top: 8%;
-        transform: translate(-50%, -50%);
+        padding: 2rem;
+        z-index: 10;
     }
 
     &__circle1 {
         background-color: $primary-yellow;
-        position: absolute;
-        width: 270px;
-        height: 270px;
-        clip-path: circle(50%);
+        height: 31rem;
+        width: 30rem;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         z-index: 1;
-        left: 50%;
-        top: 27%;
-        transform: translate(-50%, -50%);
+
+
+        @media (min-width: $desktop-width) {
+            width: 80vw;
+            height: 50%;
+            overflow: hidden;
+        }
     }
 
     &__title1 {
         z-index: 10;
-        position: absolute;
         width: 140px;
         height: 65px;
-        left: 50%;
-        top: 22%;
-        transform: translate(-50%, -50%);
         font-size: 6rem;
     }
 
 
     &__circle2 {
         background-color: $primary-yellow;
-        position: absolute;
-        width: 270px;
-        height: 270px;
-        clip-path: circle(50%);
+        height: 31rem;
+        width: 30rem;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         z-index: 1;
-        left: 50%;
-        top: 59%;
-        transform: translate(-50%, -50%);
+
+        @media (min-width: $desktop-width) {
+            bottom: -400px;
+            width: 80vw;
+            height: 50%;
+            overflow: hidden;
+        }
     }
 
     &__title2 {
         z-index: 10;
-        position: absolute;
         width: 164px;
         height: 65px;
-        left: 50%;
-        top: 32%;
-        transform: translate(-50%, -50%);
         font-size: 6rem;
     }
 
     &__title-bottom {
-        position: absolute;
-        height: 25px;
+        text-align: center;
         font-size: 16px;
-        left: 50%;
-        bottom: 18%;
-        transform: translate(-50%, -50%);
+        padding: 2rem;
+        z-index: 10;
     }
 
     &__signin-btn {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 600;
-        color: $primary-grn;
-        text-transform: uppercase;
-        position: absolute;
         width: 100vw;
         height: 75px;
-        top: 694px;
         border-top: 1px solid $primary-grn;
     }
 
     &__login-btn {
-        position: absolute;
         width: 100vw;
         height: 75px;
-        top: 769px;
         border-top: 1px solid $primary-grn;
     }
 
     &__link {
-        font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 600;
-        color: $primary-grn;
         text-transform: uppercase;
     }
 }

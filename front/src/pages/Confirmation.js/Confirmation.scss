@@ -15,8 +15,6 @@
         justify-content: center;
         align-items: center;
 
-
-
         &__child1 {
             display: grid;
             justify-items: end;
@@ -45,6 +43,7 @@
             padding: 0;
             font-size: 4em;
             line-height: 5rem;
+            text-align: center;
         }
 
         &__p {

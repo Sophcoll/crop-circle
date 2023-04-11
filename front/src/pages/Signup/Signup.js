@@ -6,10 +6,11 @@ import { useLogout } from '../../hooks/useLogout';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 // COMPONENTS
-// import Circle from '../../components/circle/Circle';
+import Circle from '../../components/circle/Circle';
 
 // STYLE SHEET
 import './Signup.scss';
+import BackNav from '../../components/back-nav/BackNav';
 
 const Signup = () => {
   //----------------------------------------------------------------------
@@ -46,22 +47,16 @@ const Signup = () => {
   return (
     <>
       <div className='signup'>
-        <div className='signup-header'>
-          <Link to='/'>
-            <button className='signup-header__btn'>Back</button>
-          </Link>
-        </div>
+          <BackNav />
         <div className='signup-body'>
-          <div className='signup-body__circle'>
-            <span className='signup-body__title'>join the circle</span>
-          </div>
-          {/* <Circle pageTitle={pageTitle} /> */}
+          <Circle pageTitle={pageTitle} />
         </div>
         <div className='signup-footer'>
           <form className='signup-footer__form' onSubmit={handleSubmit}>
             <div className='signup-footer__grid'>
               <label className='signup-footer__label'>First Name: </label>
               <input
+                placeholder='Joe'
                 className='signup-footer__input'
                 type='text'
                 onChange={(event) => setFirstName(event.target.value)}
@@ -71,6 +66,7 @@ const Signup = () => {
             <div className='signup-footer__grid'>
               <label className='signup-footer__label'>Last Name: </label>
               <input
+                placeholder='Bloggs'
                 className='signup-footer__input'
                 type='text'
                 onChange={(event) => setLastName(event.target.value)}
@@ -78,8 +74,9 @@ const Signup = () => {
               />
             </div>
             <div className='signup-footer__grid'>
-              <label className='signup-footer__label'>Email address: </label>
+              <label className='signup-footer__label'>Email: </label>
               <input
+                placeholder='joebloggs@gmail.com'
                 className='signup-footer__input'
                 type='email'
                 onChange={(event) => setEmail(event.target.value)}
@@ -89,6 +86,7 @@ const Signup = () => {
             <div className='signup-footer__grid'>
               <label className='signup-footer__label'>password</label>
               <input
+                placeholder='*********'
                 className='signup-footer__input'
                 type='password'
                 onChange={(event) => setPassword(event.target.value)}
@@ -96,17 +94,12 @@ const Signup = () => {
               />
             </div>
 
-            <div className='signup-footer__conditions'>
-              <input type='checkbox' name='agree' id='agree' />{' '}
-              <span>
-                <p> I agree to the terms and conditions</p>
-              </span>{' '}
-            </div>
+            <div className="signup-footer__conditions">
+              <input type="checkbox" name="agree" id="agree" /> <span><p className='signup-footer__p'>    I agree to the terms and conditions</p></span> </div>
+            
+               {error && <div className='error signup-footer__error'>{error}</div>}
+            <button className='signup-footer__btn' disabled={isLoading}>Sign up</button>
 
-            {error && <div className='error signup-footer__error'>{error}</div>}
-            <button className='signup-footer__btn' disabled={isLoading}>
-              Sign up
-            </button>
           </form>
         </div>
       </div>
