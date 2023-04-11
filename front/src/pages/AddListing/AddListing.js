@@ -34,7 +34,7 @@ const AddListing = () => {
   // const { dispatch } = useListingsContext();
 
   const reactLocation = useLocation();
-  const data = reactLocation.state;
+  const editStatus = reactLocation.state;
   const navigate = useNavigate();
 
   // console.log(data);
@@ -68,11 +68,11 @@ const AddListing = () => {
       }
     };
 
-    if (user && data.listingId) {
-      const id = data.listingId
+    if (user && editStatus.listingId) {
+      const id = editStatus.listingId
       fetchListingDetails(id);
     }
-  }, [user, data.listingId]);
+  }, [user, editStatus.listingId]);
 
 
   //----------------------------------------------------------------------
@@ -105,24 +105,13 @@ const AddListing = () => {
       file,
     };
 
-    // const listingEdit = {
-    //   exchange,
-    //   exchangeDescription,
-    //   name,
-    //   description,
-    //   quantity,
-    //   location,
-    //   pickup,
-    // };
-
     // POST or PUT request with user authentication token
-    const response = await fetch(`http://localhost:4000/listings/${data.listingId ? data.listingId : ''}`, {
-      method: data.listingId ? 'PUT' : 'POST',
+    const response = await fetch(`http://localhost:4000/listings/${editStatus.listingId ? editStatus.listingId : ''}`, {
+      method: editStatus.listingId ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${user.token}`,
       },
-      // body: data.listingId ? JSON.stringify(listingEdit) : JSON.stringify(listingCreate),
       body: JSON.stringify(listing),
     });
     const json = await response.json();
@@ -146,7 +135,7 @@ const AddListing = () => {
       setLocation('');
       setPickup('');
       setImage('');
-      data.listingId ? navigate(`/listings/${data.listingId}`) : navigate("/home")
+      editStatus.listingId ? navigate(`/listings/${editStatus.listingId}`) : navigate("/home")
     }
   };
 
@@ -165,6 +154,7 @@ const AddListing = () => {
     // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
     if (image) {
       setImage(image);
+      console.log(image)
       const imgUrl = URL.createObjectURL(image);
       setImagePreview(imgUrl);
     }
@@ -252,7 +242,7 @@ const AddListing = () => {
           />
 
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
-          <button type='submit'>{data.listingId ? "Update" : "Submit"}</button>
+          <button type='submit'>{editStatus.listingId ? "Update" : "Submit"}</button>
           {error && <div className='error-message'>{error}</div>}
         </form>
       </div>

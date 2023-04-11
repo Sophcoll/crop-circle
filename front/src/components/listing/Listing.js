@@ -18,11 +18,10 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
   const { user } = useAuthContext();
   const listingId = useParams().listingId;
 
-  const myData = {
+  // used in Link state below for edit button - passes this listing's id so the AddEditListing page knows to go into edit mode and pull information pertaining to this listing
+  const editStatus = {
     listingId: listingId
   }
-
-  
 
   //----------------------------------------------------------------------
   return (
@@ -39,7 +38,7 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
             >
               <Link
               to="/list/item-details"
-              state={myData}
+              state={editStatus}
                 // to={`/listings/${listingId}/edit`}
                 // state={listingDetails}
                 // key={listingDetails._id}
