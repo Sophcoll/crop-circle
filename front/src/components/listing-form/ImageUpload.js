@@ -2,7 +2,7 @@
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 
 // STYLE SHEET
-import './AddListingForm.scss';
+import './ListingForm.scss';
 
 const ImageUpload = ({ fileChangeHandler, image, imagePreview, emptyFields }) => {
   return (

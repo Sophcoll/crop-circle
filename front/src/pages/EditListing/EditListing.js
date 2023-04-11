@@ -5,23 +5,24 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
-// import ImageUpload from '../../components/add-listing-form/ImageUpload';
-import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
-import ListingName from '../../components/add-listing-form/ListingName';
-import ListingDescription from '../../components/add-listing-form/ListingDescription';
-import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
-import ListingLocation from '../../components/add-listing-form/ListingLocation';
-import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import ImageUpload from '../../components/listing-form/ImageUpload';
+import ExchangeCategory from '../../components/listing-form/ExchangeCategory';
+import ListingName from '../../components/listing-form/ListingName';
+import ListingDescription from '../../components/listing-form/ListingDescription';
+import ListingQuantity from '../../components/listing-form/ListingQuantity';
+import ListingLocation from '../../components/listing-form/ListingLocation';
+import ListingPickup from '../../components/listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
 
 // STYLE SHEET
-import "./EditListing.scss";
+import './EditListing.scss';
 
 const EditListing = () => {
   //----------------------------------------------------------------------
   // USE STATES & GLOBAL VARIABLES
 
-  // for item category (maybe needs to be on a separate page)
+  const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
   const [exchange, setExchange] = useState('');
   const [exchangeDescription, setExchangeDescription] = useState('');
   const [name, setName] = useState('');
@@ -30,6 +31,7 @@ const EditListing = () => {
   const [location, setLocation] = useState('');
   const [pickup, setPickup] = useState('');
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   // navigate hook to programmatically redirect back to 'Home' component after update button clicked
   const navigate = useNavigate();
@@ -62,6 +64,7 @@ const EditListing = () => {
       const json = await response.json();
 
       if (response.ok) {
+        setImage(json.image);
         setExchange(json.exchange);
         setExchangeDescription(json.exchangeDescription);
         setName(json.name);
@@ -129,19 +132,49 @@ const EditListing = () => {
   };
 
   //----------------------------------------------------------------------
-  // CALL BACK FUNCTIONS FOR ITEM CATEGORY
+  // CALLBACK FUNCTIONS FOR IMAGE UPLOAD
+
+  const fileChangeHandler = function (event) {
+    // save image uploaded by user in constant
+    const image = event.target.files[0];
+
+    // if no image, prompt user
+    if (!image) {
+      alert('choose image');
+    }
+
+    // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
+    if (image) {
+      setImage(image);
+      const imgUrl = URL.createObjectURL(image);
+      setImagePreview(imgUrl);
+    }
+  };
+
+  // upload image file (used in post request)
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  //----------------------------------------------------------------------
+  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
 
   // finds the chosen category
-  const handleExchangeCategory = (event) => {
-    const value = event.target.value;
+  const handleExchangeCategory = function (event) {
+    const value = event.target.id;
     setExchange(value);
     if (value === 'free') {
+      // refreshes if the exchangeDescription useState if free category is chosen
       setExchangeDescription('');
     }
   };
 
   // saves the description for the exchange
-  const handleExchangeDescription = (event) => {
+  const handleExchangeDescription = function (event) {
     const newDescription = event.target.value;
     setExchangeDescription(newDescription);
   };
@@ -155,11 +188,20 @@ const EditListing = () => {
       </header>
 
       <main className='edit-listing-body'>
-        <form onSubmit={handleUpdate}>
+        <form  className="listing-form" onSubmit={handleUpdate}>
+
+          <ImageUpload 
+          fileChangeHandler={fileChangeHandler}
+          image={image}
+          imagePreview={imagePreview}
+          emptyFields={emptyFields}
+           />
+
           <ExchangeCategory
             handleExchangeCategory={handleExchangeCategory}
             handleExchangeDescription={handleExchangeDescription}
             exchange={exchange}
+            exchangeDescription={exchangeDescription}
           />
 
           <ListingName setName={setName} name={name} />

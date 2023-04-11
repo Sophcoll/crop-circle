@@ -5,23 +5,23 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
-import ImageUpload from '../../components/add-listing-form/ImageUpload';
-import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
-import ListingName from '../../components/add-listing-form/ListingName';
-import ListingDescription from '../../components/add-listing-form/ListingDescription';
-import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
-import ListingLocation from '../../components/add-listing-form/ListingLocation';
-import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import ImageUpload from '../../components/listing-form/ImageUpload';
+import ExchangeCategory from '../../components/listing-form/ExchangeCategory';
+import ListingName from '../../components/listing-form/ListingName';
+import ListingDescription from '../../components/listing-form/ListingDescription';
+import ListingQuantity from '../../components/listing-form/ListingQuantity';
+import ListingLocation from '../../components/listing-form/ListingLocation';
+import ListingPickup from '../../components/listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
 
 const AddListing = () => {
   //----------------------------------------------------------------------
   // USE STATES, USE CONTEXT & USE NAVIGATE
 
-  const [exchange, setExchange] = useState('');
-  const [exchangeDescription, setExchangeDescription] = useState('');
   const [image, setImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+  const [exchange, setExchange] = useState('');
+  const [exchangeDescription, setExchangeDescription] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -34,27 +34,6 @@ const AddListing = () => {
   const { dispatch } = useListingsContext();
 
   const navigate = useNavigate();
-
-  // const greenBackground = false;
-
-  //----------------------------------------------------------------------
-  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
-
-  // finds the chosen category
-  const handleExchangeCategory = function (event) {
-    const value = event.target.value;
-    setExchange(value);
-    if (value === 'free') {
-      // refreshes if the exchangeDescription useState if free category is chosen
-      setExchangeDescription('');
-    }
-  };
-
-  // saves the description for the exchange
-  const handleExchangeDescription = function (event) {
-    const newDescription = event.target.value;
-    setExchangeDescription(newDescription);
-  };
 
   //----------------------------------------------------------------------
   // POST A NEW LISTING REQUEST
@@ -150,15 +129,34 @@ const AddListing = () => {
     });
 
   //----------------------------------------------------------------------
+  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
+
+  // finds the chosen category
+  const handleExchangeCategory = function (event) {
+    const value = event.target.id;
+    setExchange(value);
+    if (value === 'free') {
+      // refreshes if the exchangeDescription useState if free category is chosen
+      setExchangeDescription('');
+    }
+  };
+
+  // saves the description for the exchange
+  const handleExchangeDescription = function (event) {
+    const newDescription = event.target.value;
+    setExchangeDescription(newDescription);
+  };
+
+  //----------------------------------------------------------------------
 
   return (
     <div className='add-listing'>
       <header className='add-listing-header'>
-        <BackNav/>
+        <BackNav />
       </header>
 
       <div className='add-listing-body'>
-        <form className='add-listing-form' onSubmit={handleSubmit}>
+        <form className='listing-form' onSubmit={handleSubmit}>
           <ImageUpload
             fileChangeHandler={fileChangeHandler}
             image={image}
@@ -169,6 +167,7 @@ const AddListing = () => {
             handleExchangeCategory={handleExchangeCategory}
             handleExchangeDescription={handleExchangeDescription}
             exchange={exchange}
+            emptyFields={emptyFields}
           />
 
           <ListingName
