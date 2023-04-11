@@ -1,8 +1,8 @@
 // HOOKS
-import { useState, React } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, React, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { useListingsContext } from '../../hooks/useListingsContext';
+// import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
 import ImageUpload from '../../components/listing-form/ImageUpload';
@@ -31,13 +31,54 @@ const AddListing = () => {
   const [emptyFields, setEmptyFields] = useState([]);
 
   const { user } = useAuthContext();
-  const { dispatch } = useListingsContext();
+  // const { dispatch } = useListingsContext();
 
+  const reactLocation = useLocation();
+  const data = reactLocation.state;
   const navigate = useNavigate();
 
-  //----------------------------------------------------------------------
-  // POST A NEW LISTING REQUEST
+  // console.log(data);
 
+  //----------------------------------------------------------------------
+  // GET SPECIFIC LISTING INFORMATION IF IN EDIT MODE
+
+  useEffect(() => {
+    const fetchListingDetails = async (id) => {
+      const response = await fetch(
+        `http://localhost:4000/listings/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        setImage(json.image);
+        setExchange(json.exchange);
+        setExchangeDescription(json.exchangeDescription);
+        setName(json.name);
+        setDescription(json.description);
+        setQuantity(json.quantity);
+        setLocation(json.location);
+        setPickup(json.pickup);
+        // console.log(json.image)
+        
+      }
+    };
+
+    if (user && data.listingId) {
+      const id = data.listingId
+      fetchListingDetails(id);
+    }
+  }, [user, data.listingId]);
+
+
+  //----------------------------------------------------------------------
+  // POST A NEW LISTING REQUEST / PUT (edit) AN EXISTING LISTING 
+
+  // this request will change depending on whether the page is in 'create' or 'edit' mode
   const handleSubmit = async function (event) {
     // stop default page refresh on form submit
     event.preventDefault();
@@ -64,13 +105,24 @@ const AddListing = () => {
       file,
     };
 
-    // POST request with user authentication token
-    const response = await fetch(`http://localhost:4000/listings`, {
-      method: 'POST',
+    // const listingEdit = {
+    //   exchange,
+    //   exchangeDescription,
+    //   name,
+    //   description,
+    //   quantity,
+    //   location,
+    //   pickup,
+    // };
+
+    // POST or PUT request with user authentication token
+    const response = await fetch(`http://localhost:4000/listings/${data.listingId ? data.listingId : ''}`, {
+      method: data.listingId ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${user.token}`,
       },
+      // body: data.listingId ? JSON.stringify(listingEdit) : JSON.stringify(listingCreate),
       body: JSON.stringify(listing),
     });
     const json = await response.json();
@@ -94,8 +146,7 @@ const AddListing = () => {
       setLocation('');
       setPickup('');
       setImage('');
-      dispatch({ type: 'CREATE_LISTING', payload: json }); // update the global state to match the db
-      navigate('/home/');
+      data.listingId ? navigate(`/listings/${data.listingId}`) : navigate("/home")
     }
   };
 
@@ -201,7 +252,7 @@ const AddListing = () => {
           />
 
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
-          <button type='submit'>Submit</button>
+          <button type='submit'>{data.listingId ? "Update" : "Submit"}</button>
           {error && <div className='error-message'>{error}</div>}
         </form>
       </div>

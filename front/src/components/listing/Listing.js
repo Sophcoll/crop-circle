@@ -18,6 +18,12 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
   const { user } = useAuthContext();
   const listingId = useParams().listingId;
 
+  const myData = {
+    listingId: listingId
+  }
+
+  
+
   //----------------------------------------------------------------------
   return (
     <>
@@ -32,9 +38,11 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
               }
             >
               <Link
-                to={`/listings/${listingId}/edit`}
-                state={listingDetails}
-                key={listingDetails._id}
+              to="/list/item-details"
+              state={myData}
+                // to={`/listings/${listingId}/edit`}
+                // state={listingDetails}
+                // key={listingDetails._id}
               >
                 <button>Edit</button>
               </Link>

@@ -50,6 +50,12 @@ const Home = () => {
     }
   }, [dispatch, user]);
 
+  const editListing = false;
+
+  const myData = {
+    listingId: null
+  }
+
   //----------------------------------------------------------------------
   return (
     <div className='home'>
@@ -68,7 +74,7 @@ const Home = () => {
           <button>Menu</button>
         </Link>
         <span className='line'></span>
-        <Link to='/list/item-details'>
+        <Link to='/list/item-details' state={myData} >
           <button>List an item</button>
         </Link>
       </footer>
