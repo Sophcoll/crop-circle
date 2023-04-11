@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 // STYLE SHEET
 import './BackNav.scss';
 
-const BackNav = () => {
+const BackNav = ({greenBackground}) => {
   
   const navigate = useNavigate();
 
   return (
-    <nav className='back-nav'>
+    <nav className={greenBackground ? 'back-nav back-nav--green' : "back-nav"}>
       <button
         onClick={() => {
           navigate(-1);

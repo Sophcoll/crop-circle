@@ -22,6 +22,7 @@ const ListingDetails = () => {
   const listingId = useParams().listingId;
   const navigate = useNavigate();
 
+
   //----------------------------------------------------------------------
   // GET A SPECIFIC LISTING REQUEST
 
@@ -176,7 +177,7 @@ const ListingDetails = () => {
   //----------------------------------------------------------------------
   return (
     <div className='listing-details'>
-      <BackNav />
+      <BackNav/>
       <Listing
         authorDetails={authorDetails}
         listingDetails={listingDetails}

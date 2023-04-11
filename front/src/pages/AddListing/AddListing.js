@@ -35,6 +35,8 @@ const AddListing = () => {
 
   const navigate = useNavigate();
 
+  // const greenBackground = false;
+
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
 
@@ -152,7 +154,7 @@ const AddListing = () => {
   return (
     <div className='add-listing'>
       <header className='add-listing-header'>
-        <BackNav />
+        <BackNav/>
       </header>
 
       <div className='add-listing-body'>

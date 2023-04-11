@@ -1,9 +1,9 @@
 // STYLE SHEET
 import './Logo.scss';
 
-const Logo = () => {
+const Logo = ({ greenBackground }) => {
   return (
-    <div className='logo'>
+    <div className={greenBackground ? 'logo logo--green' : 'logo'}>
       <h5>crop</h5>
       <span className='line'></span>
       <h5>circle</h5>
