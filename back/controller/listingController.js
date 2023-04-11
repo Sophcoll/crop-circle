@@ -59,6 +59,9 @@ const createListing = async (req, res) => {
   // detect which fields are empty when user adds listing, save these in an array, then send that back to the client
   let emptyFields = [];
 
+  if (!exchange){
+    emptyFields.push('exchange');
+  }
   if (!name) {
     emptyFields.push('name');
   }

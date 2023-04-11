@@ -1,13 +1,13 @@
 // STYLE SHEET
-import './AddListingForm.scss';
+import './ListingForm.scss';
 
 const ListingLocation = ({ setLocation, location, emptyFields }) => {
   return (
     <div
       className={
         emptyFields && emptyFields.includes('location')
-          ? 'add-listing-form__form-option error'
-          : 'add-listing-form__form-option'
+          ? 'listing-form__form-option error'
+          : 'listing-form__form-option'
       }
     >
       <label>Pickup Location</label>

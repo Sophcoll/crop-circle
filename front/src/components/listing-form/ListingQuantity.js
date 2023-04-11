@@ -1,13 +1,13 @@
 // STYLE SHEET
-import './AddListingForm.scss';
+import './ListingForm.scss';
 
 const ListingQuantity = ({ setQuantity, quantity, emptyFields }) => {
   return (
     <div
       className={
         emptyFields && emptyFields.includes('quantity')
-          ? 'add-listing-form__form-option error'
-          : 'add-listing-form__form-option'
+          ? 'listing-form__form-option error'
+          : 'listing-form__form-option'
       }
     >
       <label>Quantity</label>
