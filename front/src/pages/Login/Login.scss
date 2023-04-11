@@ -1,147 +1,167 @@
 @use "../../abstracts/"as *;
 
-.mobile-card {
-  position: relative;
+.login {
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 
-  &__container {
-    display: flex;
-    position: relative;
-    height: 45vh;
-  }
 
-  &__circle {
-    background-color: $primary-yellow;
-    position: absolute;
-    width: 340px;
-    height: 340px;
-    clip-path: circle(50%);
-    z-index: 1;
-    left: calc(50% - 340px/2);
-    top: calc(50% - 350px/2 + 10px);
-  }
-
-  &__grid-top {
+  &-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid #008148;
-    border-right: 1px solid #008148;
-  }
-
-  &__title {
-    display: flex;
-    position: absolute;
-    width: 216px;
-    height: 80px;
-    z-index: 10;
-    font-size: 5rem;
-    text-align: center;
-    justify-content: center;
-    left: calc(50% - 200px/2);
-    top: calc(50% - 180px/2);
-  }
-
-  &__form {
-    padding-top: 20px;
-    position: absolute;
-    display: grid;
-    grid-template-columns: 40% 1fr;
-    text-transform: lowercase;
-    width: 80%;
-    height: 120px;
-    left: 44px;
-    top: 390px;
-    background: #FFF9E7;
-    border-top: 1px solid #008148;
+    height: 10vh;
     border-bottom: 1px solid #008148;
   }
 
-  &__label {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 600;
-    color: $primary-grn;
+  &-circle {
+    padding: 1rem;
+    height: 50vh;
+
+    @media (min-width: $desktop-width) {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      border-right: 1px solid #008148;
+      height: 100%;
+    }
   }
 
-  &__input {
-    border: none;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 200;
-    color: $primary-grn;
-    background-color: $primary-background;
+  &-media {
+    @media (min-width: $desktop-width) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+  }
+
+  &-body {
+    padding: 1rem;
+    width: 100vw;
+    margin: auto;
+    height: 40vh;
+
+    @media (min-width: $desktop-width) {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap-reverse;
+      padding: 0;
+      width: 50vw;
+      height: 80vh;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+
+      @media (min-width: $desktop-width) {
+        padding: 0;
+        margin: auto;
+      }
+    }
+
+    &__form {
+      text-transform: lowercase;
+      margin: auto;
+      width: 80%;
+      border-top: 1px solid #008148;
+      // border-bottom: 1px solid #008148;
+
+      @media (min-width: $desktop-width) {
+        margin-top: 55%;
+        width: 85%;
+      }
+    }
+
+    &__label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      color: $primary-grn;
+    }
+
+    &__input {
+      border: none;
+      height: 5vh;
+      // font-family: 'Plus Jakarta Sans', sans-serif;
+      // font-size: 16px;
+      font-weight: 200;
+      color: $primary-grn;
+      background-color: $primary-background;
+    }
+
+    &__left {
+      padding: 3.3rem 0;
+      border-bottom: 1px solid #008148;
+      // background-color: aqua;
+    }
+
+    &__right {
+      padding: 2rem 0;
+      border-bottom: 1px solid #008148;
+      // background-color: pink;
+    }
   }
 
   &__footer {
-    position: absolute;
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100vw;
     bottom: 0;
     margin: 0;
     border-top: 1px solid #008148;
-  }
 
-  &__link {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 600;
-    color: $primary-grn;
-    position: absolute;
-    text-transform: uppercase;
-    top: 35px;
-    right: 65px;
+    @media (min-width: $desktop-width) {
+      width: 50.1vw;
+      position: fixed;
+      right: 0;
+      border-left: 1px solid #008148;
+    }
+
+
+    &__error {
+      border: solid 0.1rem $primary-error;
+      background-color: $secondary-error;
+      border-radius: 0.4rem;
+      color: $primary-error;
+      padding: 5px;
+    }
   }
 }
 
 .half-btn {
-  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
-  color: $primary-grn;
   text-transform: uppercase;
   width: 100%;
-  height: 90px;
+  height: 10vh;
 }
 
 .half-btn:nth-child(odd) {
-  border-right: 1px solid #008148;
+  border-right: 1px solid #48ca90;
 }
 
 .full-btn.signin {
-  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
-  color: $primary-grn;
   text-transform: uppercase;
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  left: -45px;
-  width: 100vw;
-  height: 90px;
-  bottom: -150px;
+  margin: auto;
+  width: 100%;
+  height: 10vh;
   text-align: center;
-  border-top: 1px solid #008148;
+  border-bottom: 1px solid $primary-grn;
+
+  @media (min-width: $desktop-width) {
+    width: 100%;
+
+  }
 }
 
-/* errors */
-.mobile-card__error {
-  position: absolute;
-  left: 50%;
-  top: 128%;
-  transform: translate(-50%, -50%);
-}
-
-div.error {
-  width: 200px;
-  padding: 10px;
-  background: #ffefef;
-  border: 1px solid rgb(218, 74, 74);
-  color: rgb(218, 74, 74);
-  border-radius: 4px;
-  margin: 20px 0;
-}
-
-input.error {
-  border: 1px solid rgb(218, 74, 74);
+.login-error-message {
+  border: solid 0.1rem $primary-error;
+  background-color: $secondary-error;
+  border-radius: 0.4rem;
+  color: $primary-error;
+  padding: 5px;
+  text-align: center;
 }

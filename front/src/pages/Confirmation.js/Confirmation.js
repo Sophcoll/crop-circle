@@ -20,7 +20,7 @@ const Confirmation = () => {
         <div className='welcome-header__child3'> <h5>circle</h5></div>
         </div>
         <div className='welcome-body'>
-        <h1 className='welcome-body__title'>Welcome - {user.email} </h1>
+        <h1 className='welcome-body__title'>Welcome</h1>
         <p className='welcome-body__p'>to your friendly neighbourhood produce-sharing app</p>  
          </div>
       

@@ -45,8 +45,6 @@ router.delete('/:id', deleteListing)
 router.use("/:id/comments", require("./comments"))
 
 
-
-
 //----------------------------------------------------------------------
 // IMAGE
 
@@ -58,7 +56,7 @@ const storage = multer.diskStorage({
     },
 // define filename to use
     filename: function (req, file, cb) {
-        cb(null, file.fieldname);
+        cb(null, file.originalname);
     },
 });
 
@@ -73,7 +71,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 5242880
+        fileSize: 8 * 1024 * 1024
     },
     // fileFilter: fileFilter,   
 }

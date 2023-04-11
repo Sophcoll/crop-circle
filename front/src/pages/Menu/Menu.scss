@@ -7,11 +7,10 @@
 
     &-header {
         width: 100vw;
-        height: 10vh;
+        height: 10.5vh;
         border-bottom: 1px solid $primary-background;
         display: flex;
-        justify-items: center;
-        align-items: center;
+
 
         &__link {
             color: $primary-background;
@@ -21,9 +20,10 @@
 
     &-body {
         width: 100vw;
-        height: 90vh;
+        height: 89vh;
         display: flex;
         flex-direction: column-reverse;
+        flex-wrap: wrap-reverse;
 
 
         &__link {
@@ -31,7 +31,8 @@
         }
 
         &__link-title {
-            padding-left: 42px;
+            padding: 20px 0 20px 42px;
+            font-size: 1.6em;
             color: $primary-background;
         }
     }
