@@ -3,11 +3,17 @@ import { React } from 'react';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../../hooks/useLogout';
 
+// COMPONENTS
+import BackNav from '../../components/back-nav/BackNav';
+
 // style
 import './Menu.scss'
 
 
 const Menu = () => {
+
+    const greenBackground = true;
+
 
     const { logout } = useLogout();
      const handleClick = () => {
@@ -18,8 +24,9 @@ const Menu = () => {
     return (
         <div className='menu'>
             <div className='menu-header'>
-                <Link to='/home'>
-                    <button className='menu-header__link'>home</button></Link>
+                <BackNav greenBackground={greenBackground} />
+                {/* <Link to='/home'>
+                    <button className='menu-header__link'>home</button></Link> */}
             </div>
             <div className='menu-body'>
 
