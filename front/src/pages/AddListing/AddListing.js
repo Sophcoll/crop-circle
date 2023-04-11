@@ -1,27 +1,27 @@
 // HOOKS
-import { useState, React } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, React, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { useListingsContext } from '../../hooks/useListingsContext';
+// import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
-import ImageUpload from '../../components/add-listing-form/ImageUpload';
-import ExchangeCategory from '../../components/add-listing-form/ExchangeCategory';
-import ListingName from '../../components/add-listing-form/ListingName';
-import ListingDescription from '../../components/add-listing-form/ListingDescription';
-import ListingQuantity from '../../components/add-listing-form/ListingQuantity';
-import ListingLocation from '../../components/add-listing-form/ListingLocation';
-import ListingPickup from '../../components/add-listing-form/ListingPickup';
+import ImageUpload from '../../components/listing-form/ImageUpload';
+import ExchangeCategory from '../../components/listing-form/ExchangeCategory';
+import ListingName from '../../components/listing-form/ListingName';
+import ListingDescription from '../../components/listing-form/ListingDescription';
+import ListingQuantity from '../../components/listing-form/ListingQuantity';
+import ListingLocation from '../../components/listing-form/ListingLocation';
+import ListingPickup from '../../components/listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
 
 const AddListing = () => {
   //----------------------------------------------------------------------
   // USE STATES, USE CONTEXT & USE NAVIGATE
 
-  const [exchange, setExchange] = useState('');
-  const [exchangeDescription, setExchangeDescription] = useState('');
   const [image, setImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+  const [exchange, setExchange] = useState('');
+  const [exchangeDescription, setExchangeDescription] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -31,34 +31,54 @@ const AddListing = () => {
   const [emptyFields, setEmptyFields] = useState([]);
 
   const { user } = useAuthContext();
-  const { dispatch } = useListingsContext();
+  // const { dispatch } = useListingsContext();
 
+  const reactLocation = useLocation();
+  const editStatus = reactLocation.state;
   const navigate = useNavigate();
 
-  // const greenBackground = false;
+  // console.log(data);
 
   //----------------------------------------------------------------------
-  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
+  // GET SPECIFIC LISTING INFORMATION IF IN EDIT MODE
 
-  // finds the chosen category
-  const handleExchangeCategory = function (event) {
-    const value = event.target.value;
-    setExchange(value);
-    if (value === 'free') {
-      // refreshes if the exchangeDescription useState if free category is chosen
-      setExchangeDescription('');
+  useEffect(() => {
+    const fetchListingDetails = async (id) => {
+      const response = await fetch(
+        `http://localhost:4000/listings/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        setImage(json.image);
+        setExchange(json.exchange);
+        setExchangeDescription(json.exchangeDescription);
+        setName(json.name);
+        setDescription(json.description);
+        setQuantity(json.quantity);
+        setLocation(json.location);
+        setPickup(json.pickup);
+        // console.log(json.image)
+        
+      }
+    };
+
+    if (user && editStatus.listingId) {
+      const id = editStatus.listingId
+      fetchListingDetails(id);
     }
-  };
+  }, [user, editStatus.listingId]);
 
-  // saves the description for the exchange
-  const handleExchangeDescription = function (event) {
-    const newDescription = event.target.value;
-    setExchangeDescription(newDescription);
-  };
 
   //----------------------------------------------------------------------
-  // POST A NEW LISTING REQUEST
+  // POST A NEW LISTING REQUEST / PUT (edit) AN EXISTING LISTING 
 
+  // this request will change depending on whether the page is in 'create' or 'edit' mode
   const handleSubmit = async function (event) {
     // stop default page refresh on form submit
     event.preventDefault();
@@ -85,9 +105,9 @@ const AddListing = () => {
       file,
     };
 
-    // POST request with user authentication token
-    const response = await fetch(`http://localhost:4000/listings`, {
-      method: 'POST',
+    // POST or PUT request with user authentication token
+    const response = await fetch(`http://localhost:4000/listings/${editStatus.listingId ? editStatus.listingId : ''}`, {
+      method: editStatus.listingId ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${user.token}`,
@@ -115,8 +135,7 @@ const AddListing = () => {
       setLocation('');
       setPickup('');
       setImage('');
-      dispatch({ type: 'CREATE_LISTING', payload: json }); // update the global state to match the db
-      navigate('/home/');
+      editStatus.listingId ? navigate(`/listings/${editStatus.listingId}`) : navigate("/home")
     }
   };
 
@@ -135,6 +154,7 @@ const AddListing = () => {
     // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
     if (image) {
       setImage(image);
+      console.log(image)
       const imgUrl = URL.createObjectURL(image);
       setImagePreview(imgUrl);
     }
@@ -150,15 +170,34 @@ const AddListing = () => {
     });
 
   //----------------------------------------------------------------------
+  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
+
+  // finds the chosen category
+  const handleExchangeCategory = function (event) {
+    const value = event.target.id;
+    setExchange(value);
+    if (value === 'free') {
+      // refreshes if the exchangeDescription useState if free category is chosen
+      setExchangeDescription('');
+    }
+  };
+
+  // saves the description for the exchange
+  const handleExchangeDescription = function (event) {
+    const newDescription = event.target.value;
+    setExchangeDescription(newDescription);
+  };
+
+  //----------------------------------------------------------------------
 
   return (
     <div className='add-listing'>
       <header className='add-listing-header'>
-        <BackNav/>
+        <BackNav />
       </header>
 
       <div className='add-listing-body'>
-        <form className='add-listing-form' onSubmit={handleSubmit}>
+        <form className='listing-form' onSubmit={handleSubmit}>
           <ImageUpload
             fileChangeHandler={fileChangeHandler}
             image={image}
@@ -169,6 +208,7 @@ const AddListing = () => {
             handleExchangeCategory={handleExchangeCategory}
             handleExchangeDescription={handleExchangeDescription}
             exchange={exchange}
+            emptyFields={emptyFields}
           />
 
           <ListingName
@@ -202,7 +242,7 @@ const AddListing = () => {
           />
 
           {/* Output the error message to user at bottom of form if not all fields are filled out */}
-          <button type='submit'>Submit</button>
+          <button type='submit'>{editStatus.listingId ? "Update" : "Submit"}</button>
           {error && <div className='error-message'>{error}</div>}
         </form>
       </div>

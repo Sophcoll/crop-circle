@@ -28,6 +28,11 @@ const Home = () => {
   // feeds the circle component title for the page
   const pageTitle = 'produce nearby';
 
+  // used in Link state below for add listing button - passes a null id so the AddEditListing page knows to go into create mode
+  const editStatus = {
+    listingId: null,
+  };
+
   //----------------------------------------------------------------------
   // GET REQUEST TO DATABASE ON PAGE LOAD
 
@@ -59,8 +64,15 @@ const Home = () => {
       </header>
 
       <main className='home-body'>
-        <Circle pageTitle={pageTitle} />
-        <ListingsListView listings={listings} />
+        <div className='column-left'>
+          <Circle pageTitle={pageTitle} />
+        </div>
+        <div className='column-right'>
+          <div className='circle-container'>
+            <Circle pageTitle={pageTitle} />
+          </div>
+          <ListingsListView listings={listings} />
+        </div>
       </main>
 
       <footer className='home-footer'>
@@ -68,7 +80,7 @@ const Home = () => {
           <button>Menu</button>
         </Link>
         <span className='line'></span>
-        <Link to='/list/item-details'>
+        <Link to='/list/item-details' state={editStatus}>
           <button>List an item</button>
         </Link>
       </footer>

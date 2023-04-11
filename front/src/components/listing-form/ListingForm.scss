@@ -1,6 +1,6 @@
 @use '../../abstracts/index' as *;
 
-.add-listing-form {
+.listing-form {
 
   // IMAGE UPLOAD
   .image-upload {
@@ -173,7 +173,8 @@
   }
 }
 
-.add-listing-form__form-option.error,
+.listing-form__form-option.error,
+.listing-form__exchange.error,
 .error-message {
   border: solid 0.1rem $primary-error;
   background-color: $secondary-error;

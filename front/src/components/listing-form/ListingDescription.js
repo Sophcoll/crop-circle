@@ -1,13 +1,13 @@
 // STYLE SHEET
-import './AddListingForm.scss';
+import './ListingForm.scss';
 
 const ListingDescription = ({ setDescription, description, emptyFields }) => {
   return (
     <div
       className={
         emptyFields && emptyFields.includes('description')
-          ? 'add-listing-form__form-option error'
-          : 'add-listing-form__form-option'
+          ? 'listing-form__form-option error'
+          : 'listing-form__form-option'
       }
     >
       <label>Description</label>
