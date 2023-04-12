@@ -7,6 +7,10 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import Listing from '../../components/listing/Listing';
 import CommentSection from '../../components/comments/CommentSection';
 import BackNav from '../../components/back-nav/BackNav';
+import Circle from '../../components/circle/Circle';
+
+// STYLE SHEET
+import './ListingDetails.scss';
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
@@ -22,6 +26,7 @@ const ListingDetails = () => {
   const listingId = useParams().listingId;
   const navigate = useNavigate();
 
+  const pageTitle = 'Listing details';
 
   //----------------------------------------------------------------------
   // GET A SPECIFIC LISTING REQUEST
@@ -177,19 +182,30 @@ const ListingDetails = () => {
   //----------------------------------------------------------------------
   return (
     <div className='listing-details'>
-      <BackNav/>
-      <Listing
-        authorDetails={authorDetails}
-        listingDetails={listingDetails}
-        handleDelete={handleDelete}
-      />
-      <CommentSection
-        commentsArray={commentsArray}
-        handleCommentDelete={handleCommentDelete}
-        newComment={newComment}
-        setNewComment={setNewComment}
-        handleSubmit={handleSubmit}
-      />
+      <header className='listing-details-header'>
+        <BackNav />
+      </header>
+
+      <main className='listing-details-body'>
+        <div className='column-left'>
+          <Circle pageTitle={pageTitle} />
+        </div>
+
+        <div className='column-right'>
+          <Listing
+            authorDetails={authorDetails}
+            listingDetails={listingDetails}
+            handleDelete={handleDelete}
+          />
+          <CommentSection
+            commentsArray={commentsArray}
+            handleCommentDelete={handleCommentDelete}
+            newComment={newComment}
+            setNewComment={setNewComment}
+            handleSubmit={handleSubmit}
+          />
+        </div>
+      </main>
     </div>
   );
 };
