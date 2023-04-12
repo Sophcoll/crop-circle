@@ -47,7 +47,9 @@ const Signup = () => {
   return (
     <>
       <div className='signup'>
-          <BackNav />
+        <BackNav />
+        
+        <div className='signup-grid'>
         <div className='signup-body'>
           <Circle pageTitle={pageTitle} />
         </div>
@@ -101,7 +103,8 @@ const Signup = () => {
             <button className='signup-footer__btn' disabled={isLoading}>Sign up</button>
 
           </form>
-        </div>
+          </div>
+          </div>
       </div>
     </>
   );
