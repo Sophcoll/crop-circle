@@ -28,8 +28,6 @@ export const ListingsContextProvider = ({ children }) => {
     listings: null,
   });
 
-  console.log('listingsContext state:     ', state);
-
   return (
     <ListingsContext.Provider value={{ ...state, dispatch }}>
       {children}

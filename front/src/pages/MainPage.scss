@@ -1,11 +1,11 @@
-@use '../../abstracts/index' as *;
+@use '../abstracts/index' as *;
 
-.home {
+.main-page {
   height: 100vh;
   position: relative;
 
   // HEADER
-  &-header {
+  &__header {
     position: fixed;
     width: 100%;
     top: 0;
@@ -14,7 +14,7 @@
   }
 
   // BODY
-  &-body {
+  &__body {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -41,8 +41,6 @@
       width: 100%;
       min-height: 100%;
       max-height: 100%;
-      padding-top: 12rem;
-      padding-bottom: 6rem;
       display: flex;
       flex-direction: column;
       overflow: scroll;
@@ -61,7 +59,7 @@
   }
 
   // FOOTER
-  &-footer {
+  &__footer {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -95,4 +93,15 @@
       }
     }
   }
+}
+
+// Padding on top of right column for AddEditListing page and ListingDetails page (smaller because no filter button component)
+.padding-small {
+  padding-top: 8rem;
+}
+
+// Padding on top of right column for Home page to allow for filter buttons and bottom to allow for 'menu' and 'list an item' buttons
+.padding-big {
+  padding-top: 12rem;
+  padding-bottom: 6rem;
 }

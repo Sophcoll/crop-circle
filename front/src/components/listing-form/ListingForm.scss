@@ -179,6 +179,7 @@
 
 .listing-form__form-option.error,
 .listing-form__exchange.error,
+.image-upload.error,
 .error-message {
   border: solid 0.1rem $primary-error;
   background-color: $secondary-error;
@@ -190,3 +191,4 @@
   padding: 3.5rem;
   text-align: center;
 }
+

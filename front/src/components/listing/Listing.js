@@ -59,7 +59,7 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
 
           <main className='listing-body'>
             <p className='listing-body__exchange'>
-              Exchanging for: {listingDetails.exchange}
+              Exchanging for: {listingDetails.exchange === 'exchange' ? listingDetails.exchangeDescription : listingDetails.exchange}
             </p>
             <p
               className={

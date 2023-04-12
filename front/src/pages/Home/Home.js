@@ -10,7 +10,7 @@ import Circle from '../../components/circle/Circle';
 import ListingsListView from '../../components/listings-list-view/ListingsListView';
 
 // STYLE SHEET
-import './Home.scss';
+import "../MainPage.scss";
 
 const Home = () => {
   //----------------------------------------------------------------------
@@ -54,17 +54,17 @@ const Home = () => {
 
   //----------------------------------------------------------------------
   return (
-    <div className='home'>
-      <header className='home-header'>
+    <div className='main-page'>
+      <header className='main-page__header'>
         <Logo />
         <FilterButtons filterOptions={filterOptions} />
       </header>
 
-      <main className='home-body'>
+      <main className='main-page__body'>
         <div className='column-left'>
           <Circle pageTitle={pageTitle} />
         </div>
-        <div className='column-right'>
+        <div className='column-right padding-big'>
           <div className='circle-container'>
             <Circle pageTitle={pageTitle} />
           </div>
@@ -72,7 +72,7 @@ const Home = () => {
         </div>
       </main>
 
-      <footer className='home-footer'>
+      <footer className='main-page__footer'>
         <Link to='/menu'>
           <button>Menu</button>
         </Link>
