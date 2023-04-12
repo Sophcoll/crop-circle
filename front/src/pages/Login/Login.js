@@ -80,7 +80,7 @@ const Login = () => {
               name="password"
               /></div>
               </div>
-            <div className='login-footer__error'>{error && <div className='login-error-message'>{error}</div>}</div>
+            <div className='login-error__error'>{error && <div className='login-error__message'>{error}</div>}</div>
            
               <button className='btn full-btn signin' disabled={isLoading}>sign in</button>
           </form>

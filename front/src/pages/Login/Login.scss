@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
 
-
+  // HEADER
   &-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -16,10 +16,12 @@
     border-bottom: 1px solid #008148;
   }
 
+
   &-circle {
     padding: 1rem;
     height: 50vh;
 
+    // GRID 1
     @media (min-width: $desktop-width) {
       display: flex;
       justify-content: center;
@@ -37,12 +39,14 @@
     }
   }
 
+  // BODY
   &-body {
     padding: 1rem;
     width: 100vw;
     margin: auto;
     height: 40vh;
 
+    // GRID 2
     @media (min-width: $desktop-width) {
       position: relative;
       display: flex;
@@ -63,6 +67,7 @@
       }
     }
 
+    // FORM
     &__form {
       text-transform: lowercase;
       margin: auto;
@@ -71,8 +76,10 @@
       // border-bottom: 1px solid #008148;
 
       @media (min-width: $desktop-width) {
-        margin-top: 55%;
-        width: 85%;
+        position: fixed;
+        width: 45%;
+        margin: auto;
+        padding: 0;
       }
     }
 
@@ -85,9 +92,10 @@
     &__input {
       border: none;
       height: 5vh;
-      // font-family: 'Plus Jakarta Sans', sans-serif;
-      // font-size: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
       font-weight: 200;
+      width: 90%;
       color: $primary-grn;
       background-color: $primary-background;
     }
@@ -105,6 +113,7 @@
     }
   }
 
+  // FOOTER
   &__footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -119,15 +128,17 @@
       right: 0;
       border-left: 1px solid #008148;
     }
+  }
+}
 
-
-    &__error {
-      border: solid 0.1rem $primary-error;
-      background-color: $secondary-error;
-      border-radius: 0.4rem;
-      color: $primary-error;
-      padding: 5px;
-    }
+.login-error {
+  &__message {
+    border: solid 0.1rem $primary-error;
+    background-color: $secondary-error;
+    border-radius: 0.4rem;
+    color: $primary-error;
+    padding: 2rem;
+    text-align: center;
   }
 }
 
@@ -155,13 +166,3 @@
     width: 100%;
   }
 }
-
-.login-error-message {
-  border: solid 0.1rem $primary-error;
-  background-color: $secondary-error;
-  border-radius: 0.4rem;
-  color: $primary-error;
-  padding: 5px;
-  text-align: center;
-}
-

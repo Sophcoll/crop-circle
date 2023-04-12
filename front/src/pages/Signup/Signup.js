@@ -1,8 +1,6 @@
 // HOOKS
 import { useState, React } from 'react';
-import { Link } from 'react-router-dom';
 import { UseSignup } from '../../hooks/useSignup';
-import { useLogout } from '../../hooks/useLogout';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 // COMPONENTS
@@ -20,20 +18,13 @@ const Signup = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const { logout } = useLogout();
   const { user } = useAuthContext();
   const { signup, error, isLoading } = UseSignup();
-  //   const navigate = useNavigate(); // <--- Temporarily removed this from the imports at top of page because it's not yet being used and was throwing lint errors
 
   const pageTitle = 'join the circle';
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS
 
-  // logout
-  const handleClick = function () {
-    logout();
-  };
 
   // signup
   const handleSubmit = async function (event) {
@@ -95,11 +86,11 @@ const Signup = () => {
                 value={password}
               />
             </div>
-
+               {error && <div className='error signup-footer__error'>{error} </div>}
+              
             <div className="signup-footer__conditions">
               <input type="checkbox" name="agree" id="agree" /> <span><p className='signup-footer__p'>    I agree to the terms and conditions</p></span> </div>
             
-               {error && <div className='error signup-footer__error'>{error}</div>}
             <button className='signup-footer__btn' disabled={isLoading}>Sign up</button>
 
           </form>

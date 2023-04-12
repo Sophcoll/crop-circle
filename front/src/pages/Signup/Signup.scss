@@ -3,10 +3,12 @@
 
 .signup {
   width: 100vw;
-  height: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
   color: $primary-grn;
+  overflow: scroll;
 
   &-grid {
     @media (min-width: $desktop-width) {
@@ -15,31 +17,32 @@
     }
   }
 
-  // GRID 1
+
   &-body {
-    height: 50vh;
+    height: 50%;
     padding: 0;
 
+    // GRID 1
     @media (min-width: $desktop-width) {
       display: flex;
       justify-content: center;
-      width: 50vw;
       border-right: 1px solid #008148;
       height: 100vh;
     }
   }
 
-  // GRID 2
+
   &-footer {
     border-top: 1px solid $primary-grn;
     width: 100vw;
-    height: 45vh;
+    height: 50%;
     margin: auto;
 
+
+    // GRID 2
     @media (min-width: $desktop-width) {
       width: 100%;
       height: 100%;
-      // background-color: aqua;
       padding-top: 60%;
     }
 
@@ -50,9 +53,10 @@
       display: grid;
       grid-template-columns: 120px 1fr;
       border-top: 1px solid #008148;
+      padding-bottom: .8rem;
 
       @media (min-width: $desktop-width) {
-        width: 90%;
+        width: 80%;
       }
     }
 
@@ -81,10 +85,17 @@
       color: $primary-grn;
       text-transform: uppercase;
       width: 100%;
-      height: 8vh;
+      height: 10vh;
       margin-left: 0;
       border-top: 1px solid $primary-grn;
       border-bottom: 1px solid $primary-grn;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+
+      @media (min-width: $desktop-width) {
+        width: 50%;
+      }
     }
 
     &__error {
@@ -98,7 +109,7 @@
 
     &__conditions {
       display: inline-flex;
-      padding: 2.5rem 5rem;
+      padding: 0 5rem;
 
       @media (min-width: $desktop-width) {
         padding: 2.5rem 3.5rem;
@@ -118,4 +129,8 @@
   background-color: $secondary-error;
   border-radius: 0.4rem;
   color: $primary-error;
+}
+
+.signup-footer__grid:first-of-type {
+  border-top: none;
 }

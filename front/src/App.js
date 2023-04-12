@@ -14,9 +14,6 @@ import ListingDetails from './pages/ListingDetails/ListingDetails';
 import Menu from './pages/Menu/Menu';
 import EditListing from './pages/EditListing/EditListing';
 import Profile from './pages/Profile/Profile';
-import Messages from './pages/Messages/Messages';
-import UserListings from './pages/UserListings/UserListings';
-import Watchlist from './pages/Watchlist/Watchlist';
 import Confirmation from './pages/Confirmation.js/Confirmation';
 
 function App() {
@@ -44,9 +41,6 @@ function App() {
             />
             <Route path='/menu' element={<Menu />} />
             <Route path='/menu/profile' element={<Profile />} />
-            <Route path='/menu/messages' element={<Messages />} />
-            <Route path='/menu/listings' element={<UserListings />} />
-            <Route path='/menu/watchlist' element={<Watchlist />} />
             <Route path='/list/item-details' element={<AddListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
             <Route path='/listings/:listingId/edit' element={<EditListing />} />
