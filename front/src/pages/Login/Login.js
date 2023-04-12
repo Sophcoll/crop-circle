@@ -52,7 +52,7 @@ const Login = () => {
             <button className='bck-btn half-btn'> Signup
             </button></Link>
         </div>
-
+            
     <div className='login-media'>
         <div className='login-circle'>
           <Circle pageTitle={pageTitle} />
