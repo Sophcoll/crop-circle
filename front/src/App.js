@@ -8,7 +8,7 @@ import Landing from './pages/Landing/Landing';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import NotFound from './pages/errors/NotFound';
-import AddListing from './pages/AddListing/AddListing';
+import AddEditListing from './pages/AddEditListing/AddEditListing';
 import Home from './pages/Home/Home';
 import ListingDetails from './pages/ListingDetails/ListingDetails';
 import Menu from './pages/Menu/Menu';
@@ -42,6 +42,7 @@ function App() {
             <Route path='/menu' element={<Menu />} />
             <Route path='/menu/profile' element={<Profile />} />
             <Route path='/list/item-details' element={<AddListing />} />
+            <Route path='/list/item-details' element={<AddEditListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
             <Route path='/listings/:listingId/edit' element={<EditListing />} />
             <Route path='*' element={<NotFound />} />

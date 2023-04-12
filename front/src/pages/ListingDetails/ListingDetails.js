@@ -26,6 +26,7 @@ const ListingDetails = () => {
   const listingId = useParams().listingId;
   const navigate = useNavigate();
 
+  // passed to circle component to render page title
   const pageTitle = 'Listing details';
 
   //----------------------------------------------------------------------
