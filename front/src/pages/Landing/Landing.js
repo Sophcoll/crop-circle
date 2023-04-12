@@ -12,7 +12,7 @@ const Landing = () => {
   return (
     <div className='landing'>
       <div className='landing__container'>
-        <h5 className='landing__title-top'>Your Friendly neigbourhood</h5>
+        <h5 className='landing__title-top'>your friendly neigbourhood</h5>
 
 
         <div className="landing__circle1">
