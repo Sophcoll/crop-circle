@@ -53,10 +53,10 @@ const ExchangeCategory = ({
         <input
           onChange={handleExchangeCategory}
           type='radio'
-          id='produce'
+          id='exchange'
           name='exchange'
           value={exchange}
-          checked={exchange === 'produce' ? true : false}
+          checked={exchange === 'exchange' ? true : false}
         />
         <label htmlFor='produce'>Exchange - trade for other produce</label>
       </div>
@@ -64,7 +64,7 @@ const ExchangeCategory = ({
         <textarea
           placeholder='What are you wanting to exchange for? Please provide a brief description'
           onChange={handleExchangeDescription}
-          className={exchange === 'produce' ? '' : 'hide'}
+          className={exchange === 'exchange' ? '' : 'hide'}
           name='produceDescription'
           id='produceDescription'
           value={exchangeDescription}

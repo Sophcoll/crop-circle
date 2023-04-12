@@ -15,7 +15,7 @@ import BackNav from '../../components/back-nav/BackNav';
 import Circle from '../../components/circle/Circle';
 
 // STYLE SHEET
-import './AddEditListing.scss';
+import "../MainPage.scss";
 
 const AddEditListing = () => {
   //----------------------------------------------------------------------
@@ -34,6 +34,7 @@ const AddEditListing = () => {
 
   const [image, setImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+  const [file, setFile] = useState(null);
   const [exchange, setExchange] = useState('');
   const [exchangeDescription, setExchangeDescription] = useState('');
   const [name, setName] = useState('');
@@ -46,11 +47,16 @@ const AddEditListing = () => {
 
   const { user } = useAuthContext();
 
+  // had to label as reactLocation because we have used location already above
   const reactLocation = useLocation();
+
+  // allows us to access the state being passed in through the react router links from other components
   const editStatus = reactLocation.state;
+
+  // programmatically navigate to another page after request response is ok
   const navigate = useNavigate();
 
-  // passed to circle component to render page title
+  // passed to circle component to render page title conditionally based on whether page is in create or edit mode
   const pageTitle = editStatus.listingId ? 'Edit listing' : 'List some produce';
 
   //----------------------------------------------------------------------
@@ -98,9 +104,9 @@ const AddEditListing = () => {
       return;
     }
 
-    // image upload
-    let userImage = await toBase64(image);
-    const file = { file: userImage };
+    // image upload - MOVED THIS INTO A CALL BACK FUNCTION BELOW 
+    // let userImage = await toBase64(image);
+    // const file = { file: userImage };
 
     // define what will be sent in request body
     const listing = {
@@ -155,6 +161,7 @@ const AddEditListing = () => {
     }
   };
 
+
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS FOR IMAGE UPLOAD
 
@@ -170,9 +177,12 @@ const AddEditListing = () => {
     // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
     if (image) {
       setImage(image);
-      console.log(image);
+
       const imgUrl = URL.createObjectURL(image);
+      
       setImagePreview(imgUrl);
+
+      handleCreateFile(image)
     }
   };
 
@@ -184,6 +194,13 @@ const AddEditListing = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+
+  const handleCreateFile = async function (image) {
+    let userImage = await toBase64(image);
+    const file = { file: userImage };
+
+    setFile(file);
+  };
 
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS FOR ITEM CATEGORY
@@ -210,22 +227,23 @@ const AddEditListing = () => {
   //----------------------------------------------------------------------
 
   return (
-    <div className='add-listing'>
-      <header className='add-listing-header'>
+    <div className='main-page'>
+      <header className='main-page__header'>
         <BackNav />
       </header>
 
-      <main className='add-listing-body'>
+      <main className='main-page__body'>
         <div className='column-left'>
           <Circle pageTitle={pageTitle} />
         </div>
 
-        <div className='column-right'>
+        <div className='column-right padding-small'>
           <form className='listing-form' onSubmit={handleSubmit}>
             <ImageUpload
               fileChangeHandler={fileChangeHandler}
               image={image}
               imagePreview={imagePreview}
+              emptyFields={emptyFields}
             />
 
             <ExchangeCategory

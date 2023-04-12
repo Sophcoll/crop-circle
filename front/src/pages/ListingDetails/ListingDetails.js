@@ -10,7 +10,7 @@ import BackNav from '../../components/back-nav/BackNav';
 import Circle from '../../components/circle/Circle';
 
 // STYLE SHEET
-import './ListingDetails.scss';
+import "../MainPage.scss";
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
@@ -182,17 +182,17 @@ const ListingDetails = () => {
 
   //----------------------------------------------------------------------
   return (
-    <div className='listing-details'>
-      <header className='listing-details-header'>
+    <div className='main-page'>
+      <header className='main-page__header'>
         <BackNav />
       </header>
 
-      <main className='listing-details-body'>
+      <main className='main-page__body'>
         <div className='column-left'>
           <Circle pageTitle={pageTitle} />
         </div>
 
-        <div className='column-right'>
+        <div className='column-right padding-small'>
           <Listing
             authorDetails={authorDetails}
             listingDetails={listingDetails}
