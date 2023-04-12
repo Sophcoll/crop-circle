@@ -2,7 +2,6 @@
 import { useState, useEffect, React } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
 import Logo from '../../components/logo/Logo';
@@ -20,7 +19,6 @@ const Home = () => {
   const [listings, setListings] = useState(null);
 
   const { user } = useAuthContext();
-  const { dispatch } = useListingsContext();
 
   // values used by filter button components
   const filterOptions = ['all', 'free', 'labour', 'exchange'];
@@ -47,13 +45,12 @@ const Home = () => {
 
       if (response.ok) {
         setListings(json);
-        dispatch({ type: 'SET_LISTINGS', payload: json }); // set the initial global state so it's not null & to match the db
       }
     };
     if (user) {
       fetchListings();
     }
-  }, [dispatch, user]);
+  }, [user]);
 
   //----------------------------------------------------------------------
   return (
