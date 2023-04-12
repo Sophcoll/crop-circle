@@ -2,7 +2,6 @@
 import { useState, React, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-// import { useListingsContext } from '../../hooks/useListingsContext';
 
 // COMPONENTS
 import ImageUpload from '../../components/listing-form/ImageUpload';
@@ -13,8 +12,23 @@ import ListingQuantity from '../../components/listing-form/ListingQuantity';
 import ListingLocation from '../../components/listing-form/ListingLocation';
 import ListingPickup from '../../components/listing-form/ListingPickup';
 import BackNav from '../../components/back-nav/BackNav';
+import Circle from '../../components/circle/Circle';
 
-const AddListing = () => {
+// STYLE SHEET
+import './AddEditListing.scss';
+
+const AddEditListing = () => {
+  //----------------------------------------------------------------------
+
+  /* This page has two modes: create or edit. This mode is determined by the state data object (referred to as the editStatus) 
+  that is passed to the AddEditListing component, through whichever react-router-link that user has clicked on in order to navigate to this page.
+
+  If the user accesses this AddEditListing component from the 'List an Item' button on the Home page component, the editStatus object will contain 
+  a listingId key with a value of 'null', thus this component will be in create mode. 
+
+  If the user accesses this AddEditListing component from the 'edit' button whilst viewing a specific listing, the editStatus object will contain 
+  a listingId key with the value of the listing id, thus this component will be in edit mode. */
+
   //----------------------------------------------------------------------
   // USE STATES, USE CONTEXT & USE NAVIGATE
 
@@ -31,27 +45,24 @@ const AddListing = () => {
   const [emptyFields, setEmptyFields] = useState([]);
 
   const { user } = useAuthContext();
-  // const { dispatch } = useListingsContext();
 
   const reactLocation = useLocation();
   const editStatus = reactLocation.state;
   const navigate = useNavigate();
 
-  // console.log(data);
+  // passed to circle component to render page title
+  const pageTitle = editStatus.listingId ? 'Edit listing' : 'List some produce';
 
   //----------------------------------------------------------------------
   // GET SPECIFIC LISTING INFORMATION IF IN EDIT MODE
 
   useEffect(() => {
     const fetchListingDetails = async (id) => {
-      const response = await fetch(
-        `http://localhost:4000/listings/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:4000/listings/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -63,22 +74,20 @@ const AddListing = () => {
         setQuantity(json.quantity);
         setLocation(json.location);
         setPickup(json.pickup);
-        // console.log(json.image)
-        
       }
     };
 
     if (user && editStatus.listingId) {
-      const id = editStatus.listingId
+      const id = editStatus.listingId;
       fetchListingDetails(id);
     }
   }, [user, editStatus.listingId]);
 
-
   //----------------------------------------------------------------------
-  // POST A NEW LISTING REQUEST / PUT (edit) AN EXISTING LISTING 
+  // POST A NEW LISTING REQUEST / PUT (EDIT) AN EXISTING LISTING
 
-  // this request will change depending on whether the page is in 'create' or 'edit' mode
+  //Request changes conditionally based on the mode
+
   const handleSubmit = async function (event) {
     // stop default page refresh on form submit
     event.preventDefault();
@@ -106,14 +115,19 @@ const AddListing = () => {
     };
 
     // POST or PUT request with user authentication token
-    const response = await fetch(`http://localhost:4000/listings/${editStatus.listingId ? editStatus.listingId : ''}`, {
-      method: editStatus.listingId ? 'PUT' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify(listing),
-    });
+    const response = await fetch(
+      `http://localhost:4000/listings/${
+        editStatus.listingId ? editStatus.listingId : ''
+      }`,
+      {
+        method: editStatus.listingId ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(listing),
+      }
+    );
     const json = await response.json();
 
     // if the response is not ok, output the error in the console & on front UI
@@ -135,7 +149,9 @@ const AddListing = () => {
       setLocation('');
       setPickup('');
       setImage('');
-      editStatus.listingId ? navigate(`/listings/${editStatus.listingId}`) : navigate("/home")
+      editStatus.listingId
+        ? navigate(`/listings/${editStatus.listingId}`)
+        : navigate('/home');
     }
   };
 
@@ -154,7 +170,7 @@ const AddListing = () => {
     // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
     if (image) {
       setImage(image);
-      console.log(image)
+      console.log(image);
       const imgUrl = URL.createObjectURL(image);
       setImagePreview(imgUrl);
     }
@@ -170,12 +186,15 @@ const AddListing = () => {
     });
 
   //----------------------------------------------------------------------
-  // CALLBACK FUNCTIONS FOR ITEM CATEGORY (So exchange description r
+  // CALLBACK FUNCTIONS FOR ITEM CATEGORY
+
+  // This is a call back function rather than inline, because we need the exchange description to be reset to an empty string if the chosen exchange category is 'free'
 
   // finds the chosen category
   const handleExchangeCategory = function (event) {
     const value = event.target.id;
     setExchange(value);
+
     if (value === 'free') {
       // refreshes if the exchangeDescription useState if free category is chosen
       setExchangeDescription('');
@@ -196,58 +215,66 @@ const AddListing = () => {
         <BackNav />
       </header>
 
-      <div className='add-listing-body'>
-        <form className='listing-form' onSubmit={handleSubmit}>
-          <ImageUpload
-            fileChangeHandler={fileChangeHandler}
-            image={image}
-            imagePreview={imagePreview}
-          />
+      <main className='add-listing-body'>
+        <div className='column-left'>
+          <Circle pageTitle={pageTitle} />
+        </div>
 
-          <ExchangeCategory
-            handleExchangeCategory={handleExchangeCategory}
-            handleExchangeDescription={handleExchangeDescription}
-            exchange={exchange}
-            emptyFields={emptyFields}
-          />
+        <div className='column-right'>
+          <form className='listing-form' onSubmit={handleSubmit}>
+            <ImageUpload
+              fileChangeHandler={fileChangeHandler}
+              image={image}
+              imagePreview={imagePreview}
+            />
 
-          <ListingName
-            setName={setName}
-            name={name}
-            emptyFields={emptyFields}
-          />
+            <ExchangeCategory
+              handleExchangeCategory={handleExchangeCategory}
+              handleExchangeDescription={handleExchangeDescription}
+              exchange={exchange}
+              emptyFields={emptyFields}
+            />
 
-          <ListingDescription
-            setDescription={setDescription}
-            description={description}
-            emptyFields={emptyFields}
-          />
+            <ListingName
+              setName={setName}
+              name={name}
+              emptyFields={emptyFields}
+            />
 
-          <ListingQuantity
-            setQuantity={setQuantity}
-            quantity={quantity}
-            emptyFields={emptyFields}
-          />
+            <ListingDescription
+              setDescription={setDescription}
+              description={description}
+              emptyFields={emptyFields}
+            />
 
-          <ListingLocation
-            setLocation={setLocation}
-            location={location}
-            emptyFields={emptyFields}
-          />
+            <ListingQuantity
+              setQuantity={setQuantity}
+              quantity={quantity}
+              emptyFields={emptyFields}
+            />
 
-          <ListingPickup
-            setPickup={setPickup}
-            pickup={pickup}
-            emptyFields={emptyFields}
-          />
+            <ListingLocation
+              setLocation={setLocation}
+              location={location}
+              emptyFields={emptyFields}
+            />
 
-          {/* Output the error message to user at bottom of form if not all fields are filled out */}
-          <button type='submit'>{editStatus.listingId ? "Update" : "Submit"}</button>
-          {error && <div className='error-message'>{error}</div>}
-        </form>
-      </div>
+            <ListingPickup
+              setPickup={setPickup}
+              pickup={pickup}
+              emptyFields={emptyFields}
+            />
+
+            {/* Output the error message to user at bottom of form if not all fields are filled out */}
+            <button type='submit'>
+              {editStatus.listingId ? 'Update' : 'Submit'}
+            </button>
+            {error && <div className='error-message'>{error}</div>}
+          </form>
+        </div>
+      </main>
     </div>
   );
 };
 
-export default AddListing;
+export default AddEditListing;

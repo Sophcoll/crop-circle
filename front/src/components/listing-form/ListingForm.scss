@@ -48,6 +48,10 @@
       &__img {
         height: 25rem;
         width: 100%;
+
+        @media (min-width: $desktop-width) {
+          height: 35rem;
+        }
       }
 
       &__icon {
