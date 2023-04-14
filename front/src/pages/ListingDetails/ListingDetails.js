@@ -84,7 +84,7 @@ const ListingDetails = () => {
 
     // await response and store as json
     const json = await response.json();
-
+      
     // if the response is not ok, output the error in the console
     if (!response.ok) {
       console.log('response not ok');
@@ -93,7 +93,7 @@ const ListingDetails = () => {
     // if response is ok update the listingDetails useState and redirect back to the home page
     if (response.ok) {
       setListingDetails(json);
-      navigate('/home/');
+      navigate('/home');
     }
   };
 
