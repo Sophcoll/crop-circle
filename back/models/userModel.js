@@ -46,7 +46,7 @@ userSchema.statics.signup = async function (
   }
   // next we check if the password is strong enough, using validators 'isStrongPassword' method
   if (!validator.isStrongPassword(password)) {
-    throw Error('Password not strong enough');
+    throw Error('Must contain 8 characters, 1 symbol and 1 uppercase');
   }
 
   // CHECKING FOR EXISTING ENTRY
