@@ -3,7 +3,6 @@ import { useState, React } from 'react';
 import { Link } from 'react-router-dom';
 import { UseLogin } from '../../hooks/useLogin';
 
-
 // COMPONENTS
 import Circle from '../../components/circle/Circle';
 import BackNav from '../../components/back-nav/BackNav';
@@ -34,17 +33,9 @@ const Login = () => {
     <div className='login'>
       <div className='login-grid'>
         <BackNav />
-        <Link to='/signup'>
-          <button className='bck-btn half-btn'> Signup</button>
-        </Link>
       </div>
 
-
-        <div className='login-grid'>
-            <BackNav />
-        </div>
       <div className='login-media'>
-
         <div className='login-circle'>
           <Circle pageTitle={pageTitle} />
         </div>
@@ -86,7 +77,7 @@ const Login = () => {
               {error && <div className='login-error-message'>{error}</div>}
             </div>
             <div className='login-error__error'>
-            {error && <div className='login-error__message'>{error}</div>}
+              {error && <div className='login-error__message'>{error}</div>}
             </div>
 
             <button className='btn full-btn signin' disabled={isLoading}>
