@@ -41,7 +41,7 @@ function App() {
             />
             <Route path='/menu' element={<Menu />} />
             <Route path='/menu/profile' element={<Profile />} />
-            <Route path='/list/item-details' element={<AddListing />} />
+            {/* <Route path='/list/item-details' element={<AddListing />} /> */}
             <Route path='/list/item-details' element={<AddEditListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
             <Route path='/listings/:listingId/edit' element={<EditListing />} />
