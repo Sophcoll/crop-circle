@@ -41,7 +41,6 @@ function App() {
               element={user ? <Home /> : <Navigate to='/' />}
             />
             <Route path='/menu' element={<Menu />} />
-            <Route path='/menu/profile' element={<Profile />} />
             <Route path='/list/item-details' element={<AddEditListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
             <Route path='*' element={<NotFound />} />
