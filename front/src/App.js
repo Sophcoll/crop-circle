@@ -12,7 +12,6 @@ import AddEditListing from './pages/AddEditListing/AddEditListing';
 import Home from './pages/Home/Home';
 import ListingDetails from './pages/ListingDetails/ListingDetails';
 import Menu from './pages/Menu/Menu';
-import EditListing from './pages/EditListing/EditListing';
 import Confirmation from './pages/Confirmation.js/Confirmation';
 
 function App() {
@@ -32,8 +31,11 @@ function App() {
               path='/login'
               element={!user ? <Login /> : <Navigate to='/home' />}
             />
-            <Route path='/signup' element={!user ? <Signup /> : <Navigate to="/home" />} />
-            <Route path='/confirmation' element={ <Confirmation />} />
+            <Route
+              path='/signup'
+              element={!user ? <Signup /> : <Navigate to='/home' />}
+            />
+            <Route path='/confirmation' element={<Confirmation />} />
             <Route
               path='/home'
               element={user ? <Home /> : <Navigate to='/' />}
@@ -41,7 +43,6 @@ function App() {
             <Route path='/menu' element={<Menu />} />
             <Route path='/list/item-details' element={<AddEditListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
-            <Route path='/listings/:listingId/edit' element={<EditListing />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>

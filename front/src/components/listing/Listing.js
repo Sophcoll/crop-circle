@@ -20,8 +20,8 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
 
   // used in Link state below for edit button - passes this listing's id so the AddEditListing page knows to go into edit mode and pull information pertaining to this listing
   const editStatus = {
-    listingId: listingId
-  }
+    listingId: listingId,
+  };
 
   //----------------------------------------------------------------------
   return (
@@ -37,8 +37,8 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
               }
             >
               <Link
-              to="/list/item-details"
-              state={editStatus}
+                to='/list/item-details'
+                state={editStatus}
                 // to={`/listings/${listingId}/edit`}
                 // state={listingDetails}
                 // key={listingDetails._id}
@@ -49,17 +49,20 @@ const Listing = ({ authorDetails, listingDetails, handleDelete }) => {
               <button onClick={handleDelete}>Delete</button>
             </div>
             <figure className='listing-header__img'>
-              <img src={listingDetails.image} alt='uploaded image of produce' />
+              <img src={listingDetails.image} alt='user produce' />
             </figure>
             <div className='listing-header__name'>
               <h1>{listingDetails.name}</h1>
-              <FavoriteBorderOutlinedIcon className="heart-icon" />
+              <FavoriteBorderOutlinedIcon className='heart-icon' />
             </div>
           </header>
 
           <main className='listing-body'>
             <p className='listing-body__exchange'>
-              Exchanging for: {listingDetails.exchange === 'exchange' ? listingDetails.exchangeDescription : listingDetails.exchange}
+              Exchanging for:{' '}
+              {listingDetails.exchange === 'exchange'
+                ? 'other produce'
+                : listingDetails.exchange}
             </p>
             <p
               className={

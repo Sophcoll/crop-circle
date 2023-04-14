@@ -10,7 +10,7 @@ import Circle from '../../components/circle/Circle';
 import ListingsListView from '../../components/listings-list-view/ListingsListView';
 
 // STYLE SHEET
-import "../MainPage.scss";
+import '../MainPage.scss';
 
 const Home = () => {
   //----------------------------------------------------------------------

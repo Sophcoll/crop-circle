@@ -1,12 +1,11 @@
 @use '../../abstracts/index' as *;
 
 .listing-form {
-
   // IMAGE UPLOAD
   .image-upload {
     border-bottom: solid 0.1rem $primary-grn;
 
-    &__inner-wrapper{
+    &__inner-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -29,6 +28,7 @@
     }
 
     &__input {
+      cursor: pointer;
       z-index: 1000;
       width: 100%;
       height: 100%;
@@ -83,7 +83,7 @@
     }
   }
 
-  // EXCHANGE 
+  // EXCHANGE
   &__exchange {
     padding: 2.5rem 3.5rem;
     border-bottom: solid 0.1rem $primary-grn;
@@ -109,7 +109,7 @@
       }
     }
 
-    // DESCRIPTION 
+    // DESCRIPTION
     &-description {
       width: 100%;
 
@@ -128,7 +128,7 @@
     }
   }
 
-  // FORM OPTION 
+  // FORM OPTION
   &__form-option {
     padding: 2.5rem 0;
     border-bottom: solid 0.1rem $primary-grn;
@@ -164,7 +164,7 @@
     }
   }
 
-  // BUTTON 
+  // BUTTON
   button {
     width: 100%;
     text-transform: uppercase;
@@ -172,7 +172,7 @@
     padding: 2.5rem;
 
     &:hover {
-      background-color: $primary-background;
+      background-color: $secondary-background;
     }
   }
 }
@@ -191,4 +191,3 @@
   padding: 3.5rem;
   text-align: center;
 }
-

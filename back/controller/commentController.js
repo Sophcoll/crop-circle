@@ -10,7 +10,7 @@ then creates a new comment with data from the request body and the user's ID fro
 The comment is added to the post's comments array as a subdocument, 
 and the updated post is saved to the database and sent back to the client. */
 
-const createComment = async (req, res) => {
+const createComment = async function (req, res) {
   try {
     // find the listing we want to add the comment to by its ID in the URL params (from the route)
     // 'id' corresponds to what is written on the listing routers url parameter
@@ -36,7 +36,6 @@ const createComment = async (req, res) => {
 
     // send back the updated listing to the client
     res.json(updatedListing);
-    
   } catch (error) {
     console.log(error.message);
     res.json({ error: error.message });
@@ -51,7 +50,7 @@ removes a comment from the listing's comments array using the commentId paramete
 saves the updated listing to the database, and sends back the updated comments array to the client in the response object. 
 If an error occurs, the function logs the error message and sends back an error message to the client. */
 
-const deleteComment = async (req, res) => {
+const deleteComment = async function (req, res) {
   try {
     // find the listing by its ID in the URL params
     const listing = await Listing.findById(req.params.id);
