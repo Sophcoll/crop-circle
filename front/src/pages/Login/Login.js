@@ -2,8 +2,7 @@
 import { useState, React } from 'react';
 import { Link } from 'react-router-dom';
 import { UseLogin } from '../../hooks/useLogin';
-import { useLogout } from '../../hooks/useLogout';
-import { useAuthContext } from '../../hooks/useAuthContext';
+
 
 // COMPONENTS
 import Circle from '../../components/circle/Circle';
@@ -20,17 +19,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
   const { login, error, isLoading } = UseLogin();
 
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS
 
-  // logout
-  const handleClick = function () {
-    logout();
-  };
 
   // login
   const handleSubmit = async function (event) {
@@ -45,12 +38,10 @@ const Login = () => {
       <div className='login'>
 
         <div className='login-grid'>
-          {/* <Link to="/">
-            <button className='bck-btn half-btn'>Back</button></Link> */}
             <BackNav />
-          <Link to='/signup'>
+          {/* <Link to='/signup'>
             <button className='bck-btn half-btn'> Signup
-            </button></Link>
+            </button></Link> */}
         </div>
             
     <div className='login-media'>

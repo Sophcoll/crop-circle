@@ -1,7 +1,6 @@
 // HOOKS
 import { useState, React } from 'react';
 import { UseSignup } from '../../hooks/useSignup';
-import { useAuthContext } from '../../hooks/useAuthContext';
 
 // COMPONENTS
 import Circle from '../../components/circle/Circle';
@@ -18,7 +17,6 @@ const Signup = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user } = useAuthContext();
   const { signup, error, isLoading } = UseSignup();
 
   const pageTitle = 'join the circle';

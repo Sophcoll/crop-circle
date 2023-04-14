@@ -13,7 +13,6 @@ import Home from './pages/Home/Home';
 import ListingDetails from './pages/ListingDetails/ListingDetails';
 import Menu from './pages/Menu/Menu';
 import EditListing from './pages/EditListing/EditListing';
-import Profile from './pages/Profile/Profile';
 import Confirmation from './pages/Confirmation.js/Confirmation';
 
 function App() {
@@ -40,8 +39,6 @@ function App() {
               element={user ? <Home /> : <Navigate to='/' />}
             />
             <Route path='/menu' element={<Menu />} />
-            <Route path='/menu/profile' element={<Profile />} />
-            {/* <Route path='/list/item-details' element={<AddListing />} /> */}
             <Route path='/list/item-details' element={<AddEditListing />} />
             <Route path='/listings/:listingId' element={<ListingDetails />} />
             <Route path='/listings/:listingId/edit' element={<EditListing />} />
