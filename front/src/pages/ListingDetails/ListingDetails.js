@@ -10,7 +10,7 @@ import BackNav from '../../components/back-nav/BackNav';
 import Circle from '../../components/circle/Circle';
 
 // STYLE SHEET
-import "../MainPage.scss";
+import '../MainPage.scss';
 
 const ListingDetails = () => {
   //----------------------------------------------------------------------
@@ -24,6 +24,7 @@ const ListingDetails = () => {
 
   const { user } = useAuthContext();
   const listingId = useParams().listingId;
+
   const navigate = useNavigate();
 
   // passed to circle component to render page title
@@ -60,7 +61,7 @@ const ListingDetails = () => {
     if (user) {
       fetchListingDetails(listingId);
     }
-  }, [user, commentsArray]);
+  }, [user, listingId, commentsArray]);
 
   //----------------------------------------------------------------------
   // DELETE A SPECIFIC LISTING REQUEST
@@ -85,7 +86,7 @@ const ListingDetails = () => {
 
     // await response and store as json
     const json = await response.json();
-      
+
     // if the response is not ok, output the error in the console
     if (!response.ok) {
       console.log('response not ok');
@@ -101,7 +102,7 @@ const ListingDetails = () => {
   //----------------------------------------------------------------------
   // POST COMMENT REQUEST
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async function (event) {
     // stop default page refresh on form submit
     event.preventDefault();
 
@@ -129,7 +130,6 @@ const ListingDetails = () => {
     // if the response is not ok, output the error in the console & front end UI
     if (!response.ok) {
       setError(json.error);
-      // setEmptyFields(json.emptyFields);
       console.log(error);
     }
 
@@ -137,8 +137,6 @@ const ListingDetails = () => {
     if (response.ok) {
       setListingDetails(json);
       setCommentsArray(json.comments);
-      // setEmptyFields([]);
-      // setError(null);
       setNewComment('');
     }
   };

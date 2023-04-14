@@ -1,4 +1,4 @@
-@use "../../abstracts/"as *;
+@use '../../abstracts/' as *;
 
 .login {
   height: 100vh;
@@ -13,7 +13,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 10vh;
-    border-bottom: 1px solid #008148;
+    border-bottom: 1px solid $primary-grn;
   }
 
 
@@ -26,7 +26,7 @@
       display: flex;
       justify-content: center;
       width: 100%;
-      border-right: 1px solid #008148;
+      border-right: 1px solid $primary-grn;
       height: 100%;
     }
   }
@@ -72,7 +72,7 @@
       text-transform: lowercase;
       margin: auto;
       width: 80%;
-      border-top: 1px solid #008148;
+      border-top: 1px solid $primary-grn;
       // border-bottom: 1px solid #008148;
 
       @media (min-width: $desktop-width) {
@@ -102,13 +102,13 @@
 
     &__left {
       padding: 3.3rem 0;
-      border-bottom: 1px solid #008148;
+      border-bottom: 1px solid $primary-grn;
       // background-color: aqua;
     }
 
     &__right {
       padding: 2rem 0;
-      border-bottom: 1px solid #008148;
+      border-bottom: 1px solid $primary-grn;
       // background-color: pink;
     }
   }
@@ -120,13 +120,13 @@
     width: 100vw;
     bottom: 0;
     margin: 0;
-    border-top: 1px solid #008148;
+    border-top: 1px solid $primary-grn;
 
     @media (min-width: $desktop-width) {
       width: 50.1vw;
       position: fixed;
       right: 0;
-      border-left: 1px solid #008148;
+      border-left: 1px solid $primary-grn;
     }
   }
 }
@@ -150,7 +150,7 @@
 }
 
 .half-btn:nth-child(odd) {
-  border-right: 1px solid #48ca90;
+  border-right: 1px solid $primary-grn;
 }
 
 .full-btn.signin {

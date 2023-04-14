@@ -1,9 +1,7 @@
 // STYLE SHEET
 import './FilterButtons.scss';
 
-const FilterButtons = ({filterOptions}) => {
-
-  //----------------------------------------------------------------------
+const FilterButtons = ({ filterOptions }) => {
   return (
     <ul className='filter-list'>
       {filterOptions.map((item) => {

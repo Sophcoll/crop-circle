@@ -15,7 +15,7 @@ import BackNav from '../../components/back-nav/BackNav';
 import Circle from '../../components/circle/Circle';
 
 // STYLE SHEET
-import "../MainPage.scss";
+import '../MainPage.scss';
 
 const AddEditListing = () => {
   //----------------------------------------------------------------------
@@ -104,10 +104,6 @@ const AddEditListing = () => {
       return;
     }
 
-    // image upload - MOVED THIS INTO A CALL BACK FUNCTION BELOW 
-    // let userImage = await toBase64(image);
-    // const file = { file: userImage };
-
     // define what will be sent in request body
     const listing = {
       exchange,
@@ -161,7 +157,6 @@ const AddEditListing = () => {
     }
   };
 
-
   //----------------------------------------------------------------------
   // CALLBACK FUNCTIONS FOR IMAGE UPLOAD
 
@@ -177,12 +172,14 @@ const AddEditListing = () => {
     // if there is an image, save this in image useState, create an image url and save this in imageUrl useState
     if (image) {
       setImage(image);
-
       const imgUrl = URL.createObjectURL(image);
-      
+
       setImagePreview(imgUrl);
 
-      handleCreateFile(image)
+      handleCreateFile(image);
+
+      setEmptyFields([]);
+      setError(null);
     }
   };
 
@@ -282,12 +279,11 @@ const AddEditListing = () => {
               pickup={pickup}
               emptyFields={emptyFields}
             />
-
             {/* Output the error message to user at bottom of form if not all fields are filled out */}
+            {error && <div className='error-message'>{error}</div>}
             <button type='submit'>
               {editStatus.listingId ? 'Update' : 'Submit'}
             </button>
-            {error && <div className='error-message'>{error}</div>}
           </form>
         </div>
       </main>

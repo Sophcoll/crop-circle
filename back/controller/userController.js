@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // to create webtoken for user (backend) - npm install jsonwebtoken
-const createToken = (_id) => {
+const createToken = function (_id) {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: '3d' });
 };
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // login user, after creating check if user exists then find the token and password
-const loginUser = async (req, res) => {
+const loginUser = async function (req, res) {
   const { email, password } = req.body;
 
   try {
@@ -20,8 +20,7 @@ const loginUser = async (req, res) => {
     // create token, see above function
     const token = createToken(user._id);
     const firstName = user.firstName;
-    const userId = user._id
-
+    const userId = user._id;
 
     // res.status(200).json({ email, token });
 
@@ -33,7 +32,7 @@ const loginUser = async (req, res) => {
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // signup user
-const signupUser = async (req, res) => {
+const signupUser = async function (req, res) {
   const { firstName, lastName, email, password } = req.body;
 
   try {

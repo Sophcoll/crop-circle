@@ -7,7 +7,7 @@ const path = require('path');
 //----------------------------------------------------------------------
 // GET all listings, sorted by newest created
 
-const getAllListings = async (req, res) => {
+const getAllListings = async function (req, res) {
   // const listings = await Listing.find({}).sort({ createdAt: -1 });
 
   const listings = await Listing.find({}).populate('author');
@@ -18,7 +18,7 @@ const getAllListings = async (req, res) => {
 //----------------------------------------------------------------------
 // GET a single listing
 
-const getListing = async (req, res) => {
+const getListing = async function (req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -43,7 +43,7 @@ const getListing = async (req, res) => {
 //----------------------------------------------------------------------
 // POST a new listing
 
-const createListing = async (req, res) => {
+const createListing = async function (req, res) {
   // specify what needs to be sent in the request body to align with the listingModel
 
   const {
@@ -61,11 +61,11 @@ const createListing = async (req, res) => {
   // detect which fields are empty when user adds listing, save these in an array, then send that back to the client
   let emptyFields = [];
 
+  // TURNED ERROR HANDLING FOR IMAGE OFF - CAUSING ISSUES
 
   // if(!image) {
   //   emptyFields.push('image');
   // }
-
   if (!exchange) {
     emptyFields.push('exchange');
   }
@@ -121,7 +121,7 @@ const createListing = async (req, res) => {
 //----------------------------------------------------------------------
 // UPDATE a listing
 
-const updateListing = async (req, res) => {
+const updateListing = async function (req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -146,7 +146,7 @@ const updateListing = async (req, res) => {
 //----------------------------------------------------------------------
 // DELETE a single listing
 
-const deleteListing = async (req, res) => {
+const deleteListing = async function (req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -164,7 +164,7 @@ const deleteListing = async (req, res) => {
 
 // ----------------------------------------------------------------------
 // UPLOAD image
-const uploadImage = async (req, res) => {
+const uploadImage = async function (req, res) {
   console.log('file:' + JSON.stringify(req.file.path));
   if (!req.file) {
     res.json({ mssg: 'no image received' });
@@ -186,7 +186,7 @@ const uploadImage = async (req, res) => {
 
 // ----------------------------------------------------------------------
 // GET image
-const getImage = async (req, res) => {
+const getImage = async function (req, res) {
   Listing.find({}, (error, results) => {
     if (error) {
       console.log(error);

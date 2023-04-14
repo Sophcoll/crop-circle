@@ -19,7 +19,7 @@ const ListingsListView = ({ listings }) => {
               key={listing._id}
             >
               <li className='listings-item'>
-              <div className='listings-item__exchange'>
+                <div className='listings-item__exchange'>
                   <p>{listing.exchange}</p>
                 </div>
                 <div className='listings-item__location'>
