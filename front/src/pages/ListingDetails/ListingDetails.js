@@ -61,7 +61,7 @@ const ListingDetails = () => {
     if (user) {
       fetchListingDetails(listingId);
     }
-  }, [user, listingId, commentsArray]);
+  }, [user, commentsArray]);
 
   //----------------------------------------------------------------------
   // DELETE A SPECIFIC LISTING REQUEST
