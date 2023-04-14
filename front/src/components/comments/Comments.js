@@ -13,7 +13,7 @@ const Comments = ({ commentsArray, handleCommentDelete }) => {
 
   const { user } = useAuthContext();
 
-   //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
   return (
     <>
       {commentsArray &&

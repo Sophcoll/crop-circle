@@ -2,8 +2,6 @@
 import './CommentForm.scss';
 
 const CommentForm = ({ handleSubmit, setNewComment, newComment }) => {
-
-  //----------------------------------------------------------------------
   return (
     <form onSubmit={handleSubmit} className='add-comment-form'>
       <textarea

@@ -7,10 +7,6 @@ const Comment = require('../models/commentModel');
 
 const Schema = mongoose.Schema;
 
-// image: {
-//     contentType: String,
-//     },
-
 const listingSchema = new Schema(
   {
     exchange: {

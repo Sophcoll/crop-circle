@@ -23,9 +23,9 @@ const ImageUpload = ({
         <div className='image-thumbnail'>
           <figure className='image-thumbnail__img'>
             {imagePreview ? (
-              <img src={imagePreview} alt='user image of produce' />
+              <img src={imagePreview} alt='user produce' />
             ) : (
-              <img src={image} alt='user image of produce' />
+              <img src={image} alt='user produce' />
             )}
           </figure>
 

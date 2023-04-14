@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
-const requireAuth = async (req, res, next) => {
+const requireAuth = async function (req, res, next) {
   // verify authentication by using an authorization headers request property - this should contain our JSON web token
   const { authorization } = req.headers;
 
@@ -13,7 +13,6 @@ const requireAuth = async (req, res, next) => {
   // split the string web token which is authorization to the second part of the array the actual token, the second item
   const token = authorization.split(' ')[1];
 
-
   // we then need to verify that this token hasn't been tampered with using the JSON web token package
   try {
     // once verified, it then returns the payload of that token so we are able to grab the id from the token from the payload and store it in a constant
@@ -24,7 +23,6 @@ const requireAuth = async (req, res, next) => {
 
     // go to the next piece of middleware (controller functions)
     next();
-    
   } catch (error) {
     console.log(error);
     res.status(401).json({ error: 'Request is not authorized' });

@@ -5,7 +5,6 @@ import CommentForm from './CommentsForm';
 // STYLE SHEET
 import './CommentSection.scss';
 
-
 const CommentSection = ({
   commentsArray,
   handleCommentDelete,
@@ -13,7 +12,6 @@ const CommentSection = ({
   setNewComment,
   handleSubmit,
 }) => {
-
   return (
     <div className='comments'>
       <header className='comments-header'>
@@ -31,7 +29,11 @@ const CommentSection = ({
       </main>
 
       <footer className='comments-footer'>
-        < CommentForm handleSubmit={handleSubmit} setNewComment={setNewComment} newComment={newComment}/>
+        <CommentForm
+          handleSubmit={handleSubmit}
+          setNewComment={setNewComment}
+          newComment={newComment}
+        />
       </footer>
     </div>
   );

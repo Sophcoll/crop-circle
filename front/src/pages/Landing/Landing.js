@@ -1,12 +1,9 @@
-
-import { LandingView } from '../../components/views/LandingView';
-
 const Landing = () => {
-
-
   return (
-   <LandingView ></LandingView>
-  );
+    <div>
+      Landing page
+    </div>
+  )
 };
 
 export default Landing;
