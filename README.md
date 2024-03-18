@@ -1,6 +1,6 @@
 # CropCircle
 
-This project is a full-stack React/MongoDB application that allows users to signup, login, logout, and then create a listing, view listings, update and delete listings (if author of the listing).
+This project is a full-stack React/MongoDB application that allows users to signup, login, logout, and then create a listing, view listings, update and delete listings (if author of the listing). You will need a MongoBD account and an URI database string.
 
 TO RUN THIS PROJECT:
 
